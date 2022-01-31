@@ -15,5 +15,5 @@ Client client = new Client()
 
 };
 
-ClientEditor Adding = new ClientEditor();
-Adding.AddClient(client, dbContext);
+ClientEditor ClientEditor = new ClientEditor();
+ClientEditor.AddClient(client, dbContext);

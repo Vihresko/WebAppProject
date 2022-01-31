@@ -49,10 +49,12 @@ namespace WorkDiary.Database.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Clients");
                 });
@@ -66,14 +68,12 @@ namespace WorkDiary.Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ClientId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -91,9 +91,7 @@ namespace WorkDiary.Database.Migrations
                 {
                     b.HasOne("WorkDiary.Database.Data.Models.Client", "Client")
                         .WithMany("Procedures")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClientId");
 
                     b.Navigation("Client");
                 });

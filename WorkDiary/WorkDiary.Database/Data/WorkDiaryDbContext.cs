@@ -21,9 +21,11 @@ namespace WorkDiary.Database.Data
             }
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {
-
+            modelBuilder.Entity<Client>()
+           .HasIndex(u => u.Email)
+           .IsUnique();
         }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Procedure> Procedures { get; set; }
