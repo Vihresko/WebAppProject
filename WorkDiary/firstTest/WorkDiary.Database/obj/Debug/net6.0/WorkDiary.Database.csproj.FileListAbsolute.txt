@@ -1,0 +1,14 @@
+C:\projects\WorkDiary\WorkDiary\WorkDiary.Database\bin\Debug\net6.0\WorkDiary.Database.deps.json
+C:\projects\WorkDiary\WorkDiary\WorkDiary.Database\bin\Debug\net6.0\WorkDiary.Database.runtimeconfig.json
+C:\projects\WorkDiary\WorkDiary\WorkDiary.Database\bin\Debug\net6.0\WorkDiary.Database.dll
+C:\projects\WorkDiary\WorkDiary\WorkDiary.Database\bin\Debug\net6.0\ref\WorkDiary.Database.dll
+C:\projects\WorkDiary\WorkDiary\WorkDiary.Database\bin\Debug\net6.0\WorkDiary.Database.pdb
+C:\projects\WorkDiary\WorkDiary\WorkDiary.Database\obj\Debug\net6.0\WorkDiary.Database.GeneratedMSBuildEditorConfig.editorconfig
+C:\projects\WorkDiary\WorkDiary\WorkDiary.Database\obj\Debug\net6.0\WorkDiary.Database.AssemblyInfoInputs.cache
+C:\projects\WorkDiary\WorkDiary\WorkDiary.Database\obj\Debug\net6.0\WorkDiary.Database.AssemblyInfo.cs
+C:\projects\WorkDiary\WorkDiary\WorkDiary.Database\obj\Debug\net6.0\WorkDiary.Database.csproj.CoreCompileInputs.cache
+C:\projects\WorkDiary\WorkDiary\WorkDiary.Database\obj\Debug\net6.0\WorkDiary.Database.dll
+C:\projects\WorkDiary\WorkDiary\WorkDiary.Database\obj\Debug\net6.0\ref\WorkDiary.Database.dll
+C:\projects\WorkDiary\WorkDiary\WorkDiary.Database\obj\Debug\net6.0\WorkDiary.Database.pdb
+C:\projects\WorkDiary\WorkDiary\WorkDiary.Database\obj\Debug\net6.0\WorkDiary.Database.genruntimeconfig.cache
+C:\projects\WorkDiary\WorkDiary\WorkDiary.Database\obj\Debug\net6.0\WorkDiary.Database.csproj.AssemblyReference.cache
