@@ -25,5 +25,9 @@ namespace WorkDiaryDB
         public DbSet<User> Users { get; set; }
         public DbSet<ClientProcedure> ClientProcedures { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Income> Incomes { get; set; }
+        public DbSet<Outcome> Outcomes { get; set; }
+        public DbSet<Bank> Banks { get; set; }
+
     }
 }

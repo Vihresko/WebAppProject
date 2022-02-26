@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WorkDiaryDB.Models
 {
@@ -15,6 +16,10 @@ namespace WorkDiaryDB.Models
         public string Username { get; init; }
 
         [Required]
+        [MaxLength(FULL_NAME_MAX_LENGTH)]
+        public string FullName { get; private set; }
+
+        [Required]
         [MaxLength(EMAIL_MAX_LENGTH)]
         public string Email { get; private set; }
 
@@ -23,7 +28,11 @@ namespace WorkDiaryDB.Models
 
         public virtual ICollection<ClientProcedure> UserPlayers { get; set; } = new HashSet<ClientProcedure>();
 
-        public Contact Contact { get; set; }
+        public virtual Contact Contact { get; set; }
+
+        [ForeignKey(nameof(Bank))]
+        public string BankId { get; private set; }
+        public Bank Bank { get; set; }
 
         //TODO:IsAdmin?
     }

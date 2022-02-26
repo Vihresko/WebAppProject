@@ -17,11 +17,15 @@
         //User
         public const int USERNAME_MIN_LENGTH = 3;
         public const int USERNAME_MAX_LENGTH = 20;
+        public const int FULL_NAME_MAX_LENGTH = 50;
 
         //Contact
         public const int PHONE_NUMBER_MAX_LENGHT = 20;
         public const int TOWN_NAME_MAX_LENGTH = 85;
         public const int ADDRESS_MAX_LENGTH = 100;
+
+        //Income/Outcome
+        public const int IN_OUT_COME_DESCRIPTION_MAX_LENGTH = 100;
        
     }
 }

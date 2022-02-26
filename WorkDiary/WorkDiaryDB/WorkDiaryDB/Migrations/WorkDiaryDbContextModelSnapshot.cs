@@ -22,6 +22,16 @@ namespace WorkDiaryDB.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("WorkDiaryDB.Models.Bank", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Banks");
+                });
+
             modelBuilder.Entity("WorkDiaryDB.Models.Client", b =>
                 {
                     b.Property<string>("Id")
@@ -95,6 +105,54 @@ namespace WorkDiaryDB.Migrations
                     b.ToTable("Contacts");
                 });
 
+            modelBuilder.Entity("WorkDiaryDB.Models.Income", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("BankId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<decimal>("Value")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankId");
+
+                    b.ToTable("Incomes");
+                });
+
+            modelBuilder.Entity("WorkDiaryDB.Models.Outcome", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("BankId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<decimal>("Value")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankId");
+
+                    b.ToTable("Outcomes");
+                });
+
             modelBuilder.Entity("WorkDiaryDB.Models.Procedure", b =>
                 {
                     b.Property<string>("Id")
@@ -122,6 +180,10 @@ namespace WorkDiaryDB.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("BankId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("ContactId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -130,6 +192,11 @@ namespace WorkDiaryDB.Migrations
                         .IsRequired()
                         .HasMaxLength(254)
                         .HasColumnType("nvarchar(254)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -141,6 +208,8 @@ namespace WorkDiaryDB.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BankId");
 
                     b.HasIndex("ContactId");
 
@@ -174,15 +243,52 @@ namespace WorkDiaryDB.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("WorkDiaryDB.Models.Income", b =>
+                {
+                    b.HasOne("WorkDiaryDB.Models.Bank", "Bank")
+                        .WithMany("Incomes")
+                        .HasForeignKey("BankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bank");
+                });
+
+            modelBuilder.Entity("WorkDiaryDB.Models.Outcome", b =>
+                {
+                    b.HasOne("WorkDiaryDB.Models.Bank", "Bank")
+                        .WithMany("Outcomes")
+                        .HasForeignKey("BankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bank");
+                });
+
             modelBuilder.Entity("WorkDiaryDB.Models.User", b =>
                 {
+                    b.HasOne("WorkDiaryDB.Models.Bank", "Bank")
+                        .WithMany()
+                        .HasForeignKey("BankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("WorkDiaryDB.Models.Contact", "Contact")
                         .WithMany()
                         .HasForeignKey("ContactId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Bank");
+
                     b.Navigation("Contact");
+                });
+
+            modelBuilder.Entity("WorkDiaryDB.Models.Bank", b =>
+                {
+                    b.Navigation("Incomes");
+
+                    b.Navigation("Outcomes");
                 });
 
             modelBuilder.Entity("WorkDiaryDB.Models.Client", b =>
