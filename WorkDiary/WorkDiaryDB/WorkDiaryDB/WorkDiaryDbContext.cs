@@ -5,6 +5,8 @@ namespace WorkDiaryDB
 {
     public class WorkDiaryDbContext : DbContext
     {
+        public WorkDiaryDbContext(DbContextOptions options)
+            : base(options) { }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
