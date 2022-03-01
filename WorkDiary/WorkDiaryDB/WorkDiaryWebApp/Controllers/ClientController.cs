@@ -19,9 +19,8 @@ namespace WorkDiaryWebApp.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult AddClient(AddClientPostModel model)
+        public IActionResult AddClient(AddClientModel model)
         {
-
             return View();
         }
 

@@ -1,7 +1,6 @@
 ﻿<h1 class="text-center mt-2">Here will be form for add new client.</h1>
-
-<form class="col-6 col-lg-9" method="post">
-        <div class="form-floating mb-3">
+<form asp-controller="Client" asp-action="AddClient" method="post">
+         <div class="form-floating mb-3">
           <input name="FirstName" class="form-control" id="floatingInput">
           <label for="floatingInput">First Name</label>
         </div>

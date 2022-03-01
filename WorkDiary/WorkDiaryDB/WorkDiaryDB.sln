@@ -5,7 +5,12 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkDiaryDB", "WorkDiaryDB\WorkDiaryDB.csproj", "{2F93A3DA-42D6-4E7F-BE89-007CE3C4F14F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkDiaryWebApp", "WorkDiaryWebApp\WorkDiaryWebApp.csproj", "{47652C97-F8C1-4587-91E4-2424044D020B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkDiaryWebApp", "WorkDiaryWebApp\WorkDiaryWebApp.csproj", "{47652C97-F8C1-4587-91E4-2424044D020B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AD0E5465-B8C5-4359-AFF6-099DC900EFBF}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
