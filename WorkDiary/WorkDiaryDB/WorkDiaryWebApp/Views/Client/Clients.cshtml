@@ -1,2 +1,25 @@
-﻿<h1>Here will be displayed all registered clients</h1>
+﻿@model ListFromClients
 
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">FullName</th>
+      <th scope="col">Email</th>
+    </tr>
+  </thead>
+  <tbody>
+      @{
+            int count = 0;
+        }
+        @foreach (var client in Model.Clients)
+        {
+            count++;
+            <tr>
+                <th scope="row">@count</th>
+          <td>@client.FullName</td>
+          <td>@client.Email</td>
+         </tr>
+        }
+  </tbody>
+</table>

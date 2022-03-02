@@ -6,6 +6,7 @@
         public const int EMAIL_MAX_LENGTH = 254;
 
         //Client
+        public const int NAME_MIN_LENGTH = 2;
         public const int FIRST_NAME_MAX_LENGTH = 30;
         public const int LAST_NAME_MAX_LENGTH = 30;
 

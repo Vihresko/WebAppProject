@@ -1,15 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WorkDiaryCore.Constraints.Constants;
+using WorkDiaryWebApp.Core.Constants;
+using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Client;
 
 namespace WorkDiaryWebApp.Controllers
 {
     public class ClientController : Controller
     {
+        private readonly IClientService clientService;
+        public ClientController(IClientService _clientService)
+        {
+            clientService = _clientService;
+        }
         public IActionResult Clients()
         {
-            return View();
+            var model = clientService.GetAllClients();
+            return View(model);
         }
+
+       
         public IActionResult Client()
         {
             return View();
@@ -22,7 +31,8 @@ namespace WorkDiaryWebApp.Controllers
         [HttpPost]
         public IActionResult AddClient(AddClientModel model)
         {
-            bool isDone = false;
+            (bool isDone, string errors) = clientService.AddNewClient(model);
+
             if (isDone)
             {
                 ViewData[MessageConstant.SuccessMessage] = "success";
@@ -30,8 +40,7 @@ namespace WorkDiaryWebApp.Controllers
             //TODO: Create correct errors
             else
             {
-                ViewData[MessageConstant.WarningMessage] = "warning";
-                ViewData[MessageConstant.ErrorMessage] = "error";
+                ViewData[MessageConstant.ErrorMessage] = errors;
             }
             return View();
         }

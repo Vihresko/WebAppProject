@@ -51,6 +51,7 @@ namespace WorkDiaryDB.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 

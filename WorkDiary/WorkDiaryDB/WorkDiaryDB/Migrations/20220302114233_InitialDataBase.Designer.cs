@@ -12,8 +12,8 @@ using WorkDiaryDB;
 namespace WorkDiaryDB.Migrations
 {
     [DbContext(typeof(WorkDiaryDbContext))]
-    [Migration("20220226141435_InitialTestDb")]
-    partial class InitialTestDb
+    [Migration("20220302114233_InitialDataBase")]
+    partial class InitialDataBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -53,6 +53,7 @@ namespace WorkDiaryDB.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 

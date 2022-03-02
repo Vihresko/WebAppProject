@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WorkDiaryCore\WorkDiaryCore.csproj" />
+    <ProjectReference Include="..\WorkDiaryDB\WorkDiaryDB.csproj" />
   </ItemGroup>
 
 </Project>

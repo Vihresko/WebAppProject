@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WorkDiaryDB;
+using WorkDiaryWebApp.Core.Interfaces;
+using WorkDiaryWebApp.Constraints.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +15,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<WorkDiaryDbContext>();
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddScoped<IClientService, ClientService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
