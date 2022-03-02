@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using WorkDiaryCore.Constraints.Constants;
 using WorkDiaryWebApp.Models;
 
 namespace WorkDiaryWebApp.Controllers
@@ -15,6 +16,7 @@ namespace WorkDiaryWebApp.Controllers
 
         public IActionResult Index()
         {
+            
             return View();
         }
 

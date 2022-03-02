@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WorkDiaryCore.Constraints.Constants;
 using WorkDiaryWebApp.Models.Client;
 
 namespace WorkDiaryWebApp.Controllers
@@ -21,6 +22,17 @@ namespace WorkDiaryWebApp.Controllers
         [HttpPost]
         public IActionResult AddClient(AddClientModel model)
         {
+            bool isDone = false;
+            if (isDone)
+            {
+                ViewData[MessageConstant.SuccessMessage] = "success";
+            }
+            //TODO: Create correct errors
+            else
+            {
+                ViewData[MessageConstant.WarningMessage] = "warning";
+                ViewData[MessageConstant.ErrorMessage] = "error";
+            }
             return View();
         }
 
