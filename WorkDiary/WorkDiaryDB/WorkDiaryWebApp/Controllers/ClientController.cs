@@ -19,9 +19,10 @@ namespace WorkDiaryWebApp.Controllers
         }
 
        
-        public IActionResult Client()
+        public IActionResult Client(string clientId)
         {
-            return View();
+            var model = clientService.ClientInfo(clientId);
+            return View(model);
         }
 
         public IActionResult AddClient()

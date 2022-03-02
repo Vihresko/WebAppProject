@@ -74,6 +74,20 @@ namespace WorkDiaryWebApp.Constraints.Services
             return (true, null);
         }
 
+        public ClientInfoModel ClientInfo(string clientId)
+        {
+            var clientFromDb = database.Clients.Where(c => c.Id == clientId).FirstOrDefault();
+            ClientInfoModel model = new ClientInfoModel()
+            {
+                FirstName = clientFromDb.FirstName,
+                LastName = clientFromDb.LastName,
+                BirthDay = clientFromDb.BirthDay,
+                Email = clientFromDb.Email,
+                Id = clientId
+            };
+            return model;
+        }
+
         public ListFromClients GetAllClients()
         {
             var model = new ListFromClients();
@@ -83,7 +97,8 @@ namespace WorkDiaryWebApp.Constraints.Services
                 ShowClientModel clientModel = new ShowClientModel()
                 {
                     FullName = client.FirstName + " " + client.LastName,
-                    Email = client.Email
+                    Email = client.Email,
+                    Id = client.Id     
                 };
                 model.Clients.Add(clientModel);
             }

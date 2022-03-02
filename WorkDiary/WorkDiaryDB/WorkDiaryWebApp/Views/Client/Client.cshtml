@@ -1,1 +1,20 @@
-﻿<h1>Here will be displayed information for selected client</h1>
+﻿@model ClientInfoModel
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">FirstName</th>
+            <th scope="col">LastName</th>
+            <th scope="col">BirthDay</th>
+            <th scope="col">Email</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr>
+                <td>@Model.FirstName</td>
+                <td>@Model.LastName</td>
+                <td>@Model.BirthDay</td>
+                <td>@Model.Email</td>
+            </tr>
+    </tbody>
+</table>

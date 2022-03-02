@@ -6,5 +6,7 @@ namespace WorkDiaryWebApp.Core.Interfaces
     {
         public (bool isDone, string errors) AddNewClient(AddClientModel addClientModel);
         public ListFromClients GetAllClients();
+
+        public ClientInfoModel ClientInfo(string clientId);
     }
 }

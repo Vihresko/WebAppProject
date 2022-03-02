@@ -1,25 +1,25 @@
 ﻿@model ListFromClients
 
 <table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">FullName</th>
-      <th scope="col">Email</th>
-    </tr>
-  </thead>
-  <tbody>
-      @{
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">FullName</th>
+            <th scope="col">Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
             int count = 0;
         }
         @foreach (var client in Model.Clients)
         {
             count++;
-            <tr>
+            <tr onclick="window.location.href = '/Client/Client?clientId=@client.Id'">
                 <th scope="row">@count</th>
-          <td>@client.FullName</td>
-          <td>@client.Email</td>
-         </tr>
+                <td>@client.FullName</td>
+                <td>@client.Email</td>
+            </tr>
         }
-  </tbody>
+    </tbody>
 </table>
