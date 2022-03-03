@@ -15,7 +15,12 @@
       "ProjectGuid": "47652c97-f8c1-4587-91e4-2424044d020b",
       "DisplayName": "WorkDiaryWebApp",
       "ColorIndex": 1
+    },
+    "d5b832b1-160b-46fd-97b9-06b1f16fea8b": {
+      "ProjectGuid": "d5b832b1-160b-46fd-97b9-06b1f16fea8b",
+      "DisplayName": "WorkDiaryCore",
+      "ColorIndex": 2
     }
   },
-  "NextColorIndex": 2
+  "NextColorIndex": 3
 }

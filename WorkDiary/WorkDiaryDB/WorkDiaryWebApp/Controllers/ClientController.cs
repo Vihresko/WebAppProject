@@ -38,7 +38,6 @@ namespace WorkDiaryWebApp.Controllers
             {
                 ViewData[MessageConstant.SuccessMessage] = "success";
             }
-            //TODO: Create correct errors
             else
             {
                 ViewData[MessageConstant.ErrorMessage] = errors;

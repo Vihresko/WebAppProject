@@ -1,1 +1,18 @@
-﻿<h1>Here will be displayed selected procedure Info</h1>
+﻿@model ShowProcedureModel
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr>
+                <td>@Model.Name</td>
+                <td>@Model.Description</td>
+                <td>@Model.Price</td>
+            </tr>
+    </tbody>
+</table>

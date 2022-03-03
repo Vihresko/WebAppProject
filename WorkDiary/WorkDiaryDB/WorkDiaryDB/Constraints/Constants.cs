@@ -11,9 +11,11 @@
         public const int LAST_NAME_MAX_LENGTH = 30;
 
         //Procedure
+        public const int PROCEDURE_NAME_MIN_LENGTH = 3;
         public const int PROCEDURE_NAME_MAX_LENGTH = 30;
         public const int PROCEDURE_DESCRIPTION_MAX_LENGTH = 1000;
-        public const decimal PROCEDURE_MIN_PRICE = 0;
+        public const decimal PROCEDURE_MIN_PRICE = 1;
+        public const decimal PROCEDURE_MAX_PRICE = 1000000;
 
         //User
         public const int USERNAME_MIN_LENGTH = 3;

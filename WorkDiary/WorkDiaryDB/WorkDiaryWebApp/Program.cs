@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using WorkDiaryDB;
 using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Constraints.Services;
+using WorkDiaryWebApp.Core.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<WorkDiaryDbContext>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<IProcedureService, ProcedureService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
