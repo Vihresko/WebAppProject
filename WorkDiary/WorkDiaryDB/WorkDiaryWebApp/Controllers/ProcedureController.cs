@@ -31,6 +31,7 @@ namespace WorkDiaryWebApp.Controllers
         [HttpPost]
         public IActionResult AddProcedure(AddProcedureModel model)
         {
+           
             (bool isDone, string errors) = procedureService.AddNewProcedure(model);
 
             if (isDone)

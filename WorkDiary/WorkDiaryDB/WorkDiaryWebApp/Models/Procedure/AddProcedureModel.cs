@@ -1,4 +1,6 @@
-﻿namespace WorkDiaryWebApp.Models.Procedure
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WorkDiaryWebApp.Models.Procedure
 {
     public class AddProcedureModel
     {

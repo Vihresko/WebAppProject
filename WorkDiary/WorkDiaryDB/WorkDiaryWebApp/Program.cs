@@ -4,6 +4,8 @@ using WorkDiaryDB;
 using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Constraints.Services;
 using WorkDiaryWebApp.Core.Services;
+using WorkDiaryWebApp.Core.ModelBinders;
+using WorkDiaryWebApp.Core.Constants;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +17,11 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<WorkDiaryDbContext>();
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddMvcOptions(options =>
+{
+    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+    options.ModelBinderProviders.Insert(0, new DateTimeModelBinderProvider(FormatConstant.DateTimeFormat));
+});
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IProcedureService, ProcedureService>();
 var app = builder.Build();
