@@ -8,5 +8,7 @@ namespace WorkDiaryWebApp.Core.Interfaces
         public ListFromProcedures GetAllProcedures();
 
         public ShowProcedureModel ProcedureInfo(string procedureId);
+
+        public (bool isDone, string errors) EditProcedure(ShowProcedureModel model);
     }
 }

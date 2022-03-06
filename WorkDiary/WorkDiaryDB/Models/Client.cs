@@ -24,5 +24,8 @@ namespace WorkDiaryDB.Models
         public DateTime BirthDay { get;  set; }
 
         public virtual ICollection<ClientProcedure> Procedures { get; set; } = new HashSet<ClientProcedure>();
+
+        public bool IsActive { get; set; } = true;
+
     }
 }

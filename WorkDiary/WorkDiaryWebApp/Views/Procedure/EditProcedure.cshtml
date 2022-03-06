@@ -6,6 +6,7 @@
             <th scope="col">Current Name</th>
             <th scope="col">Current Description</th>
             <th scope="col">Current Price</th>
+            <th scope="col">IsActive</th>
         </tr>
     </thead>
     <tbody>
@@ -15,6 +16,7 @@
                 <textarea rows="5" cols="120" readonly>@Model.Description</textarea>
             </td>
             <td>@Model.Price</td>
+            <td>@Model.IsActive</td>
         </tr>
 
     </tbody>
@@ -22,13 +24,26 @@
 
 <form asp-controller="Procedure" asp-action="EditProcedure" method="post">
     <p class="text-primary">New Name:</p>
-    <input class="form-control" type="text" value=@Model.Name>
+    <input name="Name" class="form-control" type="text" value=@Model.Name>
     <br />
     <p class="text-primary">New Description:</p>
-    <textarea rows="5" cols="120">@Model.Description</textarea>
+    <textarea name="Description" rows="5" cols="120">@Model.Description</textarea>
     <br />
     <p class="text-primary">New Price:</p>
-    <input class="form-control" type="number" value=@Model.Price>
+    <input name="Price" class="form-control" type="number" value=@Model.Price>
     <br />
-    <button class="btn btn-primary" type="submit">Save changes</button>
-</form></>
+
+    <label>IsActive</label>
+    <div class="form-switch" data-on-label="YES" data-off-label="NO">
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked="@Model.IsActive">
+    </div>
+
+    <input name="Id" class="form-control" type="hidden" value=@Model.Id>
+    <button class="btn btn-danger" type="submit">Save changes</button>
+    <a href="/Procedure/Procedures" class="btn btn-primary" role="button">Back</a>
+
+
+</form>
+
+
+

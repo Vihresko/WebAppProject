@@ -50,5 +50,25 @@ namespace WorkDiaryWebApp.Controllers
             var model = procedureService.ProcedureInfo(procedureId);
             return View(model);
         }
+
+        [HttpPost]
+        public IActionResult EditProcedure(ShowProcedureModel model)
+        {
+            (bool isDone, string errors) = procedureService.EditProcedure(model);
+
+            if (isDone)
+            {
+                ViewData[MessageConstant.SuccessMessage] = "success";
+            }
+            else if(errors == CommonMessage.NoChangesMessage)
+            {
+                ViewData[MessageConstant.WarningMessage] = CommonMessage.NoChangesMessage;
+            }
+            else
+            {
+                ViewData[MessageConstant.ErrorMessage] = errors;
+            }
+            return View(model);
+        }
     }
 }

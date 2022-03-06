@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using WorkDiaryDB;
 using WorkDiaryDB.Models;
+using WorkDiaryWebApp.Core.Constants;
 using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Procedure;
 
@@ -17,25 +18,7 @@ namespace WorkDiaryWebApp.Core.Services
         }
         public (bool isDone, string errors) AddNewProcedure(AddProcedureModel model)
         {
-            bool isValidModel = true;
-            var errors = new StringBuilder();
-
-            if(model.Name == null || model.Name.Length < PROCEDURE_NAME_MIN_LENGTH || model.Name.Length > PROCEDURE_NAME_MAX_LENGTH)
-            {
-                isValidModel = false;
-                errors.AppendLine($"{nameof(model.Name)} must be between {PROCEDURE_NAME_MIN_LENGTH} and {PROCEDURE_NAME_MAX_LENGTH} characters!");
-            }
-
-            if(model.Description != null && model.Description.Length > PROCEDURE_DESCRIPTION_MAX_LENGTH)
-            {
-                isValidModel = false;
-                errors.AppendLine($"{nameof(model.Description)} must be maximum from {PROCEDURE_DESCRIPTION_MAX_LENGTH} symbols!");
-            }
-            if(model.Price < PROCEDURE_MIN_PRICE || model.Price > decimal.MaxValue)
-            {
-                isValidModel = false;
-                errors.AppendLine($"{nameof(model.Price)} must be between {PROCEDURE_MIN_PRICE} and {PROCEDURE_MAX_PRICE}");
-            }
+            (bool isValidModel, string errors) = ValidateProcedureValues(model.Name, model.Description, model.Price);
 
             if (!isValidModel)
             {
@@ -61,6 +44,39 @@ namespace WorkDiaryWebApp.Core.Services
             return (true, null);
         }
 
+        public (bool isDone, string errors) EditProcedure(ShowProcedureModel model)
+        {
+            (bool isValidModel, string errors) = ValidateProcedureValues(model.Name, model.Description, model.Price);
+
+            if (!isValidModel)
+            {
+                return (isValidModel, errors.ToString());
+            }
+            var originState = database.Procedures.Where(p => p.Id == model.Id).FirstOrDefault();
+
+            if (originState.Name == model.Name &&
+               originState.Description == model.Description &&
+               originState.Price == model.Price &&
+               originState.IsActive == model.IsActive)
+            {
+                return (false, CommonMessage.NoChangesMessage);
+            }
+
+            try
+            {
+                originState.Name = model.Name;
+                originState.Description = model.Description;
+                originState.Price = model.Price;
+                originState.IsActive = model.IsActive;
+                database.SaveChanges();
+            }
+            catch
+            {
+                return (false, "Fail to edit procedure from database");
+            }
+            return (true, null);
+        }
+
         public ListFromProcedures GetAllProcedures()
         {
             var model = new ListFromProcedures();
@@ -70,8 +86,8 @@ namespace WorkDiaryWebApp.Core.Services
                 ShowProcedureModel procedureModel = new ShowProcedureModel()
                 {
                     Name = procedure.Name,
-                    Description =procedure.Description,
-                    Price =procedure.Price,
+                    Description = procedure.Description,
+                    Price = procedure.Price,
                     Id = procedure.Id
                 };
                 model.Procedures.Add(procedureModel);
@@ -85,12 +101,38 @@ namespace WorkDiaryWebApp.Core.Services
             var procedureFromDb = database.Procedures.Where(p => p.Id == procedureId).FirstOrDefault();
             ShowProcedureModel model = new ShowProcedureModel()
             {
-                 Name = procedureFromDb.Name,
-                 Description = procedureFromDb.Description,
-                 Price =procedureFromDb.Price,
-                 Id =procedureFromDb.Id
+                Name = procedureFromDb.Name,
+                Description = procedureFromDb.Description,
+                Price = procedureFromDb.Price,
+                Id = procedureFromDb.Id,
+                IsActive = procedureFromDb.IsActive
             };
             return model;
+        }
+
+        private (bool, string) ValidateProcedureValues(string Name, string Description, decimal Price)
+        {
+            bool isValidModel = true;
+            var errors = new StringBuilder();
+
+            if (Name == null || Name.Length < PROCEDURE_NAME_MIN_LENGTH || Name.Length > PROCEDURE_NAME_MAX_LENGTH)
+            {
+                isValidModel = false;
+                errors.AppendLine($"{nameof(Name)} must be between {PROCEDURE_NAME_MIN_LENGTH} and {PROCEDURE_NAME_MAX_LENGTH} characters!");
+            }
+
+            if (Description != null && Description.Length > PROCEDURE_DESCRIPTION_MAX_LENGTH)
+            {
+                isValidModel = false;
+                errors.AppendLine($"{nameof(Description)} must be maximum from {PROCEDURE_DESCRIPTION_MAX_LENGTH} symbols!");
+            }
+            if (Price < PROCEDURE_MIN_PRICE || Price > decimal.MaxValue)
+            {
+                isValidModel = false;
+                errors.AppendLine($"{nameof(Price)} must be between {PROCEDURE_MIN_PRICE} and {PROCEDURE_MAX_PRICE}");
+            }
+
+            return (isValidModel, errors.ToString());
         }
     }
 }

@@ -19,5 +19,7 @@ namespace WorkDiaryDB.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
         public virtual ICollection<ClientProcedure> Clients { get; set; } = new HashSet<ClientProcedure>();
+
+        public bool IsActive { get; set; } = true;
     }
 }
