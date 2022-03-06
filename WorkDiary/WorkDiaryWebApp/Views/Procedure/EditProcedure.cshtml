@@ -1,0 +1,34 @@
+﻿@model ShowProcedureModel
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Current Name</th>
+            <th scope="col">Current Description</th>
+            <th scope="col">Current Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="table-active">
+            <td>@Model.Name</td>
+            <td>
+                <textarea rows="5" cols="120" readonly>@Model.Description</textarea>
+            </td>
+            <td>@Model.Price</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<form asp-controller="Procedure" asp-action="EditProcedure" method="post">
+    <p class="text-primary">New Name:</p>
+    <input class="form-control" type="text" value=@Model.Name>
+    <br />
+    <p class="text-primary">New Description:</p>
+    <textarea rows="5" cols="120">@Model.Description</textarea>
+    <br />
+    <p class="text-primary">New Price:</p>
+    <input class="form-control" type="number" value=@Model.Price>
+    <br />
+    <button class="btn btn-primary" type="submit">Save changes</button>
+</form></>

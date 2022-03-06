@@ -1,0 +1,22 @@
+﻿@model ClientInfoModel
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">FirstName</th>
+            <th scope="col">LastName</th>
+            <th scope="col">BirthDay</th>
+            <th scope="col">Email</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr>
+                <td>@Model.FirstName</td>
+                <td>@Model.LastName</td>
+                <td>@Model.BirthDay</td>
+                <td>@Model.Email</td>
+                <td><button>Work</button><button>History</button></td>
+            </tr>
+    </tbody>
+</table>

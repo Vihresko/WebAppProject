@@ -1,0 +1,19 @@
+﻿@model ShowProcedureModel
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr>
+                <td>@Model.Name</td>
+                <td>@Model.Price</td>
+            </tr>
+    </tbody>
+</table>
+
+<h4>Description:</h4>
+<span style="white-space: pre-wrap; word-wrap:anywhere">@Model.Description</span>
