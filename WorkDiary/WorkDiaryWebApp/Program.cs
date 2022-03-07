@@ -20,7 +20,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddControllersWithViews().AddMvcOptions(options =>
 {
     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
-    options.ModelBinderProviders.Insert(0, new DateTimeModelBinderProvider(FormatConstant.DateTimeFormat));
+    options.ModelBinderProviders.Insert(0, new DateTimeModelBinderProvider(FormatConstant.DATE_TIME_FORMAT));
 });
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IProcedureService, ProcedureService>();

@@ -8,5 +8,7 @@ namespace WorkDiaryWebApp.Core.Interfaces
         public ListFromClients GetAllClients();
 
         public ClientInfoModel ClientInfo(string clientId);
+
+        public (bool isDone, string errors) EditClient(ClientInfoModel model);
     }
 }

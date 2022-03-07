@@ -60,9 +60,9 @@ namespace WorkDiaryWebApp.Controllers
             {
                 ViewData[MessageConstant.SuccessMessage] = "success";
             }
-            else if(errors == CommonMessage.NoChangesMessage)
+            else if(errors == CommonMessage.NO_CHANGES_MESSAGE)
             {
-                ViewData[MessageConstant.WarningMessage] = CommonMessage.NoChangesMessage;
+                ViewData[MessageConstant.WarningMessage] = CommonMessage.NO_CHANGES_MESSAGE;
             }
             else
             {

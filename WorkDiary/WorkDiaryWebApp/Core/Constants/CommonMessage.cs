@@ -2,6 +2,8 @@
 {
     public class CommonMessage
     {
-        public const string NoChangesMessage = "No changes for save!";
+        public const string NO_CHANGES_MESSAGE = "No changes for save!";
+        public const string SUCCESS_MESSAGE = "Success!";
+        public const string ACTIVE_STATUS_ERROR = "Invalid data for Activity (true/false)!";
     }
 }

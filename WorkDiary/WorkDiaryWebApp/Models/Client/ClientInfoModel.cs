@@ -10,7 +10,9 @@
 
         public string Email { get; set; }
 
-        public DateTime BirthDay { get; set; }
+        public string BirthDay { get; set; }
+
+        public bool IsActive { get; set; }
 
     }
 }

@@ -59,7 +59,7 @@ namespace WorkDiaryWebApp.Core.Services
                originState.Price == model.Price &&
                originState.IsActive == model.IsActive)
             {
-                return (false, CommonMessage.NoChangesMessage);
+                return (false, CommonMessage.NO_CHANGES_MESSAGE);
             }
 
             try

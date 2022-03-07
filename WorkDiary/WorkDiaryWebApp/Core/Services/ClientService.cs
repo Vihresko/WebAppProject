@@ -2,6 +2,7 @@
 using System.Text;
 using WorkDiaryDB;
 using WorkDiaryDB.Models;
+using WorkDiaryWebApp.Core.Constants;
 using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Client;
 
@@ -17,41 +18,11 @@ namespace WorkDiaryWebApp.Constraints.Services
         }
         public (bool isDone, string errors) AddNewClient(AddClientModel model)
         {
-            bool isValidModel = true;
-            var errors = new StringBuilder();
-            if(model.FirstName == null ||model.FirstName.Length < NAME_MIN_LENGTH || model.FirstName.Length > FIRST_NAME_MAX_LENGTH)
-            {
-                isValidModel = false;
-                errors.AppendLine($"{nameof(model.FirstName)} must be between {NAME_MIN_LENGTH} and {FIRST_NAME_MAX_LENGTH} characters!");
-            }
-            if(model.LastName == null || model.LastName.Length < NAME_MIN_LENGTH || model.LastName.Length > LAST_NAME_MAX_LENGTH)
-            {
-                isValidModel = false;
-                errors.AppendLine($"{nameof(model.LastName)} must be between {NAME_MIN_LENGTH} and {LAST_NAME_MAX_LENGTH} characters!");
-            }
-            if(model.Email == null ||model.Email.Length > EMAIL_MAX_LENGTH)
-            {
-                isValidModel = false;
-                errors.AppendLine($"{nameof(model.Email)} must be maximum from {EMAIL_MAX_LENGTH} symbols");
-            }
-
-            var isValidDate = DateTime.TryParseExact(model.BirthDay, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime birthDay);
-
-            if (!isValidDate)
-            {
-                isValidModel = false;
-                errors.AppendLine($"{nameof(model.BirthDay)} must be valid DATE like '01/01/2000'!");
-            }
+            (bool isValidModel, string errors) = ValidateClientModel(model.FirstName, model.LastName, model.Email, model.BirthDay);
 
             if (!isValidModel)
             {
-                return (isValidModel, errors.ToString());
-            }
-
-            bool isEmailExist = database.Clients.Where(c => c.Email == model.Email).Any();
-            if (isEmailExist)
-            {
-                return (false, "This email is already registred!");
+                return (isValidModel, errors);
             }
 
             Client newClient = new Client()
@@ -59,7 +30,7 @@ namespace WorkDiaryWebApp.Constraints.Services
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Email = model.Email,
-                BirthDay = birthDay
+                BirthDay = DateTime.ParseExact(model.BirthDay, FormatConstant.DATE_TIME_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None)
             };
 
             try
@@ -74,6 +45,45 @@ namespace WorkDiaryWebApp.Constraints.Services
             return (true, null);
         }
 
+        private (bool, string) ValidateClientModel(string firstName, string lastName, string email, string birthDay)
+        {
+            bool isValidModel = true;
+            var errors = new StringBuilder();
+
+            if (firstName == null || firstName.Length < NAME_MIN_LENGTH || firstName.Length > FIRST_NAME_MAX_LENGTH)
+            {
+                isValidModel = false;
+                errors.AppendLine($"{nameof(firstName)} must be between {NAME_MIN_LENGTH} and {FIRST_NAME_MAX_LENGTH} characters!");
+            }
+            if (lastName == null || lastName.Length < NAME_MIN_LENGTH || lastName.Length > LAST_NAME_MAX_LENGTH)
+            {
+                isValidModel = false;
+                errors.AppendLine($"{nameof(lastName)} must be between {NAME_MIN_LENGTH} and {LAST_NAME_MAX_LENGTH} characters!");
+            }
+            if (email == null || email.Length > EMAIL_MAX_LENGTH)
+            {
+                isValidModel = false;
+                errors.AppendLine($"{nameof(email)} must be maximum from {EMAIL_MAX_LENGTH} symbols");
+            }
+
+            var isValidDate = DateTime.TryParseExact(birthDay, FormatConstant.DATE_TIME_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime birthDayChecked);
+
+            if (!isValidDate)
+            {
+                isValidModel = false;
+                errors.AppendLine($"{nameof(birthDay)} must be valid DATE like '{FormatConstant.DATE_TIME_FORMAT_EXAM}'!");
+            }
+
+            bool isEmailExist = database.Clients.Where(c => c.Email == email).Any();
+            if (isEmailExist)
+            {
+                isValidModel = false;
+                errors.AppendLine("This email is already registred!");
+            }
+
+            return (isValidModel, errors.ToString());
+        }
+
         public ClientInfoModel ClientInfo(string clientId)
         {
             var clientFromDb = database.Clients.Where(c => c.Id == clientId).FirstOrDefault();
@@ -81,7 +91,7 @@ namespace WorkDiaryWebApp.Constraints.Services
             {
                 FirstName = clientFromDb.FirstName,
                 LastName = clientFromDb.LastName,
-                BirthDay = clientFromDb.BirthDay,
+                BirthDay = clientFromDb.BirthDay.ToString(FormatConstant.DATE_TIME_FORMAT),
                 Email = clientFromDb.Email,
                 Id = clientId
             };
@@ -104,6 +114,45 @@ namespace WorkDiaryWebApp.Constraints.Services
             }
             model.Clients = model.Clients.OrderBy(c => c.FullName).ToHashSet();
             return model;
+        }
+
+        public (bool isDone, string errors) EditClient(ClientInfoModel model)
+        {
+            (bool isValidModel, string errors) = ValidateClientModel(model.FirstName, model.LastName, model.Email, model.BirthDay);
+
+            if(model.IsActive != true && model.IsActive != false)
+            {
+                isValidModel = false;
+                errors += $"{CommonMessage.ACTIVE_STATUS_ERROR}";
+            }
+            if (!isValidModel)
+            {
+                return (isValidModel, errors);
+            }
+            var originState = database.Clients.Where(c => c.Id == model.Id).FirstOrDefault();
+            var birthDay = DateTime.ParseExact(model.BirthDay, FormatConstant.DATE_TIME_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None);
+            if (originState.FirstName == model.FirstName && originState.LastName == model.LastName
+                && originState.Email == model.FirstName && originState.IsActive == model.IsActive
+                && originState.BirthDay == birthDay)
+            {
+                return (false, CommonMessage.NO_CHANGES_MESSAGE);
+            }
+
+            try
+            {
+                originState.FirstName = model.FirstName;
+                originState.LastName = model.LastName;
+                originState.Email = model.Email;
+                originState.IsActive = model.IsActive;
+                originState.BirthDay = birthDay;
+                database.SaveChanges();
+            }
+            catch
+            {
+
+            }
+
+            return (true, null);
         }
     }
 }

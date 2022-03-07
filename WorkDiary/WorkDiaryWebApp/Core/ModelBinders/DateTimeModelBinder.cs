@@ -24,7 +24,7 @@ namespace WorkDiaryWebApp.Core.ModelBinders
 
                 try
                 {
-                    actualValue = DateTime.ParseExact(dateValue, FormatConstant.DateTimeFormat, CultureInfo.InvariantCulture);
+                    actualValue = DateTime.ParseExact(dateValue, FormatConstant.DATE_TIME_FORMAT, CultureInfo.InvariantCulture);
                     success = true;
                 }
                 catch (FormatException)

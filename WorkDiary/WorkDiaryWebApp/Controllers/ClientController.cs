@@ -45,6 +45,24 @@ namespace WorkDiaryWebApp.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult EditClient(ClientInfoModel model)
+        {
+            (bool isDone, string errors) = clientService.EditClient(model);
 
+            if (isDone)
+            {
+                ViewData[MessageConstant.SuccessMessage] = CommonMessage.SUCCESS_MESSAGE;
+            }
+            else if (errors == CommonMessage.NO_CHANGES_MESSAGE)
+            {
+                ViewData[MessageConstant.WarningMessage] = CommonMessage.NO_CHANGES_MESSAGE;
+            }
+            else
+            {
+                ViewData[MessageConstant.ErrorMessage] = errors;
+            }
+            return View(model);
+        }
     }
 }
