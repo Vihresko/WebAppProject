@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WorkDiaryDB.Models
+namespace WorkDiaryWebApp.WorkDiaryDB.Models
 {
     public class ClientProcedure
     {
@@ -17,6 +17,10 @@ namespace WorkDiaryDB.Models
         public virtual User User { get; set; }
 
         public DateTime Date { get; set; } = DateTime.UtcNow;
+
+        [ForeignKey(nameof(VisitBag))]
+        public string? VisitBagId { get; set; }
+        public virtual VisitBag? VisitBag { get; set; }
 
     }
 }

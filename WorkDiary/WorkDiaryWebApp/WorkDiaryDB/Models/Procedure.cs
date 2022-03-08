@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WorkDiaryDB.Models
+namespace WorkDiaryWebApp.WorkDiaryDB.Models
 {
-    using static Constraints.Constants;
+    using static WorkDiaryDB.Constraints.Constants;
     public class Procedure
     {
         public string Id { get; init; } = Guid.NewGuid().ToString();

@@ -64,5 +64,11 @@ namespace WorkDiaryWebApp.Controllers
             }
             return View(model);
         }
+
+        public IActionResult EditClient(string clientId)
+        {
+            var model = clientService.ClientInfo(clientId);
+            return View(model);
+        }
     }
 }

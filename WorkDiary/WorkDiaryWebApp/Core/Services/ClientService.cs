@@ -1,10 +1,10 @@
 ﻿using System.Globalization;
 using System.Text;
-using WorkDiaryDB;
-using WorkDiaryDB.Models;
 using WorkDiaryWebApp.Core.Constants;
 using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Client;
+using WorkDiaryWebApp.WorkDiaryDB;
+using WorkDiaryWebApp.WorkDiaryDB.Models;
 
 namespace WorkDiaryWebApp.Constraints.Services
 {
@@ -45,7 +45,7 @@ namespace WorkDiaryWebApp.Constraints.Services
             return (true, null);
         }
 
-        private (bool, string) ValidateClientModel(string firstName, string lastName, string email, string birthDay)
+        private (bool, string) ValidateClientModel(string firstName, string lastName, string email, string birthDay, string clientId = null)
         {
             bool isValidModel = true;
             var errors = new StringBuilder();
@@ -74,7 +74,13 @@ namespace WorkDiaryWebApp.Constraints.Services
                 errors.AppendLine($"{nameof(birthDay)} must be valid DATE like '{FormatConstant.DATE_TIME_FORMAT_EXAM}'!");
             }
 
-            bool isEmailExist = database.Clients.Where(c => c.Email == email).Any();
+            bool isEmailChanged = database.Clients.Where(c => c.Id == clientId && c.Email != email).Any();
+            bool isEmailExist = false;
+            if (isEmailChanged)
+            {
+                isEmailExist = database.Clients.Where(c => c.Email == email).Any();
+            }
+
             if (isEmailExist)
             {
                 isValidModel = false;
@@ -91,9 +97,10 @@ namespace WorkDiaryWebApp.Constraints.Services
             {
                 FirstName = clientFromDb.FirstName,
                 LastName = clientFromDb.LastName,
-                BirthDay = clientFromDb.BirthDay.ToString(FormatConstant.DATE_TIME_FORMAT),
+                BirthDay = clientFromDb.BirthDay.ToString(FormatConstant.DATE_TIME_FORMAT).Replace('.','/'),
                 Email = clientFromDb.Email,
-                Id = clientId
+                Id = clientId,
+                IsActive = clientFromDb.IsActive
             };
             return model;
         }
@@ -118,7 +125,7 @@ namespace WorkDiaryWebApp.Constraints.Services
 
         public (bool isDone, string errors) EditClient(ClientInfoModel model)
         {
-            (bool isValidModel, string errors) = ValidateClientModel(model.FirstName, model.LastName, model.Email, model.BirthDay);
+            (bool isValidModel, string errors) = ValidateClientModel(model.FirstName, model.LastName, model.Email, model.BirthDay, model.Id);
 
             if(model.IsActive != true && model.IsActive != false)
             {
@@ -132,12 +139,11 @@ namespace WorkDiaryWebApp.Constraints.Services
             var originState = database.Clients.Where(c => c.Id == model.Id).FirstOrDefault();
             var birthDay = DateTime.ParseExact(model.BirthDay, FormatConstant.DATE_TIME_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None);
             if (originState.FirstName == model.FirstName && originState.LastName == model.LastName
-                && originState.Email == model.FirstName && originState.IsActive == model.IsActive
+                && originState.Email == model.Email && originState.IsActive == model.IsActive
                 && originState.BirthDay == birthDay)
             {
                 return (false, CommonMessage.NO_CHANGES_MESSAGE);
             }
-
             try
             {
                 originState.FirstName = model.FirstName;

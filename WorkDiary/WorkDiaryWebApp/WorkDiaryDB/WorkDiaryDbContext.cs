@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WorkDiaryDB.Models;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using WorkDiaryWebApp.WorkDiaryDB.Models;
 
-namespace WorkDiaryDB
+namespace WorkDiaryWebApp.WorkDiaryDB
 {
-    public class WorkDiaryDbContext : DbContext
+    public class WorkDiaryDbContext : IdentityDbContext<User>
     {
         public WorkDiaryDbContext(DbContextOptions options)
             : base(options) { }
@@ -24,12 +25,13 @@ namespace WorkDiaryDB
 
         public DbSet<Client> Clients { get; set; }
         public DbSet<Procedure> Procedures { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<ClientProcedure> ClientProcedures { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Income> Incomes { get; set; }
         public DbSet<Outcome> Outcomes { get; set; }
         public DbSet<Bank> Banks { get; set; }
+
+        public DbSet<VisitBag> VisitBags { get; set; }
 
     }
 }

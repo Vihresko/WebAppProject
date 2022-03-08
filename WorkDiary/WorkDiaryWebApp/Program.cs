@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using WorkDiaryDB;
-using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Constraints.Services;
-using WorkDiaryWebApp.Core.Services;
-using WorkDiaryWebApp.Core.ModelBinders;
 using WorkDiaryWebApp.Core.Constants;
+using WorkDiaryWebApp.Core.Interfaces;
+using WorkDiaryWebApp.Core.ModelBinders;
+using WorkDiaryWebApp.Core.Services;
+using WorkDiaryWebApp.WorkDiaryDB;
+using WorkDiaryWebApp.WorkDiaryDB.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,8 @@ builder.Services.AddDbContext<WorkDiaryDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<WorkDiaryDbContext>();
 builder.Services.AddControllersWithViews().AddMvcOptions(options =>
 {

@@ -20,7 +20,12 @@
       "ProjectGuid": "d5b832b1-160b-46fd-97b9-06b1f16fea8b",
       "DisplayName": "WorkDiaryCore",
       "ColorIndex": 2
+    },
+    "ae83da2c-4c74-4558-9ec7-a2ed3577b5a6": {
+      "ProjectGuid": "ae83da2c-4c74-4558-9ec7-a2ed3577b5a6",
+      "DisplayName": "takeIDentity",
+      "ColorIndex": 3
     }
   },
-  "NextColorIndex": 3
+  "NextColorIndex": 4
 }

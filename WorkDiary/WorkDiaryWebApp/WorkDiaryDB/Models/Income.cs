@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WorkDiaryDB.Models
+namespace WorkDiaryWebApp.WorkDiaryDB.Models
 {
-    using static Constraints.Constants;
+    using static WorkDiaryDB.Constraints.Constants;
     public class Income
     {
         public string Id { get; init; } = Guid.NewGuid().ToString();
@@ -16,7 +16,7 @@ namespace WorkDiaryDB.Models
 
         [ForeignKey(nameof(Bank))]
         public string BankId { get; set; }
-        public Bank Bank { get; set; }
+        public virtual Bank Bank { get; set; }
 
     }
 }

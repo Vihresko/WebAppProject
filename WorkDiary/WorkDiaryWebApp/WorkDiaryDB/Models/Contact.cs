@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WorkDiaryDB.Models
+namespace WorkDiaryWebApp.WorkDiaryDB.Models
 {
-    using static Constraints.Constants;
+    using static WorkDiaryDB.Constraints.Constants;
     public class Contact
     {
         public string Id { get; init; } = Guid.NewGuid().ToString();

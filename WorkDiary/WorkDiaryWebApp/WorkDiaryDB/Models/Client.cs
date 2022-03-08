@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WorkDiaryDB.Models
+namespace WorkDiaryWebApp.WorkDiaryDB.Models
 {
-    using static Constraints.Constants;
+    using static WorkDiaryDB.Constraints.Constants;
     public class Client
     {
         public string Id { get; init; } = Guid.NewGuid().ToString();
@@ -27,5 +27,6 @@ namespace WorkDiaryDB.Models
 
         public bool IsActive { get; set; } = true;
 
+       
     }
 }

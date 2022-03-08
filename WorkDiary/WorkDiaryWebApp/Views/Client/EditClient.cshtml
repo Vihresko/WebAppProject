@@ -1,0 +1,62 @@
+﻿@model ClientInfoModel
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Current First Name</th>
+            <th scope="col">Current Last Name</th>
+            <th scope="col">Current Email</th>
+            <th scope="col">Current Birthday</th>
+            <th scope="col">IsActive</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="table-active">
+            <td>@Model.FirstName</td>
+            <td>@Model.LastName</td>
+            <td>@Model.Email</td>
+            <td>@Model.BirthDay</td>
+            <td>@Model.IsActive</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<form class="form-inline" asp-controller="Client" asp-action="EditClient" method="post">
+
+    <p class="text-primary">New First Name:</p>
+    <input name="FirstName" class="form-control" type="text" value=@Model.FirstName>
+    <br />
+     <p class="text-primary">New Last Name:</p>
+    <input name="LastName" class="form-control" type="text" value=@Model.LastName>
+    <br />
+     <p class="text-primary">New Email:</p>
+    <input name="Email" class="form-control" type="text" value=@Model.Email>
+    <br /> 
+    <p class="text-primary">New BirthDay:</p>
+    <input name="BirthDay" class="form-control" type="text" value=@Model.BirthDay>
+    <br />
+
+    <div class="col-lg-6 col-md-6 col-12">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <p class="text-primary">Status Options:</p>
+                <select class="form-control select2bs4" name="IsActive" id="IsActive" style="width: 100%">
+                    <option value="@Model.IsActive">Current Status</option>
+                    <option value="true">Activate</option>
+                    <option value="false">Deactivate</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <input name="Id" class="form-control" type="hidden" value=@Model.Id>
+    <br />
+    <button class="btn btn-danger" type="submit">Save changes</button>
+
+    <a href="/Client/Clients" class="btn btn-primary" role="button">Back</a>
+
+</form>
+
+
+

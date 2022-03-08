@@ -1,9 +1,9 @@
 ﻿using System.Text;
-using WorkDiaryDB;
-using WorkDiaryDB.Models;
 using WorkDiaryWebApp.Core.Constants;
 using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Procedure;
+using WorkDiaryWebApp.WorkDiaryDB;
+using WorkDiaryWebApp.WorkDiaryDB.Models;
 
 namespace WorkDiaryWebApp.Core.Services
 {

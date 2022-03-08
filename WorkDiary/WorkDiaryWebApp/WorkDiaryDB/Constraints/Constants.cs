@@ -1,4 +1,4 @@
-﻿namespace WorkDiaryDB.Constraints
+﻿namespace WorkDiaryWebApp.WorkDiaryDB.Constraints
 {
     public class Constants
     {
