@@ -1,3 +1,55 @@
 ﻿@model RegisterFormModel
 
-<h1>Here must have post form for enter registration values!</h1>
+<h1 class="text-center mt-2">Creat new account</h1>
+<form asp-controller="User" asp-action="Register" method="post">
+          <div asp-validation-summary="ModelOnly"></div>
+          <div class="form-floating mb-3">
+          <input type="text" name="Username" class="form-control" id="floatingInput" value=@Model.Username>
+          <label for="floatingInput">Username</label>
+           </div>     
+
+         <div class="form-floating mb-3">
+          <input type="text" name="FirstName" class="form-control" id="floatingInput" value=@Model.FirstName>
+          <label for="floatingInput">First Name</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="text" name="LastName" class="form-control" id="floatingInput" value=@Model.LastName>
+          <label for="floatingInput">Last Name</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="email" name="Email" class="form-control" id="floatingInput" value=@Model.Email>
+          <label for="floatingInput">Email</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="password" name="Password" class="form-control" id="floatingInput" value=@Model.Password>
+          <label for="floatingInput">Password</label>
+        </div>
+
+         <div class="form-floating mb-3">
+          <input type="password" name="ConfirmPassword" class="form-control" id="floatingInput" value=@Model.ConfirmPassword>
+          <label for="floatingInput">ConfirmPassword</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="text" name="PhoneNumber" class="form-control" id="floatingInput" value=@Model.PhoneNumber>
+          <label for="floatingInput">PhoneNumber</label>
+        </div>
+
+         <div class="form-floating mb-3">
+          <input type="text" name="Town" class="form-control" id="floatingInput" value=@Model.Town>
+          <label for="floatingInput">Town</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="text" name="Address" class="form-control" id="floatingInput" value=@Model.Address>
+          <label for="floatingInput">Address</label>
+        </div>
+
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary" type="submit">Create</button>
+        </div>
+</form>
+

@@ -8,12 +8,17 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Models
         public string Id { get; init; } = Guid.NewGuid().ToString();
 
         [MaxLength(PHONE_NUMBER_MAX_LENGHT)]
-        public string PhoneNumber { get; private set; }
+        public string PhoneNumber { get;  set; }
+
+        [Required]
+        [MaxLength(EMAIL_MAX_LENGTH)]
+        [EmailAddress]
+        public string Email { get; set; }
 
         [MaxLength(TOWN_NAME_MAX_LENGTH)]
-        public string? Town { get; private set; }
+        public string? Town { get;  set; }
 
         [MaxLength(ADDRESS_MAX_LENGTH)]
-        public string? Address { get; private set; }
+        public string? Address { get;  set; }
     }
 }

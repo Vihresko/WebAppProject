@@ -8,7 +8,7 @@ using WorkDiaryWebApp.WorkDiaryDB.Models;
 
 namespace WorkDiaryWebApp.Constraints.Services
 {
-    using static WorkDiaryDB.Constraints.Constants;
+    using static WorkDiaryWebApp.WorkDiaryDB.Constraints.Constants;
     public class ClientService : IClientService
     {
         private readonly WorkDiaryDbContext database;

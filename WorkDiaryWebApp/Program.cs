@@ -16,7 +16,10 @@ builder.Services.AddDbContext<WorkDiaryDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
+builder.Services.AddDefaultIdentity<User>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+})
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<WorkDiaryDbContext>();
 builder.Services.AddControllersWithViews().AddMvcOptions(options =>
@@ -26,6 +29,7 @@ builder.Services.AddControllersWithViews().AddMvcOptions(options =>
 });
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IProcedureService, ProcedureService>();
+builder.Services.AddScoped<IUserService, UserService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

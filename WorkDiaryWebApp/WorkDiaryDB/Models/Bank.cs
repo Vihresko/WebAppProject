@@ -6,7 +6,7 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Models
     public class Bank
     {
         [Key]
-        public string Id { get; init; }
+        public string Id { get; init; } = Guid.NewGuid().ToString();
 
         [Column(TypeName = "decimal(18,2)")]
 

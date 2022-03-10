@@ -20,7 +20,9 @@
         //User
         public const int USERNAME_MIN_LENGTH = 3;
         public const int USERNAME_MAX_LENGTH = 20;
-        public const int FULL_NAME_MAX_LENGTH = 50;
+        public const int FULL_NAME_MAX_LENGTH = 61;
+        public const int PASSWORD_MIN_VALUE = 6;
+        public const int PASSWORD_MAX_LENGTH = 30;
 
         //Contact
         public const int PHONE_NUMBER_MAX_LENGHT = 20;

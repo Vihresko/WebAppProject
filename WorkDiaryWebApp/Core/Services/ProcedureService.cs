@@ -7,7 +7,7 @@ using WorkDiaryWebApp.WorkDiaryDB.Models;
 
 namespace WorkDiaryWebApp.Core.Services
 {
-    using static WorkDiaryDB.Constraints.Constants;
+    using static WorkDiaryWebApp.WorkDiaryDB.Constraints.Constants;
 
     public class ProcedureService : IProcedureService
     {
