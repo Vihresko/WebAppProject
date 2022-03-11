@@ -32,7 +32,7 @@ namespace WorkDiaryWebApp.Controllers
         public IActionResult AddProcedure(AddProcedureModel model)
         {
            
-            (bool isDone, string errors) = procedureService.AddNewProcedure(model);
+            (bool isDone, string? errors) = procedureService.AddNewProcedure(model);
 
             if (isDone)
             {
@@ -54,7 +54,7 @@ namespace WorkDiaryWebApp.Controllers
         [HttpPost]
         public IActionResult EditProcedure(ShowProcedureModel model)
         {
-            (bool isDone, string errors) = procedureService.EditProcedure(model);
+            (bool isDone, string? errors) = procedureService.EditProcedure(model);
 
             if (isDone)
             {

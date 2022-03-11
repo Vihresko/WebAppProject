@@ -1,4 +1,6 @@
-﻿namespace WorkDiaryWebApp.Models.Procedure
+﻿using WorkDiaryWebApp.Core.Interfaces;
+
+namespace WorkDiaryWebApp.Models.Procedure
 {
     public class ListFromProcedures
     {

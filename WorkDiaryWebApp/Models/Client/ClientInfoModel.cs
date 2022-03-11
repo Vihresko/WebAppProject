@@ -1,4 +1,6 @@
-﻿namespace WorkDiaryWebApp.Models.Client
+﻿using WorkDiaryWebApp.Core.Interfaces;
+
+namespace WorkDiaryWebApp.Models.Client
 {
     public class ClientInfoModel
     {

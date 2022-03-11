@@ -16,7 +16,7 @@ namespace WorkDiaryWebApp.Constraints.Services
         {
             database = db;
         }
-        public (bool isDone, string errors) AddNewClient(AddClientModel model)
+        public (bool, string?) AddNewClient(AddClientModel model)
         {
             (bool isValidModel, string errors) = ValidateClientModel(model.FirstName, model.LastName, model.Email, model.BirthDay);
 
@@ -40,12 +40,12 @@ namespace WorkDiaryWebApp.Constraints.Services
             }
             catch
             {
-                return (false, "Fail to add client to database");
+                return (false, CommonMessage.DATABASE_ERROR);
             }
             return (true, null);
         }
 
-        private (bool, string) ValidateClientModel(string firstName, string lastName, string email, string birthDay, string clientId = null)
+        private (bool, string) ValidateClientModel(string firstName, string lastName, string email, string birthDay, string? clientId = null)
         {
             bool isValidModel = true;
             var errors = new StringBuilder();
@@ -123,7 +123,7 @@ namespace WorkDiaryWebApp.Constraints.Services
             return model;
         }
 
-        public (bool isDone, string errors) EditClient(ClientInfoModel model)
+        public (bool, string?) EditClient(ClientInfoModel model)
         {
             (bool isValidModel, string errors) = ValidateClientModel(model.FirstName, model.LastName, model.Email, model.BirthDay, model.Id);
 
@@ -155,7 +155,7 @@ namespace WorkDiaryWebApp.Constraints.Services
             }
             catch
             {
-
+                return(false, CommonMessage.DATABASE_ERROR);
             }
 
             return (true, null);

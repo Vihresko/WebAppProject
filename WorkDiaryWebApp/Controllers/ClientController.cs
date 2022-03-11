@@ -21,8 +21,8 @@ namespace WorkDiaryWebApp.Controllers
        
         public IActionResult Client(string clientId)
         {
-            var model = clientService.ClientInfo(clientId);
-            return View(model);
+            var clientModel = clientService.ClientInfo(clientId);
+            return View(clientModel);
         }
 
         public IActionResult AddClient()
@@ -32,7 +32,7 @@ namespace WorkDiaryWebApp.Controllers
         [HttpPost]
         public IActionResult AddClient(AddClientModel model)
         {
-            (bool isDone, string errors) = clientService.AddNewClient(model);
+            (bool isDone, string? errors) = clientService.AddNewClient(model);
 
             if (isDone)
             {
@@ -48,7 +48,7 @@ namespace WorkDiaryWebApp.Controllers
         [HttpPost]
         public IActionResult EditClient(ClientInfoModel model)
         {
-            (bool isDone, string errors) = clientService.EditClient(model);
+            (bool isDone, string? errors) = clientService.EditClient(model);
 
             if (isDone)
             {

@@ -4,11 +4,11 @@ namespace WorkDiaryWebApp.Core.Interfaces
 {
     public interface IProcedureService
     {
-        public (bool isDone, string errors) AddNewProcedure(AddProcedureModel addProcedureModel);
+        public (bool, string?) AddNewProcedure(AddProcedureModel addProcedureModel);
         public ListFromProcedures GetAllProcedures();
 
         public ShowProcedureModel ProcedureInfo(string procedureId);
 
-        public (bool isDone, string errors) EditProcedure(ShowProcedureModel model);
+        public (bool, string?) EditProcedure(ShowProcedureModel model);
     }
 }

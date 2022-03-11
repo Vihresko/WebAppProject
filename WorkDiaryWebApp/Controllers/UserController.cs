@@ -10,13 +10,9 @@ namespace WorkDiaryWebApp.Controllers
 {
     public class UserController : Controller
     {
-        private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager;
         private readonly IUserService userService;
-        public UserController(UserManager<User> _userManager, SignInManager<User> _signInManager, IUserService _userService)
+        public UserController(IUserService _userService)
         {
-            userManager = _userManager;
-            signInManager = _signInManager;
             userService = _userService;
         }
 
@@ -60,8 +56,8 @@ namespace WorkDiaryWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginFormModel model)
         {
-            bool isConfirm = await userService.TryToLogin(model);
-            if (isConfirm)
+            bool isSuccess = await userService.TryToLogin(model);
+            if (isSuccess)
             {
                 return Redirect("/Home/Index");
             }

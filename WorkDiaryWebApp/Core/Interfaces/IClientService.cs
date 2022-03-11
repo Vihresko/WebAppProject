@@ -4,11 +4,11 @@ namespace WorkDiaryWebApp.Core.Interfaces
 {
     public interface IClientService
     {
-        public (bool isDone, string errors) AddNewClient(AddClientModel addClientModel);
+        public (bool, string?) AddNewClient(AddClientModel addClientModel);
         public ListFromClients GetAllClients();
 
         public ClientInfoModel ClientInfo(string clientId);
 
-        public (bool isDone, string errors) EditClient(ClientInfoModel model);
+        public (bool, string?) EditClient(ClientInfoModel model);
     }
 }

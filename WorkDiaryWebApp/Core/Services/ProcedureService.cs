@@ -16,7 +16,7 @@ namespace WorkDiaryWebApp.Core.Services
         {
             database = db;
         }
-        public (bool isDone, string errors) AddNewProcedure(AddProcedureModel model)
+        public (bool, string?) AddNewProcedure(AddProcedureModel model)
         {
             (bool isValidModel, string errors) = ValidateProcedureValues(model.Name, model.Description, model.Price);
 
@@ -44,7 +44,7 @@ namespace WorkDiaryWebApp.Core.Services
             return (true, null);
         }
 
-        public (bool isDone, string errors) EditProcedure(ShowProcedureModel model)
+        public (bool, string?) EditProcedure(ShowProcedureModel model)
         {
             (bool isValidModel, string errors) = ValidateProcedureValues(model.Name, model.Description, model.Price);
 

@@ -1,1 +1,36 @@
 ﻿<p>This is partial view for procedures selection on work!<p>
+@model WorkModel
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+                <th scope="col">Info</th>
+                <th scope="col">AdminAction</th>
+            </tr>
+        </thead>
+        <tbody>
+                @{
+                    int count = 0;
+                }
+                @foreach (var procedure in Model.Procedures.Procedures)
+                {
+                    count++;
+                <tr>
+                    <th scope="row">@count</th>
+                    <td>@procedure.Name</td>
+                    <td>
+                        <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                @procedure.Description
+                        </span>
+                    </td>
+                    <td>@procedure.Price</td>
+                    <td><a href="/Procedure/Procedure?procedureId=@procedure.Id" class="btn btn-primary"       role="button">Select</a></td>
+                    <td><a href="/Procedure/EditProcedure?procedureId=@procedure.Id" class="btn btn-danger" role="button">Edit</a></td>
+
+                </tr>
+                }
+        </tbody>
+    </table>
