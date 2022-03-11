@@ -12,10 +12,13 @@ namespace WorkDiaryWebApp.Core.Services
     {
         private readonly WorkDiaryDbContext database;
         private readonly UserManager<User> userManager;
-        public UserService(WorkDiaryDbContext _database, UserManager<User> _userManager)
+        private readonly SignInManager<User> signInManager;
+
+        public UserService(WorkDiaryDbContext _database, UserManager<User> _userManager,SignInManager<User> _signInManager)
         {
             database = _database;
             userManager = _userManager;
+            signInManager = _signInManager;
         }
         public async Task<(bool, StringBuilder)> RegisterNewUser(RegisterFormModel model)
         {
@@ -58,6 +61,22 @@ namespace WorkDiaryWebApp.Core.Services
             }
            
             return (isValidModel, errors);
+        }
+
+        public async Task<bool> TryToLogin(LoginFormModel model)
+        {
+            var user = database.Users.FirstOrDefault(u => u.UserName == model.Username);
+            bool isValid = false;
+            if(user != null)
+            {
+                isValid = await userManager.CheckPasswordAsync(user, model.Password);
+                if (isValid)
+                {
+                    await signInManager.SignInAsync(user, isPersistent: false);
+                }
+            }
+            
+            return isValid;
         }
 
         private (bool, string) ValidateEmail(string email)

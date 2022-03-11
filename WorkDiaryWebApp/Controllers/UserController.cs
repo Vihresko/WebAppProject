@@ -58,8 +58,17 @@ namespace WorkDiaryWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginFormModel model)
+        public async Task<IActionResult> Login(LoginFormModel model)
         {
+            bool isConfirm = await userService.TryToLogin(model);
+            if (isConfirm)
+            {
+                return Redirect("/Home/Index");
+            }
+            else
+            {
+                ViewData[MessageConstant.ErrorMessage] = CommonMessage.NOT_REGISTRED_USER;
+            }
             return View();
         }
     }
