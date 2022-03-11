@@ -56,5 +56,11 @@ namespace WorkDiaryWebApp.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public IActionResult Login(LoginFormModel model)
+        {
+            return View();
+        }
     }
 }
