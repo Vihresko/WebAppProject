@@ -25,6 +25,11 @@ namespace WorkDiaryWebApp.Controllers
 
         public IActionResult CreateIncome(string clientId)
         {
+           //TempData is needed for Back button 
+            TempData["Controller"] = "Income";
+            TempData["Action"] = "CreateIncome";
+            TempData["neededId"] = $"?clientId={clientId}";
+
             var clientModel = clientService.ClientInfo(clientId);
             var proceduresModel = procedureService.GetAllProcedures();
 

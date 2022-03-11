@@ -15,12 +15,18 @@ namespace WorkDiaryWebApp.Controllers
         public IActionResult Procedures()
         {
             var model = procedureService.GetAllProcedures();
+
+            //TempData is needed for Back button 
+            TempData["Controller"] = "Procedure";
+            TempData["Action"] = "Procedures";
+
             return View(model);
         }
 
         public IActionResult Procedure(string procedureId)
         {
             var model = procedureService.ProcedureInfo(procedureId);
+           
             return View(model);
         }
         public IActionResult AddProcedure()
