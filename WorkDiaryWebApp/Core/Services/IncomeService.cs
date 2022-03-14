@@ -34,7 +34,7 @@ namespace WorkDiaryWebApp.Core.Services
 
         public ListFromProcedures ShowClientHistory(string clientId)
         {
-           var clientProceduresFromDb = database.ClientProcedures.Where(cp => cp.ClientId == clientId).OrderByDescending(cp => cp.Date).ToList();
+           var clientProceduresFromDb = database.ClientProcedures.Where(cp => cp.ClientId == clientId && string.IsNullOrEmpty(cp.VisitBagId)).OrderByDescending(cp => cp.Date).ToList();
 
             var model = new ListFromProcedures();
             foreach (var cp in clientProceduresFromDb)
@@ -50,6 +50,29 @@ namespace WorkDiaryWebApp.Core.Services
                 model.Procedures.Add(procedureModel);
             }
            
+            return model;
+        }
+
+        public ListFromProcedures ShowClientVisitBag(string clientId)
+        {
+            var clientProceduresFromDb = database.ClientProcedures.Where(cp => cp.ClientId == clientId && cp.VisitBagId != null)
+                                                                  .OrderByDescending(cp => cp.Date).ToList();
+
+            var model = new ListFromProcedures();
+            foreach (var cp in clientProceduresFromDb)
+            {
+                var procedure = database.Procedures.Where(p => p.Id == cp.ProcedureId).FirstOrDefault();
+                ShowProcedureModel procedureModel = new ShowProcedureModel()
+                {
+                    Name = procedure.Name,
+                    Description = procedure.Description,
+                    Id = procedure.Id,
+                    DateForHistory = cp.Date,
+                    Price = procedure.Price,
+                };
+                model.Procedures.Add(procedureModel);
+            }
+
             return model;
         }
     }

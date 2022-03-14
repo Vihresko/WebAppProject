@@ -70,6 +70,15 @@ namespace WorkDiaryWebApp.Controllers
             return View(model);
         }
 
+        public IActionResult ShowClientVisitBag(string clientId)
+        {
+            TempData["Controller"] = "Income";
+            TempData["Action"] = "CreateIncome";
+            TempData["neededId"] = $"?clientId={clientId}";
+            var model = incomeService.ShowClientVisitBag(clientId);
+            return View(model);
+        }
+
         private WorkModel GetWorkModelForView(string clientId)
         {
             //TempData is needed for Back button 

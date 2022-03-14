@@ -8,5 +8,7 @@ namespace WorkDiaryWebApp.Core.Interfaces
         public (bool, string) AddClientProcedureToVisitBag(AddIncomePostModel model, string clientId);
 
         public ListFromProcedures ShowClientHistory(string clientId);
+
+        public ListFromProcedures ShowClientVisitBag(string clientId);
     }
 }
