@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkDiaryWebApp.WorkDiaryDB;
 
@@ -11,9 +12,10 @@ using WorkDiaryWebApp.WorkDiaryDB;
 namespace WorkDiaryWebApp.Migrations
 {
     [DbContext(typeof(WorkDiaryDbContext))]
-    partial class WorkDiaryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220314124530_AddFKFromClientToVisitBag")]
+    partial class AddFKFromClientToVisitBag
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,34 +210,28 @@ namespace WorkDiaryWebApp.Migrations
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.ClientProcedure", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("ClientId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ClientId")
-                        .IsRequired()
+                    b.Property<string>("ProcedureId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ProcedureId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("VisitBagId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
+                    b.HasKey("ClientId", "ProcedureId", "UserId");
 
                     b.HasIndex("ProcedureId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("VisitBagId");
 
                     b.ToTable("ClientProcedures");
                 });
@@ -515,6 +511,10 @@ namespace WorkDiaryWebApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("WorkDiaryWebApp.WorkDiaryDB.Models.VisitBag", null)
+                        .WithMany("Works")
+                        .HasForeignKey("VisitBagId");
+
                     b.Navigation("Client");
 
                     b.Navigation("Procedure");
@@ -583,6 +583,11 @@ namespace WorkDiaryWebApp.Migrations
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.User", b =>
                 {
                     b.Navigation("UserPlayers");
+                });
+
+            modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.VisitBag", b =>
+                {
+                    b.Navigation("Works");
                 });
 #pragma warning restore 612, 618
         }

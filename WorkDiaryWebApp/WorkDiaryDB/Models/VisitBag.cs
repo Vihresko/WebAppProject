@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WorkDiaryWebApp.WorkDiaryDB.Models
 {
@@ -6,8 +7,6 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Models
     {
         [Key]
         public string Id { get; set; } = Guid.NewGuid().ToString();
-
-        public virtual ICollection<ClientProcedure> WorkBag { get; set; } = new List<ClientProcedure>();
 
     }
 }

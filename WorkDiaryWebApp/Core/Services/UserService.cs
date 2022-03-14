@@ -65,6 +65,7 @@ namespace WorkDiaryWebApp.Core.Services
 
         public async Task<bool> TryToLogin(LoginFormModel model)
         {
+            
             var user = database.Users.FirstOrDefault(u => u.UserName == model.Username);
             bool isValid = false;
             if(user != null)
@@ -137,6 +138,7 @@ namespace WorkDiaryWebApp.Core.Services
                 errors.AppendLine($"{nameof(model.Password)} and {nameof(model.ConfirmPassword)} must be same");
             }
 
+            //TODO: Trim number!
             if(model.PhoneNumber == null || model.PhoneNumber.Length > PHONE_NUMBER_MAX_LENGHT)
             {
                 isValid = false;

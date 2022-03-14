@@ -56,6 +56,7 @@ namespace WorkDiaryWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginFormModel model)
         {
+            
             bool isSuccess = await userService.TryToLogin(model);
             if (isSuccess)
             {

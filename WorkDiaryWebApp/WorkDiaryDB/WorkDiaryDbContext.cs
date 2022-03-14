@@ -20,7 +20,6 @@ namespace WorkDiaryWebApp.WorkDiaryDB
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<ClientProcedure>().HasKey(cp => new { cp.ClientId, cp.ProcedureId, cp.UserId });
         }
 
         public DbSet<Client> Clients { get; set; }

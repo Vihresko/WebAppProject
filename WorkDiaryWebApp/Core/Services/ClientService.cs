@@ -30,7 +30,8 @@ namespace WorkDiaryWebApp.Constraints.Services
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Email = model.Email,
-                BirthDay = DateTime.ParseExact(model.BirthDay, FormatConstant.DATE_TIME_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None)
+                BirthDay = DateTime.ParseExact(model.BirthDay, FormatConstant.DATE_TIME_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None),
+                VisitBag = new VisitBag()
             };
 
             try

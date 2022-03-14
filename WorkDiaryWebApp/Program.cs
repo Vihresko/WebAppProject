@@ -30,6 +30,7 @@ builder.Services.AddControllersWithViews().AddMvcOptions(options =>
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IProcedureService, ProcedureService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IIncomeService, IncomeService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

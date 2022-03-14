@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WorkDiaryWebApp.WorkDiaryDB.Models
 {
@@ -27,6 +28,10 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Models
 
         public bool IsActive { get; set; } = true;
 
-       
+        [ForeignKey(nameof(VisitBag))]
+        public string VisitBagId { get; set; }
+        public virtual VisitBag VisitBag { get; set; }
+
+
     }
 }
