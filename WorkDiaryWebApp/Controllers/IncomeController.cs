@@ -15,12 +15,14 @@ namespace WorkDiaryWebApp.Controllers
         private readonly IProcedureService procedureService;
         private readonly UserManager<User> userManager;
         private readonly IIncomeService visitBagService;
-        public IncomeController(IClientService _clientService, IProcedureService _procedureService, UserManager<User> _userManager, IIncomeService _visitBagService)
+        private readonly IIncomeService incomeService;
+        public IncomeController(IClientService _clientService, IProcedureService _procedureService, UserManager<User> _userManager, IIncomeService _visitBagService, IIncomeService _incomeService)
         {
             clientService = _clientService;
             procedureService = _procedureService;
             visitBagService = _visitBagService;
             userManager = _userManager;
+            incomeService = _incomeService;
         }
         public IActionResult UserIncomes()
         {
@@ -57,6 +59,15 @@ namespace WorkDiaryWebApp.Controllers
             }
 
             return View("~/Views/Income/CreateIncome.cshtml",model);
+        }
+
+        public IActionResult ShowHistoryOfClient(string clientId)
+        {
+            TempData["Controller"] = "Income";
+            TempData["Action"] = "ShowHistoryOfClient";
+            TempData["neededId"] = $"?clientId={clientId}";
+            var model = incomeService.ShowClientHistory(clientId);
+            return View(model);
         }
 
         private WorkModel GetWorkModelForView(string clientId)

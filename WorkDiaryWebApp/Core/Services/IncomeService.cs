@@ -1,5 +1,6 @@
 ﻿using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Income;
+using WorkDiaryWebApp.Models.Procedure;
 using WorkDiaryWebApp.WorkDiaryDB;
 using WorkDiaryWebApp.WorkDiaryDB.Models;
 
@@ -26,10 +27,30 @@ namespace WorkDiaryWebApp.Core.Services
             };
 
             database.ClientProcedures.Add(work);
-            
             database.SaveChanges();
             return (true, null);
            
+        }
+
+        public ListFromProcedures ShowClientHistory(string clientId)
+        {
+           var clientProceduresFromDb = database.ClientProcedures.Where(cp => cp.ClientId == clientId).OrderByDescending(cp => cp.Date).ToList();
+
+            var model = new ListFromProcedures();
+            foreach (var cp in clientProceduresFromDb)
+            {
+                var procedure = database.Procedures.Where(p => p.Id == cp.ProcedureId).FirstOrDefault();
+                ShowProcedureModel procedureModel = new ShowProcedureModel()
+                {
+                    Name = procedure.Name,
+                    Description = procedure.Description,
+                    Id = procedure.Id,
+                    DateForHistory = cp.Date
+                };
+                model.Procedures.Add(procedureModel);
+            }
+           
+            return model;
         }
     }
 }

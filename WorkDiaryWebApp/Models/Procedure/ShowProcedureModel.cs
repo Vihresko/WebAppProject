@@ -7,5 +7,7 @@
         public decimal Price { get; set; }
         public string Id { get; set; }
         public bool IsActive { get; set; }
+
+        public DateTime? DateForHistory { get; set; }
     }
 }

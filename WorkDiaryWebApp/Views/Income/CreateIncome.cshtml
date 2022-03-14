@@ -19,8 +19,9 @@
                 <td>@Model.LastName</td>
                 <td>@Model.BirthDay</td>
                 <td>@Model.Email</td>
-                <td><button>Work</button><button>History</button></td>
+                <td><a href="/Income/ShowHistoryOfClient?clientId=@Model.Id" class="btn btn-primary" role="button">VisitBag</a></td>
             </tr>
     </tbody>
 </table>
 <partial name="_ProceduresPartial" />
+
