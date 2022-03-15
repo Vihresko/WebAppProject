@@ -6,8 +6,8 @@
             <th scope="col">Name</th>
             <th scope="col">Description</th>
             <th scope="col">Date</th>
-            <th scope="col">Info</th>
             <th scope="col">Price</th>
+            <th scope="col">Edit</th>
         </tr>
     </thead>
     <tbody>
@@ -23,14 +23,13 @@
                 <th scope="row">@count</th>
                 <td>@procedure.Name</td>
                 <td>
-                    <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                    <span class="d-inline-block text-truncate" style="max-width: 300px;">
                         @procedure.Description
                     </span>
                 </td>
                 <td>@procedure.DateForHistory</td>
-                <td><a href="/Procedure/Procedure?procedureId=@procedure.Id" class="btn btn-primary" role="button">Info</a></td>
                 <td>@procedure.Price</td>
-
+                <td><a href="/Income/RemoveProcedure?clientId=@TempData["clientId"]&procedureId=@procedure.Id" class="btn btn-danger">Remove</a></td>
             </tr>
 
         }

@@ -14,7 +14,7 @@ namespace WorkDiaryWebApp.Core.Services
         {
             database = _database;
         }
-        public (bool, string) AddClientProcedureToVisitBag(AddIncomePostModel model, string userId)
+        public (bool, string?) AddClientProcedureToVisitBag(AddIncomePostModel model, string userId)
         {
             var clientBagId = database.Clients.Where(c => c.Id == model.ClientId).Select(c => c.VisitBagId).FirstOrDefault();
             
@@ -26,10 +26,24 @@ namespace WorkDiaryWebApp.Core.Services
                 VisitBagId = clientBagId
             };
 
+            var isDoubling = database.ClientProcedures.Where(cp => cp.VisitBagId == clientBagId && cp.ProcedureId == model.ProcedureId).Any();
+
+            if (isDoubling)
+            {
+                return (false, "This procedure is already added in client visitbag!");
+            }
             database.ClientProcedures.Add(work);
             database.SaveChanges();
             return (true, null);
            
+        }
+
+        public void RemoveProcedureFromVisitBag(string clientId, string procedureId)
+        {
+            var clientBagId = database.Clients.Where(c => c.Id == clientId).Select(c => c.VisitBagId).FirstOrDefault();
+            var workForDelete = database.ClientProcedures.Where(cp => cp.ProcedureId == procedureId && cp.ClientId == clientId && cp.VisitBagId == clientBagId).FirstOrDefault();
+            database.ClientProcedures.Remove(workForDelete);
+            database.SaveChanges();
         }
 
         public ListFromProcedures ShowClientHistory(string clientId)

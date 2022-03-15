@@ -14,13 +14,11 @@ namespace WorkDiaryWebApp.Controllers
         private readonly IClientService clientService;
         private readonly IProcedureService procedureService;
         private readonly UserManager<User> userManager;
-        private readonly IIncomeService visitBagService;
         private readonly IIncomeService incomeService;
-        public IncomeController(IClientService _clientService, IProcedureService _procedureService, UserManager<User> _userManager, IIncomeService _visitBagService, IIncomeService _incomeService)
+        public IncomeController(IClientService _clientService, IProcedureService _procedureService, UserManager<User> _userManager, IIncomeService _incomeService)
         {
             clientService = _clientService;
             procedureService = _procedureService;
-            visitBagService = _visitBagService;
             userManager = _userManager;
             incomeService = _incomeService;
         }
@@ -45,7 +43,7 @@ namespace WorkDiaryWebApp.Controllers
         {
             
             string userId = userManager.GetUserId(this.User);
-            (bool isDone, string errors) = visitBagService.AddClientProcedureToVisitBag(addWorkmodel, userId);
+            (bool isDone, string errors) = incomeService.AddClientProcedureToVisitBag(addWorkmodel, userId);
 
             var model = GetWorkModelForView(addWorkmodel.ClientId);
 
@@ -75,6 +73,7 @@ namespace WorkDiaryWebApp.Controllers
             TempData["Controller"] = "Income";
             TempData["Action"] = "CreateIncome";
             TempData["neededId"] = $"?clientId={clientId}";
+            TempData["clientId"] = clientId;
             var model = incomeService.ShowClientVisitBag(clientId);
             return View(model);
         }
@@ -90,6 +89,14 @@ namespace WorkDiaryWebApp.Controllers
             var proceduresModel = procedureService.GetAllProcedures();
             var model = new WorkModel(clientModel, proceduresModel);
             return model;
+        }
+
+        public IActionResult RemoveProcedure(string clientId, string procedureId)
+        {
+            incomeService.RemoveProcedureFromVisitBag(clientId, procedureId);
+
+            return Redirect($"/Income/ShowClientVisitBag?clientId={clientId}");
+          
         }
         
     }
