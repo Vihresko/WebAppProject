@@ -38,6 +38,12 @@ namespace WorkDiaryWebApp.Core.Services
            
         }
 
+        public bool GetInfoForPayment(string clientId)
+        {
+            //TODO Pay Button logic
+            return true;
+        }
+
         public void RemoveProcedureFromVisitBag(string clientId, string procedureId)
         {
             var clientBagId = database.Clients.Where(c => c.Id == clientId).Select(c => c.VisitBagId).FirstOrDefault();

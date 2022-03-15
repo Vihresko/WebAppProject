@@ -43,7 +43,7 @@ namespace WorkDiaryWebApp.Controllers
         {
             
             string userId = userManager.GetUserId(this.User);
-            (bool isDone, string errors) = incomeService.AddClientProcedureToVisitBag(addWorkmodel, userId);
+            (bool isDone, string? errors) = incomeService.AddClientProcedureToVisitBag(addWorkmodel, userId);
 
             var model = GetWorkModelForView(addWorkmodel.ClientId);
 
@@ -78,6 +78,19 @@ namespace WorkDiaryWebApp.Controllers
             return View(model);
         }
 
+        public IActionResult RemoveProcedure(string clientId, string procedureId)
+        {
+            incomeService.RemoveProcedureFromVisitBag(clientId, procedureId);
+            return Redirect($"/Income/ShowClientVisitBag?clientId={clientId}");
+          
+        }
+
+        public IActionResult Pay()
+        {
+
+            return Redirect($"/Bank/UserBank");
+        }
+
         private WorkModel GetWorkModelForView(string clientId)
         {
             //TempData is needed for Back button 
@@ -91,13 +104,5 @@ namespace WorkDiaryWebApp.Controllers
             return model;
         }
 
-        public IActionResult RemoveProcedure(string clientId, string procedureId)
-        {
-            incomeService.RemoveProcedureFromVisitBag(clientId, procedureId);
-
-            return Redirect($"/Income/ShowClientVisitBag?clientId={clientId}");
-          
-        }
-        
     }
 }

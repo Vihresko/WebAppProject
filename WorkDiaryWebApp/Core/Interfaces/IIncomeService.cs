@@ -1,5 +1,6 @@
 ﻿using WorkDiaryWebApp.Models.Income;
 using WorkDiaryWebApp.Models.Procedure;
+using WorkDiaryWebApp.WorkDiaryDB.Models;
 
 namespace WorkDiaryWebApp.Core.Interfaces
 {
@@ -12,5 +13,7 @@ namespace WorkDiaryWebApp.Core.Interfaces
         public ListFromProcedures ShowClientVisitBag(string clientId);
 
         public void RemoveProcedureFromVisitBag(string clientId, string procedureId);
+
+        public bool GetInfoForPayment(string clientId);
     }
 }

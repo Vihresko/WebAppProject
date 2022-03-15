@@ -6,6 +6,7 @@ namespace WorkDiaryWebApp.Controllers
     {
         public IActionResult UserBank()
         {
+
             return View();
         }
 
@@ -13,5 +14,6 @@ namespace WorkDiaryWebApp.Controllers
         {
             return View();
         }
+
     }
 }
