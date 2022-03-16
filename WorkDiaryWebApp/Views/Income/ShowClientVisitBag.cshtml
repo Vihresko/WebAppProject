@@ -43,13 +43,17 @@
                 <button class="button-return" type="submit">Return</button>
             </form>
 
-            <form asp-controller="Income" asp-action="Pay" method="post">
+        @if(Model.Procedures.Count > 0)
+        {
+             <form asp-controller="Income" asp-action="Pay" method="post">
                 <input type="hidden" name="clientId" value=@TempData["clientId"] />
                 <input type="hidden" name="totalPrice" value=@totalPrice />
 
                 <input type="hidden" name="Value" value="@totalPrice" />
                 <button class="button-pay" type="submit" style="margin-left:15px">Payment</button>
             </form>
+        }
+           
             <br />
             <br />
 

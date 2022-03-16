@@ -68,7 +68,7 @@ namespace WorkDiaryWebApp.Core.Services
         {
             var document = new StringBuilder();
             var client = database.Clients.Where(c => c.Id == clientId).FirstOrDefault();
-            document.AppendLine($"Today: {DateTime.UtcNow.ToString()}, '{client.FirstName} {client.LastName}' with email:'{client.Email}' pay below procedures:");
+            document.AppendLine($"Today: {DateTime.Now.ToString()}, '{client.FirstName} {client.LastName}' with email:'{client.Email}' pay below procedures:");
             int count = 0;
             foreach (var pr in procedures.Procedures)
             {
