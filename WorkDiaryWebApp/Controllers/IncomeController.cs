@@ -94,14 +94,21 @@ namespace WorkDiaryWebApp.Controllers
             string document = incomeService.GetInfoForPayment(clientId, totalPrice, userId, proceduresInfo);
             var model = new PayPostModel()
             {
-                Description = document
+                Description = document,
+                ClientId = clientId,
+                UserId = userId,
+                Value = totalPrice
             };
             return View(model);
         }
 
-        public IActionResult Pay(PayPostModel model)
+        [HttpPost]
+        public IActionResult ConfirmPay(PayPostModel model)
         {
-            return View(model);
+            var result = incomeService.CompleetePayment(model);
+
+            //TODO:Redirect correctly
+            return Redirect($"/Income/ShowClientVisitBag?clientId={model.ClientId}");
         }
 
         private WorkModel GetWorkModelForView(string clientId)

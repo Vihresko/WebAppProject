@@ -13,7 +13,7 @@
         //Procedure
         public const int PROCEDURE_NAME_MIN_LENGTH = 3;
         public const int PROCEDURE_NAME_MAX_LENGTH = 30;
-        public const int PROCEDURE_DESCRIPTION_MAX_LENGTH = 1000;
+        public const int PROCEDURE_DESCRIPTION_MAX_LENGTH = 10000;
         public const decimal PROCEDURE_MIN_PRICE = 1;
         public const decimal PROCEDURE_MAX_PRICE = 1000000;
 
@@ -30,7 +30,7 @@
         public const int ADDRESS_MAX_LENGTH = 100;
 
         //Income/Outcome
-        public const int IN_OUT_COME_DESCRIPTION_MAX_LENGTH = 100;
+        public const int IN_OUT_COME_DESCRIPTION_MAX_LENGTH = 1000;
        
     }
 }

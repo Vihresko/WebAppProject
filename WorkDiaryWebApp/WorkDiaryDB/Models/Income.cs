@@ -12,7 +12,7 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Models
         [MaxLength(IN_OUT_COME_DESCRIPTION_MAX_LENGTH)]
         public string Description { get; set; }
         [Column(TypeName = "decimal(18,2)")]
-        public decimal  Value { get; private set; }
+        public decimal  Value { get;  set; }
 
         [ForeignKey(nameof(Bank))]
         public string BankId { get; set; }

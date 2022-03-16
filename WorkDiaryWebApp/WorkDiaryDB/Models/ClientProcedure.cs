@@ -22,6 +22,7 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Models
         public DateTime Date { get; set; } = DateTime.UtcNow;
 
         [ForeignKey(nameof(VisitBagId))]
+        [MaxLength(450)]
         public string? VisitBagId { get; set; }
     }
 }

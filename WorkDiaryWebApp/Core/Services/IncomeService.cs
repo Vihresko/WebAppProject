@@ -39,12 +39,37 @@ namespace WorkDiaryWebApp.Core.Services
            
         }
 
+        public bool CompleetePayment(PayPostModel model)
+        {
+            //TODO: Model must be fullfillet
+            var userBank = database.Users.Where(u => u.Id == model.UserId).Select(u => u.Bank).FirstOrDefault();
+            var clientVisitBagId = database.Clients.Where(c => c.Id == model.ClientId).Select(c => c.VisitBagId).FirstOrDefault();
+
+            var income = new Income()
+            {
+                BankId = userBank.Id,
+                Description = model.Description,
+                Value = model.Value,
+            };
+            database.Incomes.Add(income);
+
+            var clientProceduresForClose = database.ClientProcedures.Where(cp => cp.UserId == model.UserId &&
+                                                                                 cp.ClientId == model.ClientId &&
+                                                                                 cp.VisitBagId == clientVisitBagId).ToList();
+
+            foreach (var cp in clientProceduresForClose)
+            {
+                cp.VisitBagId = null;
+            }
+            database.SaveChanges();
+            return true;
+        }
+
         public string GetInfoForPayment(string clientId, decimal totalPrice, string userId, ListFromProcedures procedures)
         {
-            //TODO Pay Button logic
             var document = new StringBuilder();
             var client = database.Clients.Where(c => c.Id == clientId).FirstOrDefault();
-            document.AppendLine($"Today: {DateTime.Now.ToString()}, '{client.FirstName} {client.LastName}' with email:'{client.Email}' use pay below procedures:");
+            document.AppendLine($"Today: {DateTime.Now.ToString()}, '{client.FirstName} {client.LastName}' with email:'{client.Email}' pay below procedures:");
             int count = 0;
             foreach (var pr in procedures.Procedures)
             {

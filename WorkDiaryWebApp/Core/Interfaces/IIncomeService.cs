@@ -15,5 +15,7 @@ namespace WorkDiaryWebApp.Core.Interfaces
         public void RemoveProcedureFromVisitBag(string clientId, string procedureId);
 
         public string GetInfoForPayment(string clientId, decimal totalPrice, string userId, ListFromProcedures procedures);
+
+        public bool CompleetePayment(PayPostModel model);
     }
 }

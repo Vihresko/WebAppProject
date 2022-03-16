@@ -3,4 +3,15 @@
 }
 @model PayPostModel
 
-<h1>@Model.Description</h1>
+
+<strong>
+<span style="white-space: pre-wrap; word-wrap:anywhere">@Model.Description</span>
+</strong>
+
+<form asp-controller="Income" asp-action="ConfirmPay" method="post">
+    <input type="hidden" name="ClientId" value="@Model.ClientId" />
+    <input type="hidden" name="Description" value="@Model.Description" />
+    <input type="hidden" name="Value" value="@Model.Value" />
+    <input type="hidden" name="UserId" value="@Model.UserId" />
+     <button class="button-pay" type="submit" style="margin-left:15px">Confirm</button>
+</form>
