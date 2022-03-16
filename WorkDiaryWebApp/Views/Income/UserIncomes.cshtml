@@ -1,1 +1,14 @@
 ﻿<h1>here will be displayed UserIncomes</h1>
+@model List<Income>
+
+@{
+    int count = 0;
+}
+@foreach(var i in Model)
+{
+    count++;
+        
+    <p>@count</p>    
+    <p>@i.Description</p>
+}
+

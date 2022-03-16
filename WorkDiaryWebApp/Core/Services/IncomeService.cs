@@ -81,6 +81,13 @@ namespace WorkDiaryWebApp.Core.Services
             return document.ToString();
         }
 
+        public List<Income> GetUserIncomes(string userId)
+        {
+            var userBankId = database.Users.Where(u => u.Id == userId).Select(u => u.BankId).FirstOrDefault();
+            var userIncomes = database.Incomes.Where(i => i.BankId == userBankId).ToList();
+            return userIncomes;
+        }
+
         public void RemoveProcedureFromVisitBag(string clientId, string procedureId)
         {
             var clientBagId = database.Clients.Where(c => c.Id == clientId).Select(c => c.VisitBagId).FirstOrDefault();

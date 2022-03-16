@@ -17,5 +17,7 @@ namespace WorkDiaryWebApp.Core.Interfaces
         public string GetInfoForPayment(string clientId, decimal totalPrice, string userId, ListFromProcedures procedures);
 
         public bool CompleetePayment(PayPostModel model);
+
+        public List<Income> GetUserIncomes(string userId);
     }
 }

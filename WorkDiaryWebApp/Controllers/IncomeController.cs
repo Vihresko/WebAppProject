@@ -24,7 +24,9 @@ namespace WorkDiaryWebApp.Controllers
         }
         public IActionResult UserIncomes()
         {
-            return View();
+            var userId = userManager.GetUserId(User);
+            var model = incomeService.GetUserIncomes(userId);
+            return View(model);
         }
 
         public IActionResult TotalIncomes()
