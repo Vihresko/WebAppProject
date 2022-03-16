@@ -1,5 +1,4 @@
-﻿<p>This is partial view for procedures selection on work!<p>
-@model ListFromProcedures
+﻿@model ListFromProcedures
     <table class="table table-striped">
         <thead>
             <tr>
@@ -27,9 +26,12 @@
                     </td>
                     <td>@procedure.DateForHistory</td>
                     <td><a href="/Procedure/Procedure?procedureId=@procedure.Id" class="btn btn-primary" role="button">Info</a></td>
-
                 </tr>
                 }
+                <form asp-controller="Client" asp-action="Client" method="get">
+                  <input type="hidden" name="clientId" value="@TempData["clientId"]" />
+                  <button class="button-return" type="submit">Return</button>
+                </form>
         </tbody>
     </table>
     

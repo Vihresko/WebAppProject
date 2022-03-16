@@ -64,6 +64,7 @@ namespace WorkDiaryWebApp.Controllers
             TempData["Controller"] = "Income";
             TempData["Action"] = "ShowHistoryOfClient";
             TempData["neededId"] = $"?clientId={clientId}";
+            TempData["clientId"] = clientId;
             var model = incomeService.ShowClientHistory(clientId);
             return View(model);
         }

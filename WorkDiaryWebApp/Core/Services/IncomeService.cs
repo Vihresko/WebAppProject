@@ -41,7 +41,6 @@ namespace WorkDiaryWebApp.Core.Services
 
         public bool CompleetePayment(PayPostModel model)
         {
-            //TODO: Model must be fullfillet
             var userBank = database.Users.Where(u => u.Id == model.UserId).Select(u => u.Bank).FirstOrDefault();
             var clientVisitBagId = database.Clients.Where(c => c.Id == model.ClientId).Select(c => c.VisitBagId).FirstOrDefault();
 
@@ -69,7 +68,7 @@ namespace WorkDiaryWebApp.Core.Services
         {
             var document = new StringBuilder();
             var client = database.Clients.Where(c => c.Id == clientId).FirstOrDefault();
-            document.AppendLine($"Today: {DateTime.Now.ToString()}, '{client.FirstName} {client.LastName}' with email:'{client.Email}' pay below procedures:");
+            document.AppendLine($"Today: {DateTime.UtcNow.ToString()}, '{client.FirstName} {client.LastName}' with email:'{client.Email}' pay below procedures:");
             int count = 0;
             foreach (var pr in procedures.Procedures)
             {

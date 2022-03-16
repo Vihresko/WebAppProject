@@ -19,7 +19,7 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Models
         public string UserId { get; set; }
         public virtual User User { get; set; }
 
-        public DateTime Date { get; set; } = DateTime.UtcNow;
+        public DateTime Date { get; set; } = DateTime.Now;
 
         [ForeignKey(nameof(VisitBagId))]
         [MaxLength(450)]
