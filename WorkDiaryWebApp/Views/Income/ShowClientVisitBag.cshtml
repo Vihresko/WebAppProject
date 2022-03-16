@@ -33,9 +33,21 @@
             </tr>
 
         }
-        <p>Total price: @totalPrice</p>
-        <a href="/@TempData["Controller"]/@TempData["Action"]@TempData["neededId"]" class="btn btn-primary" role="button">Back</a>
-        <a href="/Income/Pay?clientId=@TempData["clientId"]" class="btn btn-danger">Pay</a>
+        <h5>Total price: @totalPrice</h5>
+
+         <form asp-controller="Income" asp-action="CreateIncome" method="get">
+            <input type="hidden" name="clientId" value=@TempData["clientId"] />
+            <button class="button-return" type="submit">Return</button>
+        </form>
+
+        <form asp-controller="Income" asp-action="Pay" method="post">
+            <input type="hidden" name="clientId" value=@TempData["clientId"] />
+            <input type="hidden" name="totalPrice" value=@totalPrice />
+            <button class="button-pay" type="submit" style="margin-left:15px">Payment</button>
+        </form>
+      <br />
+      <br />
+        
 
     </tbody>
 </table>

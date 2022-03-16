@@ -85,10 +85,23 @@ namespace WorkDiaryWebApp.Controllers
           
         }
 
-        public IActionResult Pay()
+        [HttpPost]
+        public IActionResult Pay(string clientId, decimal totalPrice)
         {
+            var proceduresInfo = incomeService.ShowClientVisitBag(clientId);
+            string userId = userManager.GetUserId(this.User);
+            //TODO: userId do nothing?
+            string document = incomeService.GetInfoForPayment(clientId, totalPrice, userId, proceduresInfo);
+            var model = new PayPostModel()
+            {
+                Description = document
+            };
+            return View(model);
+        }
 
-            return Redirect($"/Bank/UserBank");
+        public IActionResult Pay(PayPostModel model)
+        {
+            return View(model);
         }
 
         private WorkModel GetWorkModelForView(string clientId)

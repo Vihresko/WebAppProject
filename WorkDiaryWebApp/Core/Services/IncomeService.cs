@@ -1,4 +1,5 @@
-﻿using WorkDiaryWebApp.Core.Interfaces;
+﻿using System.Text;
+using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Income;
 using WorkDiaryWebApp.Models.Procedure;
 using WorkDiaryWebApp.WorkDiaryDB;
@@ -38,10 +39,22 @@ namespace WorkDiaryWebApp.Core.Services
            
         }
 
-        public bool GetInfoForPayment(string clientId)
+        public string GetInfoForPayment(string clientId, decimal totalPrice, string userId, ListFromProcedures procedures)
         {
             //TODO Pay Button logic
-            return true;
+            var document = new StringBuilder();
+            var client = database.Clients.Where(c => c.Id == clientId).FirstOrDefault();
+            document.AppendLine($"Today: {DateTime.Now.ToString()}, '{client.FirstName} {client.LastName}' with email:'{client.Email}' use pay below procedures:");
+            int count = 0;
+            foreach (var pr in procedures.Procedures)
+            {
+                count++;
+                document.AppendLine($"{pr.Name}: -'{pr.Description}' price: {pr.Price}");
+            }
+            //TODO: valuta
+            document.AppendLine($">>>Total price: {totalPrice}");
+            //TODO: if have promotion? 
+            return document.ToString();
         }
 
         public void RemoveProcedureFromVisitBag(string clientId, string procedureId)
