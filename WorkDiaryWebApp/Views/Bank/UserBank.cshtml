@@ -1,4 +1,29 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "UserBank";
 }
-<h1>Here will be info for USER bank!</h1>
+@model UserBankStatusGetModel
+
+@{var balance = Model.TakenMoney - Model.ReportedMoney;}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Taken Money:</th>
+            <th scope="col">Reported Money:</th>
+            <th scope="col">Not reported value:</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr>
+                <td>@Model.TakenMoney</td>
+                <td>@Model.ReportedMoney</td>
+                <td>@balance</td>
+            </tr>
+    </tbody>
+</table>
+
+<form asp-controller="Bank" asp-action="ReportMoney" method="post">
+    <input type="number" name="Value" value=@balance />
+    <input type="hidden" name="userId" value=@Model.UserId />
+    <button class="button-return" type="submit">Report</button>
+</form>

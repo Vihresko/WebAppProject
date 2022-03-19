@@ -18,5 +18,7 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Models
         public string BankId { get; set; }
         public virtual Bank Bank { get; set; }
 
+        public bool IsReported { get; set; } = false;
+
     }
 }

@@ -17,5 +17,8 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Models
         }
         public virtual ICollection<Income> Incomes { get; set; } = new HashSet<Income>();
         public virtual ICollection<Outcome> Outcomes { get; set; } = new HashSet<Outcome>();
+
+        public decimal TakenMoney { get; set; }
+        public decimal ReportedMoney { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using WorkDiaryWebApp.Core.Constants;
 using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Income;
 using WorkDiaryWebApp.Models.Procedure;
@@ -60,6 +61,7 @@ namespace WorkDiaryWebApp.Core.Services
             {
                 cp.VisitBagId = null;
             }
+            userBank.TakenMoney += model.Value;
             database.SaveChanges();
             return true;
         }
@@ -76,7 +78,7 @@ namespace WorkDiaryWebApp.Core.Services
                 document.AppendLine($"{pr.Name}: -'{pr.Description}' price: {pr.Price}");
             }
             //TODO: valuta
-            document.AppendLine($">>>Total price: {totalPrice}");
+            document.AppendLine($">>>Total price: {totalPrice} {FormatConstant.CURRENCY}");
             //TODO: if have promotion? 
             return document.ToString();
         }
