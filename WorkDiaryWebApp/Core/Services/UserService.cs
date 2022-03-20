@@ -14,7 +14,7 @@ namespace WorkDiaryWebApp.Core.Services
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
 
-        public UserService(WorkDiaryDbContext _database, UserManager<User> _userManager,SignInManager<User> _signInManager)
+        public UserService(WorkDiaryDbContext _database, UserManager<User> _userManager, SignInManager<User> _signInManager)
         {
             database = _database;
             userManager = _userManager;
@@ -22,16 +22,16 @@ namespace WorkDiaryWebApp.Core.Services
         }
         public async Task<(bool, StringBuilder)> RegisterNewUser(RegisterFormModel model)
         {
-            (bool isValidModel,StringBuilder errors) = ValidateRegisterModel(model);
-            (bool isEmailExist, string emailError) = ValidateEmail(model.Email);
-           
+            (bool isValidModel, StringBuilder errors) = ValidateRegisterModel(model);
+            (bool isEmailExist, string? emailError) = ValidateEmail(model.Email);
+
             if (isEmailExist) errors.AppendLine(emailError);
-           
+
             if (isValidModel)
             {
                 var newContact = new Contact()
                 {
-                    PhoneNumber = model.PhoneNumber,
+                    PhoneNumber = model.PhoneNumber.Trim(),
                     Address = model.Address,
                     Town = model.Town,
                     Email = model.Email
@@ -57,18 +57,18 @@ namespace WorkDiaryWebApp.Core.Services
                     }
                     isValidModel = false;
                 }
-                database.SaveChanges();
+                await database.SaveChangesAsync();
             }
-           
+
             return (isValidModel, errors);
         }
 
         public async Task<bool> TryToLogin(LoginFormModel model)
         {
-            
+
             var user = database.Users.FirstOrDefault(u => u.UserName == model.Username);
             bool isValid = false;
-            if(user != null)
+            if (user != null)
             {
                 isValid = await userManager.CheckPasswordAsync(user, model.Password);
                 if (isValid)
@@ -76,13 +76,13 @@ namespace WorkDiaryWebApp.Core.Services
                     await signInManager.SignInAsync(user, isPersistent: false);
                 }
             }
-            
+
             return isValid;
         }
 
-        private (bool, string) ValidateEmail(string email)
+        private (bool, string?) ValidateEmail(string email)
         {
-            var isEmailExist = database.Users.Where(u => u.Email == email).Any();
+            var isEmailExist = database.Contacts.Where(c => c.Email == email).Any();
             if (isEmailExist)
             {
                 return (true, $"{nameof(email)} already exist!");
@@ -91,13 +91,13 @@ namespace WorkDiaryWebApp.Core.Services
             return (false, null);
         }
 
-       
+
         private (bool, StringBuilder) ValidateRegisterModel(RegisterFormModel model)
         {
             bool isValid = true;
             var errors = new StringBuilder();
-            if (model.Username == null || 
-                model.Username.Length < USERNAME_MIN_LENGTH||
+            if (model.Username == null ||
+                model.Username.Length < USERNAME_MIN_LENGTH ||
                 model.Username.Length > USERNAME_MAX_LENGTH)
             {
                 isValid = false;
@@ -132,22 +132,21 @@ namespace WorkDiaryWebApp.Core.Services
                 errors.AppendLine($"{nameof(model.Password)} must be between {PASSWORD_MIN_VALUE} and {PASSWORD_MAX_LENGTH} symbols!");
             }
 
-            if(model.ConfirmPassword == null || model.ConfirmPassword != model.Password)
+            if (model.ConfirmPassword == null || model.ConfirmPassword != model.Password)
             {
                 isValid = false;
                 errors.AppendLine($"{nameof(model.Password)} and {nameof(model.ConfirmPassword)} must be same");
             }
 
-            //TODO: Trim number!
-            if(model.PhoneNumber == null || model.PhoneNumber.Length > PHONE_NUMBER_MAX_LENGHT)
+            if (model.PhoneNumber == null || model.PhoneNumber.Length > PHONE_NUMBER_MAX_LENGHT)
             {
                 isValid = false;
                 errors.AppendLine($"{nameof(model.PhoneNumber)} must be maximum {PHONE_NUMBER_MAX_LENGHT} symbols!");
             }
 
-            if(model.Town != null)
+            if (model.Town != null)
             {
-                if(model.Town.Length > TOWN_NAME_MAX_LENGTH)
+                if (model.Town.Length > TOWN_NAME_MAX_LENGTH)
                 {
                     isValid = false;
                     errors.AppendLine($"{nameof(model.PhoneNumber)} must be maximum from {TOWN_NAME_MAX_LENGTH} characters!");

@@ -57,11 +57,11 @@ namespace WorkDiaryWebApp.Controllers
 
             if (isDone)
             {
-                ViewData[MessageConstant.SuccessMessage] = "success";
+                ViewData[MessageConstant.SuccessMessage] = "Success!";
             }
             else
             {
-                ViewData[MessageConstant.ErrorMessage] = errors;
+                ViewData[MessageConstant.ErrorMessage] = "Invalid data!";
             }
           
             return View(model);

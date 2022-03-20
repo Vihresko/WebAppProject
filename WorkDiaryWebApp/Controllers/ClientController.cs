@@ -27,22 +27,32 @@ namespace WorkDiaryWebApp.Controllers
 
         public IActionResult AddClient()
         {
-            return View();
+            return View(new AddClientModel());
         }
         [HttpPost]
         public IActionResult AddClient(AddClientModel model)
         {
             (bool isDone, string? errors) = clientService.AddNewClient(model);
 
+            if (!isDone)
+            {
+                var splitedErrors = errors.ToString().Split(Environment.NewLine);
+
+                foreach (var error in splitedErrors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                }
+            }
+
             if (isDone)
             {
-                ViewData[MessageConstant.SuccessMessage] = "success";
+                ViewData[MessageConstant.SuccessMessage] = "Success!";
             }
             else
             {
-                ViewData[MessageConstant.ErrorMessage] = errors;
+                ViewData[MessageConstant.ErrorMessage] = "Invalid data!";
             }
-            return View();
+            return View(model);
         }
 
         [HttpPost]

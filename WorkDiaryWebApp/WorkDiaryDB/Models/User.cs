@@ -22,6 +22,5 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Models
         public string BankId { get; private set; }
         public virtual Bank Bank { get; set; }
 
-        //TODO:IsAdmin?
     }
 }

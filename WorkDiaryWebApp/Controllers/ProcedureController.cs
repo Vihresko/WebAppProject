@@ -31,7 +31,7 @@ namespace WorkDiaryWebApp.Controllers
         }
         public IActionResult AddProcedure()
         {
-            return View();
+            return View(new AddProcedureModel());
         }
 
         [HttpPost]
@@ -39,16 +39,24 @@ namespace WorkDiaryWebApp.Controllers
         {
            
             (bool isDone, string? errors) = procedureService.AddNewProcedure(model);
+            if (!isDone)
+            {
+                var splitedErrors = errors.ToString().Split(Environment.NewLine);
 
+                foreach (var error in splitedErrors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                }
+            }
             if (isDone)
             {
-                ViewData[MessageConstant.SuccessMessage] = "success";
+                ViewData[MessageConstant.SuccessMessage] = "Success!";
             }
             else
             {
-                ViewData[MessageConstant.ErrorMessage] = errors;
+                ViewData[MessageConstant.ErrorMessage] = "Invalid data!";
             }
-            return View();
+            return View(model);
         }
 
         public IActionResult EditProcedure(string procedureId)

@@ -1,21 +1,22 @@
 ﻿@{
     ViewData["Title"] = "AddProcedure";
 }
+@model AddProcedureModel
 <h1 class="text-center mt-2">Please, fullfill below form to create new Procedure!</h1>
 <form asp-controller="Procedure" asp-action="AddProcedure" method="post">
-
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
          <div class="form-floating mb-3">
-          <input type="text" name="Name" class="form-control" id="floatingInput">
+          <input type="text" name="Name" class="form-control" id="floatingInput" value=@Model.Name>
           <label for="floatingInput">Procedure Name</label>
         </div>
         
         <div class="form-floating mb-3">
-        <textarea style="white-space: pre-wrap" name="Description" class="form-control"  id="floatingInput"></textarea>
+        <textarea style="white-space: pre-wrap" name="Description" class="form-control"  id="floatingInput" value=@Model.Description></textarea>
         <label for="floatingTextarea">Description</label>
         </div>
 
         <div class="form-floating mb-3">
-          <input type="number" name="Price" class="form-control" id="floatingInput">
+          <input type="number" name="Price" class="form-control" id="floatingInput" value=@Model.Price>
           <label for="floatingInput">Price</label>
         </div>
 

@@ -1,23 +1,25 @@
 ﻿@{
     ViewData["Title"] = "AddClient";
 }
+@model AddClientModel
 <h1 class="text-center mt-2">Add new client</h1>
 <form asp-controller="Client" asp-action="AddClient" method="post">
+         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
          <div class="form-floating mb-3">
-          <input name="FirstName" class="form-control" id="floatingInput">
-          <label for="floatingInput">First Name</label>
+          <input name="FirstName" class="form-control" id="floatingInput" value=@Model.FirstName>
+          <label for="FirstName">First Name</label>
         </div>
         <div class="form-floating mb-3">
-          <input name="LastName" class="form-control" id="floatingInput">
-          <label for="floatingInput">Last Name</label>
+          <input name="LastName" class="form-control" id="floatingInput" value=@Model.LastName>
+          <label for="LastName">Last Name</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="Email" name="Email" class="form-control" id="floatingInput">
-          <label for="floatingInput">Email address</label>
+          <input type="Email" name="Email" class="form-control" id="floatingInput" value=@Model.Email>
+          <label for="Email">Email address</label>
         </div>
         <div class="form-floating mb-3">
-          <input name="BirthDay" class="form-control" id="floatingInput">
-          <label for="floatingInput">Birthday: dd/mm/year</label>
+          <input name="BirthDay" class="form-control" id="floatingInput" value=@Model.BirthDay>
+          <label for="BirthDay">Birthday: dd/mm/year</label>
         </div>
         <div class="d-grid gap-2">
           <button class="btn btn-primary" type="submit">Create</button>
