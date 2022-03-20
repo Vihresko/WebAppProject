@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using WorkDiaryWebApp.Core.Constants;
@@ -11,9 +12,27 @@ namespace WorkDiaryWebApp.Controllers
     public class UserController : Controller
     {
         private readonly IUserService userService;
-        public UserController(IUserService _userService)
+        private readonly RoleManager<IdentityRole> roleManager;
+        public UserController(IUserService _userService, RoleManager<IdentityRole> _roleManager)
         {
             userService = _userService;
+            roleManager = _roleManager;
+        }
+
+        public async Task<IActionResult> CreateRole()
+        {
+           /* await roleManager.CreateAsync(new IdentityRole()
+            {
+                Name = "User"
+            }); */
+
+            return Ok();
+        }
+
+        [Authorize(Roles = UserConstant.Role.Administrator)]
+        public async Task<IActionResult> ManageUsers()
+        {
+            return Ok();
         }
 
         public IActionResult Register()

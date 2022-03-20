@@ -33,6 +33,7 @@ namespace WorkDiaryWebApp.Controllers
         public IActionResult ReportMoney(ReportMoneyPostModel model)
         {
             (bool isDone, string message) = bankService.ReportMoney(model);
+            
             return Redirect($"/Bank/UserBank");
         }
 

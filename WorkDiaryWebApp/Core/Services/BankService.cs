@@ -49,6 +49,10 @@ namespace WorkDiaryWebApp.Core.Services
                 message.AppendLine("Cannot report 'ZERO' money!");
             }
 
+            if (!isOk)
+            {
+                return (false, message.ToString());
+            }
             bank.ReportedMoney+=model.Value;
             database.SaveChanges();
             return (isOk, message.ToString());
