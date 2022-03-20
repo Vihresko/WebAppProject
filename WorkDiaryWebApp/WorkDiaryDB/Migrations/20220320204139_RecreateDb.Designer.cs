@@ -9,11 +9,11 @@ using WorkDiaryWebApp.WorkDiaryDB;
 
 #nullable disable
 
-namespace WorkDiaryWebApp.Migrations
+namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
 {
     [DbContext(typeof(WorkDiaryDbContext))]
-    [Migration("20220316130637_MoreSpaceForIncomeDescription")]
-    partial class MoreSpaceForIncomeDescription
+    [Migration("20220320204139_RecreateDb")]
+    partial class RecreateDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -166,6 +166,12 @@ namespace WorkDiaryWebApp.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<decimal>("ReportedMoney")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TakenMoney")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Banks");
@@ -273,8 +279,11 @@ namespace WorkDiaryWebApp.Migrations
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.Income", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<string>("BankId")
                         .IsRequired()
@@ -284,6 +293,9 @@ namespace WorkDiaryWebApp.Migrations
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
+
+                    b.Property<bool>("IsReported")
+                        .HasColumnType("bit");
 
                     b.Property<decimal>("Value")
                         .HasColumnType("decimal(18,2)");
@@ -297,8 +309,11 @@ namespace WorkDiaryWebApp.Migrations
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.Outcome", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<string>("BankId")
                         .IsRequired()

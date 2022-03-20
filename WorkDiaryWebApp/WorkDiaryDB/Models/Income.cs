@@ -6,7 +6,8 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Models
     using static WorkDiaryDB.Constraints.Constants;
     public class Income
     {
-        public string Id { get; init; } = Guid.NewGuid().ToString();
+        [Key]
+        public long Id { get; init; }
 
         [Required]
         [MaxLength(IN_OUT_COME_DESCRIPTION_MAX_LENGTH)]

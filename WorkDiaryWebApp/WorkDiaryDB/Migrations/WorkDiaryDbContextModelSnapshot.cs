@@ -8,7 +8,7 @@ using WorkDiaryWebApp.WorkDiaryDB;
 
 #nullable disable
 
-namespace WorkDiaryWebApp.Migrations
+namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
 {
     [DbContext(typeof(WorkDiaryDbContext))]
     partial class WorkDiaryDbContextModelSnapshot : ModelSnapshot
@@ -172,7 +172,7 @@ namespace WorkDiaryWebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Banks");
+                    b.ToTable("Banks", (string)null);
                 });
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.Client", b =>
@@ -209,7 +209,7 @@ namespace WorkDiaryWebApp.Migrations
 
                     b.HasIndex("VisitBagId");
 
-                    b.ToTable("Clients");
+                    b.ToTable("Clients", (string)null);
                 });
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.ClientProcedure", b =>
@@ -244,7 +244,7 @@ namespace WorkDiaryWebApp.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ClientProcedures");
+                    b.ToTable("ClientProcedures", (string)null);
                 });
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.Contact", b =>
@@ -272,13 +272,16 @@ namespace WorkDiaryWebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contacts");
+                    b.ToTable("Contacts", (string)null);
                 });
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.Income", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<string>("BankId")
                         .IsRequired()
@@ -299,13 +302,16 @@ namespace WorkDiaryWebApp.Migrations
 
                     b.HasIndex("BankId");
 
-                    b.ToTable("Incomes");
+                    b.ToTable("Incomes", (string)null);
                 });
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.Outcome", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<string>("BankId")
                         .IsRequired()
@@ -323,7 +329,7 @@ namespace WorkDiaryWebApp.Migrations
 
                     b.HasIndex("BankId");
 
-                    b.ToTable("Outcomes");
+                    b.ToTable("Outcomes", (string)null);
                 });
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.Procedure", b =>
@@ -348,7 +354,7 @@ namespace WorkDiaryWebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Procedures");
+                    b.ToTable("Procedures", (string)null);
                 });
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.User", b =>
@@ -440,7 +446,7 @@ namespace WorkDiaryWebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VisitBags");
+                    b.ToTable("VisitBags", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

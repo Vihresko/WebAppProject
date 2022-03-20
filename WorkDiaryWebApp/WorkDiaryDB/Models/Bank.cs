@@ -18,7 +18,10 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Models
         public virtual ICollection<Income> Incomes { get; set; } = new HashSet<Income>();
         public virtual ICollection<Outcome> Outcomes { get; set; } = new HashSet<Outcome>();
 
+        [Column(TypeName = "decimal(18,2)")]
         public decimal TakenMoney { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
         public decimal ReportedMoney { get; set; }
     }
 }

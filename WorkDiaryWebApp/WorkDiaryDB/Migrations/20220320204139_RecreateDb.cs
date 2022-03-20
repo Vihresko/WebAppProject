@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace WorkDiaryWebApp.Migrations
+namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
 {
-    public partial class InitialDataBase : Migration
+    public partial class RecreateDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,27 +27,13 @@ namespace WorkDiaryWebApp.Migrations
                 name: "Banks",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TakenMoney = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ReportedMoney = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Banks", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Clients",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(254)", maxLength: 254, nullable: false),
-                    BirthDay = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Clients", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -56,6 +42,7 @@ namespace WorkDiaryWebApp.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(254)", maxLength: 254, nullable: false),
                     Town = table.Column<string>(type: "nvarchar(85)", maxLength: 85, nullable: true),
                     Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
@@ -70,7 +57,7 @@ namespace WorkDiaryWebApp.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -115,10 +102,12 @@ namespace WorkDiaryWebApp.Migrations
                 name: "Incomes",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     Value = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    BankId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    BankId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsReported = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -135,8 +124,9 @@ namespace WorkDiaryWebApp.Migrations
                 name: "Outcomes",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     Value = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     BankId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -156,7 +146,7 @@ namespace WorkDiaryWebApp.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(61)", maxLength: 61, nullable: false),
                     ContactId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     BankId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -187,6 +177,29 @@ namespace WorkDiaryWebApp.Migrations
                         name: "FK_AspNetUsers_Contacts_ContactId",
                         column: x => x.ContactId,
                         principalTable: "Contacts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Clients",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(254)", maxLength: 254, nullable: false),
+                    BirthDay = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    VisitBagId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clients", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Clients_VisitBags_VisitBagId",
+                        column: x => x.VisitBagId,
+                        principalTable: "VisitBags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -280,15 +293,16 @@ namespace WorkDiaryWebApp.Migrations
                 name: "ClientProcedures",
                 columns: table => new
                 {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ClientId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProcedureId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    VisitBagId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    VisitBagId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ClientProcedures", x => new { x.ClientId, x.ProcedureId, x.UserId });
+                    table.PrimaryKey("PK_ClientProcedures", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ClientProcedures_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -307,11 +321,6 @@ namespace WorkDiaryWebApp.Migrations
                         principalTable: "Procedures",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ClientProcedures_VisitBags_VisitBagId",
-                        column: x => x.VisitBagId,
-                        principalTable: "VisitBags",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -364,6 +373,11 @@ namespace WorkDiaryWebApp.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ClientProcedures_ClientId",
+                table: "ClientProcedures",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ClientProcedures_ProcedureId",
                 table: "ClientProcedures",
                 column: "ProcedureId");
@@ -374,8 +388,8 @@ namespace WorkDiaryWebApp.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClientProcedures_VisitBagId",
-                table: "ClientProcedures",
+                name: "IX_Clients_VisitBagId",
+                table: "Clients",
                 column: "VisitBagId");
 
             migrationBuilder.CreateIndex(
@@ -428,13 +442,13 @@ namespace WorkDiaryWebApp.Migrations
                 name: "Procedures");
 
             migrationBuilder.DropTable(
-                name: "VisitBags");
-
-            migrationBuilder.DropTable(
                 name: "Banks");
 
             migrationBuilder.DropTable(
                 name: "Contacts");
+
+            migrationBuilder.DropTable(
+                name: "VisitBags");
         }
     }
 }
