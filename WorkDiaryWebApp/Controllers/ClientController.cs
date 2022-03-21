@@ -32,6 +32,10 @@ namespace WorkDiaryWebApp.Controllers
         [HttpPost]
         public IActionResult AddClient(AddClientModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             (bool isDone, string? errors) = clientService.AddNewClient(model);
 
             if (!isDone)

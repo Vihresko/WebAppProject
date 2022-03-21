@@ -69,6 +69,12 @@ namespace WorkDiaryWebApp.Constraints.Services
 
             var isValidDate = DateTime.TryParseExact(birthDay, FormatConstant.DATE_TIME_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime birthDayChecked);
 
+            if(birthDayChecked > DateTime.Now)
+            {
+                isValidDate = false;
+                errors.AppendLine("Birth day is in the future!");
+            }
+
             if (!isValidDate)
             {
                 isValidModel = false;

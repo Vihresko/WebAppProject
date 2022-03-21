@@ -37,8 +37,13 @@ namespace WorkDiaryWebApp.Controllers
         [HttpPost]
         public IActionResult AddProcedure(AddProcedureModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
            
             (bool isDone, string? errors) = procedureService.AddNewProcedure(model);
+
             if (!isDone)
             {
                 var splitedErrors = errors.ToString().Split(Environment.NewLine);

@@ -4,6 +4,7 @@
     {
         //Common
         public const int EMAIL_MAX_LENGTH = 254;
+        public const string BIRTH_DAY_REGEX = @"^[0-9]{2}/[0-9]{2}/[0-9]{4}$";
 
         //Client
         public const int NAME_MIN_LENGTH = 2;

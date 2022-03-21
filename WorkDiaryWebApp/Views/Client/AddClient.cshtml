@@ -6,20 +6,24 @@
 <form asp-controller="Client" asp-action="AddClient" method="post">
          <div asp-validation-summary="ModelOnly" class="text-danger"></div>
          <div class="form-floating mb-3">
-          <input name="FirstName" class="form-control" id="floatingInput" value=@Model.FirstName>
-          <label for="FirstName">First Name</label>
+          <input asp-for=@Model.FirstName class="form-control" value=@Model.FirstName>
+          <label for=@Model.FirstName>First Name</label>
+          <span asp-validation-for=@Model.FirstName class="text-danger"></span>
         </div>
         <div class="form-floating mb-3">
-          <input name="LastName" class="form-control" id="floatingInput" value=@Model.LastName>
-          <label for="LastName">Last Name</label>
+          <input asp-for=@Model.LastName class="form-control" value=@Model.LastName>
+          <label for=@Model.LastName>Last Name</label>
+           <span asp-validation-for=@Model.LastName class="text-danger"></span>
         </div>
         <div class="form-floating mb-3">
-          <input type="Email" name="Email" class="form-control" id="floatingInput" value=@Model.Email>
-          <label for="Email">Email address</label>
+          <input type="Email" asp-for=@Model.Email class="form-control" value=@Model.Email>
+          <label for=@Model.Email>Email address</label>
+           <span asp-validation-for=@Model.Email class="text-danger"></span>
         </div>
         <div class="form-floating mb-3">
-          <input name="BirthDay" class="form-control" id="floatingInput" value=@Model.BirthDay>
-          <label for="BirthDay">Birthday: dd/mm/year</label>
+          <input asp-for=@Model.BirthDay class="form-control" id="floatingInput" value=@Model.BirthDay>
+          <label for=@Model.BirthDay>Birthday: dd/mm/year</label>
+           <span asp-validation-for=@Model.BirthDay class="text-danger"></span>
         </div>
         <div class="d-grid gap-2">
           <button class="btn btn-primary" type="submit">Create</button>

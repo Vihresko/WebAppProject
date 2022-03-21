@@ -18,11 +18,19 @@ namespace WorkDiaryWebApp.Core.Services
         }
         public (bool, string?) AddNewProcedure(AddProcedureModel model)
         {
+            
             (bool isValidModel, string errors) = ValidateProcedureValues(model.Name, model.Description, model.Price);
 
             if (!isValidModel)
             {
                 return (isValidModel, errors.ToString());
+            }
+
+            var isExist = database.Procedures.Any(p => p.Name == model.Name && p.Description == model.Description);
+
+            if (isExist)
+            {
+                return (false, MessageConstant.DoubleEntity);
             }
 
             Procedure newProcedure = new Procedure()
@@ -31,6 +39,7 @@ namespace WorkDiaryWebApp.Core.Services
                 Description = model.Description,
                 Price = model.Price
             };
+
 
             try
             {
@@ -110,7 +119,7 @@ namespace WorkDiaryWebApp.Core.Services
             return model;
         }
 
-        private (bool, string) ValidateProcedureValues(string Name, string Description, decimal Price)
+        private (bool, string) ValidateProcedureValues(string Name, string? Description, decimal Price)
         {
             bool isValidModel = true;
             var errors = new StringBuilder();
