@@ -7,57 +7,57 @@
 <form asp-controller="User" asp-action="Register" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
           <div class="form-floating mb-3">
-          <input type="text" name="Username" class="form-control" id="floatingInput" value=@Model.Username>
-          <label for="floatingInput">Username</label>
-           <span asp-validation-for="Username" class="text-danger"></span>
+          <input type="text" asp-for=@Model.Username class="form-control"value=@Model.Username>
+          <label asp-for=@Model.Username>Username</label>
+           <span asp-validation-for=@Model.Username class="text-danger"></span>
            </div>     
 
          <div class="form-floating mb-3">
-          <input type="text" name="FirstName" class="form-control" id="floatingInput" value=@Model.FirstName>
-          <label for="floatingInput">First Name</label>
-          <span asp-validation-for="FirstName" class="text-danger"></span>
+          <input type="text" asp-for=@Model.FirstName class="form-control" value=@Model.FirstName>
+          <label asp-for=@Model.FirstName>First Name</label>
+          <span asp-validation-for=@Model.FirstName class="text-danger"></span>
         </div>
 
         <div class="form-floating mb-3">
-          <input type="text" name="LastName" class="form-control" id="floatingInput" value=@Model.LastName>
-          <label for="floatingInput">Last Name</label>
-           <span asp-validation-for="LastName" class="text-danger"></span>
+          <input type="text" asp-for=@Model.LastName class="form-control" value=@Model.LastName>
+          <label asp-for=@Model.LastName>Last Name</label>
+           <span asp-validation-for=@Model.LastName class="text-danger"></span>
         </div>
 
         <div class="form-floating mb-3">
-          <input type="email" name="Email" class="form-control" id="floatingInput" value=@Model.Email>
-          <label for="floatingInput">Email</label>
-           <span asp-validation-for="Email" class="text-danger"></span>
+          <input type="email" asp-for=@Model.Email class="form-control" value=@Model.Email>
+          <label asp-for=@Model.Email>Email</label>
+           <span asp-validation-for=@Model.Email class="text-danger"></span>
         </div>
 
         <div class="form-floating mb-3">
-          <input type="password" name="Password" class="form-control" id="floatingInput" value=@Model.Password>
-          <label for="floatingInput">Password</label>
-           <span asp-validation-for="Password" class="text-danger"></span>
+          <input type="password" asp-for=@Model.Password class="form-control" value=@Model.Password>
+          <label asp-for=@Model.Password>Password</label>
+           <span asp-validation-for=@Model.Password class="text-danger"></span>
         </div>
 
          <div class="form-floating mb-3">
-          <input type="password" name="ConfirmPassword" class="form-control" id="floatingInput" value=@Model.ConfirmPassword>
-          <label for="floatingInput">ConfirmPassword</label>
-           <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+          <input type="password" asp-for=@Model.ConfirmPassword class="form-control" value=@Model.ConfirmPassword>
+          <label asp-for=@Model.ConfirmPassword>ConfirmPassword</label>
+           <span asp-validation-for=@Model.ConfirmPassword class="text-danger"></span>
         </div>
 
         <div class="form-floating mb-3">
-          <input type="text" name="PhoneNumber" class="form-control" id="floatingInput" value=@Model.PhoneNumber>
-          <label for="floatingInput">PhoneNumber</label>
-           <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+          <input type="string" asp-for=@Model.PhoneNumber class="form-control" value=@Model.PhoneNumber>
+          <label asp-for=@Model.PhoneNumber>PhoneNumber</label>
+           <span asp-validation-for=@Model.PhoneNumber class="text-danger"></span>
         </div>
 
          <div class="form-floating mb-3">
-          <input type="text" name="Town" class="form-control" id="floatingInput" value=@Model.Town>
-          <label for="floatingInput">Town</label>
-           <span asp-validation-for="Town" class="text-danger"></span>
+          <input type="text" asp-for=@Model.Town class="form-control"value=@Model.Town>
+          <label asp-for=@Model.Town>Town</label>
+           <span asp-validation-for=@Model.Town class="text-danger"></span>
         </div>
 
         <div class="form-floating mb-3">
-          <input type="text" name="Address" class="form-control" id="floatingInput" value=@Model.Address>
-          <label for="floatingInput">Address</label>
-           <span asp-validation-for="Address" class="text-danger"></span>
+          <input type="text" asp-for=@Model.Address class="form-control"value=@Model.Address>
+          <label asp-for=@Model.Address>Address</label>
+           <span asp-validation-for=@Model.Address class="text-danger"></span>
         </div>
 
         <div class="d-grid gap-2">

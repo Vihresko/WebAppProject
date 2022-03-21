@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using WorkDiaryWebApp.Core.Constants;
 
 namespace WorkDiaryWebApp.WorkDiaryDB.Models
 {
@@ -8,6 +9,7 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Models
         public string Id { get; init; } = Guid.NewGuid().ToString();
 
         [MaxLength(PHONE_NUMBER_MAX_LENGHT)]
+        [RegularExpression(PHONE_NUMBER_REGEX, ErrorMessage = MessageConstant.INVALID_PHONE_NUMBER)]
         public string PhoneNumber { get;  set; }
 
         [Required]

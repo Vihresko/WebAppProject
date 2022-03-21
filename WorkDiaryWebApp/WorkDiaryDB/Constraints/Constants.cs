@@ -5,6 +5,8 @@
         //Common
         public const int EMAIL_MAX_LENGTH = 254;
         public const string BIRTH_DAY_REGEX = @"^[0-9]{2}/[0-9]{2}/[0-9]{4}$";
+        public const string HUMAN_NAMES_REGEX = @"^[A-z]+$";
+        public const string PHONE_NUMBER_REGEX = @"^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$";
 
         //Client
         public const int NAME_MIN_LENGTH = 2;

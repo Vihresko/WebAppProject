@@ -43,7 +43,11 @@ namespace WorkDiaryWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterFormModel model)
         {
-            
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             (bool isDone, StringBuilder errors) = await userService.RegisterNewUser(model);
             if (!isDone)
             {

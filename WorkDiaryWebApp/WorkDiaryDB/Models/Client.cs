@@ -11,11 +11,13 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Models
         [Required]
         [MinLength(NAME_MIN_LENGTH)]
         [MaxLength(FIRST_NAME_MAX_LENGTH)]
+        [RegularExpression(HUMAN_NAMES_REGEX)]
         public string FirstName { get;  set; }
 
         [Required]
         [MinLength(NAME_MIN_LENGTH)]
         [MaxLength(LAST_NAME_MAX_LENGTH)]
+        [RegularExpression(HUMAN_NAMES_REGEX)]
         public string LastName { get;  set; }
 
         [Required]
