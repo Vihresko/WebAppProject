@@ -62,9 +62,21 @@ div.content {
     position: relative;
 }
 
+.scroll-all {
+    height: 600px;
+    overflow: scroll;
+    position: relative;
+}
+
 
 tr.static th {
     background: white;
+    color: rgba(0, 0, 0, 0.4)
+}
+
+tr.static-radial th {
+    background: white;
+    background-image: radial-gradient(white, white, green);
     color: rgba(0, 0, 0, 0.4)
 }
 

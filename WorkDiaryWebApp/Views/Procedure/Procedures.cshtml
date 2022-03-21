@@ -2,19 +2,18 @@
     ViewData["Title"] = "Procedures";
 }
 @model ListFromProcedures
-
-<div class="tableFixHead">
-
-
+<h1>Preview all active procedures</h1>
+<br /><br /><br />
+<div class="scroll-all">
 <table class="table table-striped">
     <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Description</th>
-            <th scope="col">Price</th>
-            <th scope="col">Info</th>
-            <th scope="col">AdminAction</th>
+        <tr class="static-radial">
+            <th class="th-static" scope="col">#</th>
+            <th class="th-static" scope="col">Name</th>
+            <th class="th-static" scope="col">Description</th>
+            <th class="th-static" scope="col">Price</th>
+            <th class="th-static" scope="col">Info</th>
+            <th class="th-static" scope="col">AdminAction</th>
         </tr>
     </thead>
     <tbody>
@@ -35,7 +34,6 @@
                 <td>@procedure.Price</td>
                 <td><a href="/Procedure/Procedure?procedureId=@procedure.Id" class="btn btn-primary" role="button">Select</a></td>
                 <td><a href="/Procedure/EditProcedure?procedureId=@procedure.Id" class="btn btn-danger" role="button">Edit</a></td>
-                
             </tr>
         }
     </tbody>
