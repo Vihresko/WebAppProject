@@ -4,11 +4,39 @@
 @{
     int count = 0;
 }
-@foreach(var i in Model)
+
+<form>
+   
+    <a asp-controller="Income" asp-action="UserIncomes" class="button-return">NotReported</a>
+    <a asp-controller="Income" asp-action="UserIncomesHistory" class="button-return">History</a>
+
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Income Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model)
+        {
+            count++;
+            <tr>
+                <th scope="row">@count</th>
+                <td>@i.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+ 
+@if(@count > 0 && ViewBag.Show == "Unreported")
 {
-    count++;
-        
-    <p>@count</p>    
-    <p>@i.Description</p>
+    <div>
+     <a asp-controller="Income" asp-action="ReportAllUserIncomes" class="button-pay">ReportAll</a>
+    </div>
 }
+
+
 

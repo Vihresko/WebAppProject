@@ -24,11 +24,28 @@ namespace WorkDiaryWebApp.Controllers
         }
         public IActionResult UserIncomes()
         {
+            
             var userId = userManager.GetUserId(User);
-            var model = incomeService.GetUserIncomes(userId);
+            var model = incomeService.GetUnreportedUserIncomes(userId);
+            ViewBag.Show = "Unreported";
+
             return View(model);
         }
 
+
+        public IActionResult UserIncomesHistory()
+        {
+            var userId = userManager.GetUserId(User);
+            var model = incomeService.GetUserIncomesHistory(userId);
+            return View("~/Views/Income/UserIncomes.cshtml",model);
+        }
+
+        public IActionResult ReportAllUserIncomes()
+        {
+            var userId = userManager.GetUserId(User);
+            var isDone = incomeService.ReportAllUserIncomes(userId);
+            return Redirect("/Income/UserIncomes");
+        }
         public IActionResult TotalIncomes()
         {
             return View();

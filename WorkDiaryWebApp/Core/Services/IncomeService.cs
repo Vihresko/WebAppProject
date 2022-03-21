@@ -66,6 +66,7 @@ namespace WorkDiaryWebApp.Core.Services
             return true;
         }
 
+       
         public string GetInfoForPayment(string clientId, decimal totalPrice, string userId, ListFromProcedures procedures)
         {
             var document = new StringBuilder();
@@ -83,12 +84,20 @@ namespace WorkDiaryWebApp.Core.Services
             return document.ToString();
         }
 
-        public List<Income> GetUserIncomes(string userId)
+        public List<Income> GetUnreportedUserIncomes(string userId)
         {
             var userBankId = database.Users.Where(u => u.Id == userId).Select(u => u.BankId).FirstOrDefault();
-            var userIncomes = database.Incomes.Where(i => i.BankId == userBankId).ToList();
+            var userIncomes = database.Incomes.Where(i => i.BankId == userBankId && i.IsReported == false).OrderByDescending(i => i.Id).ToList();
             return userIncomes;
         }
+
+        public List<Income> GetUserIncomesHistory(string userId)
+        {
+            var userBankId = database.Users.Where(u => u.Id == userId).Select(u => u.BankId).FirstOrDefault();
+            var userIncomes = database.Incomes.Where(i => i.BankId == userBankId && i.IsReported == true).OrderByDescending(i => i.Id).ToList();
+            return userIncomes;
+        }
+
 
         public void RemoveProcedureFromVisitBag(string clientId, string procedureId)
         {
@@ -96,6 +105,28 @@ namespace WorkDiaryWebApp.Core.Services
             var workForDelete = database.ClientProcedures.Where(cp => cp.ProcedureId == procedureId && cp.ClientId == clientId && cp.VisitBagId == clientBagId).FirstOrDefault();
             database.ClientProcedures.Remove(workForDelete);
             database.SaveChanges();
+        }
+
+        public async Task<bool> ReportAllUserIncomes(string userId)
+        {
+            var userBankId = database.Users.Where(u => u.Id == userId).Select(u => u.BankId).FirstOrDefault();
+            var userIncomes = database.Incomes.Where(i => i.BankId == userBankId && i.IsReported == false).ToList();
+
+            foreach (var income in userIncomes)
+            {
+                income.IsReported = true;
+            }
+
+            try
+            {
+                await database.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+               return false;
+            }
+            
+            return true;
         }
 
         public ListFromProcedures ShowClientHistory(string clientId)
