@@ -1,42 +1,45 @@
 ﻿@model WorkModel
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Add</th>
-            <th scope="col">Name</th>
-            <th scope="col">Description</th>
-            <th scope="col">Price</th>
-            <th scope="col">Info</th>
 
-        </tr>
-    </thead>
-    <tbody>
-        @{
-            int count = 0;
-        }
-        @foreach (var procedure in Model.Procedures.Procedures)
-        {
-            count++;
-            <tr>
-                <th scope="row">@count</th>
-                <td>
-                    <form asp-controller="Income" asp-action="AddIncomeToClientVisitBag">
-                        <input type="hidden" name="ClientId" value=@Model.Id>
-                        <input type="hidden" name="ProcedureId" value=@procedure.Id>
-                        <button class="button-return" type="submit">Add</button>
-                    </form>
-                </td>
-                <td>@procedure.Name</td>
-                <td>
-                    <span class="d-inline-block text-truncate" style="max-width: 250px;">
-                        @procedure.Description
-                    </span>
-                </td>
-                <td>@procedure.Price</td>
-                <td><a href="/Procedure/Procedure?procedureId=@procedure.Id" class="btn btn-primary" role="button">Info</a></td>
+<div class="scroll">
+    <table class="table table-striped">
+        <thead>
+            <tr class="static">
+                <th class="th-static" scope="col">#</th>
+                <th class="th-static" scope="col">Add</th>
+                <th class="th-static" scope="col">Name</th>
+                <th class="th-static" scope="col">Description</th>
+                <th class="th-static" scope="col">Price</th>
+                <th class="th-static" scope="col">Info</th>
 
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @{
+                int count = 0;
+            }
+            @foreach (var procedure in Model.Procedures.Procedures)
+            {
+                count++;
+                <tr>
+                    <th scope="row">@count</th>
+                    <td>
+                        <form asp-controller="Income" asp-action="AddIncomeToClientVisitBag">
+                            <input type="hidden" name="ClientId" value=@Model.Id>
+                            <input type="hidden" name="ProcedureId" value=@procedure.Id>
+                            <button class="button-return" type="submit">Add</button>
+                        </form>
+                    </td>
+                    <td>@procedure.Name</td>
+                    <td>
+                        <span class="d-inline-block text-truncate" style="max-width: 250px;">
+                            @procedure.Description
+                        </span>
+                    </td>
+                    <td>@procedure.Price</td>
+                    <td><a href="/Procedure/Procedure?procedureId=@procedure.Id" class="btn btn-primary" role="button">Info</a></td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
