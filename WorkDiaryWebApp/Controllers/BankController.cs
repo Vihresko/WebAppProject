@@ -24,10 +24,7 @@ namespace WorkDiaryWebApp.Controllers
             return View(model);
         }
 
-        public IActionResult MainBank()
-        {
-            return View();
-        }
+       
 
         [HttpPost]
         public IActionResult ReportMoney(ReportMoneyPostModel model)

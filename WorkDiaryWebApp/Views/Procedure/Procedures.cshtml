@@ -39,7 +39,7 @@
                        role="button">
                        Select</a>
                </td>
-                <td><a href="/Procedure/EditProcedure?procedureId=@procedure.Id" class="btn btn-danger" role="button">Edit</a></td>
+                <td><a class="btn button-pay" asp-area="Admin" asp-controller="Procedure" asp-action="EditProcedure" asp-route-procedureId=@procedure.Id>Edit</a></td>
             </tr>
         }
     </tbody>

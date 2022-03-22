@@ -25,7 +25,7 @@
     </tbody>
 </table>
 
-<form class="form-inline" asp-controller="Procedure" asp-action="EditProcedure" method="post">
+<form class="form-inline" asp-area="Admin" asp-controller="Procedure" asp-action="EditProcedure" method="post">
 
     <p class="text-primary">New Name:</p>
     <input asp-for=@Model.Name class="form-control" value=@Model.Name>

@@ -46,10 +46,6 @@ namespace WorkDiaryWebApp.Controllers
             var isDone = incomeService.ReportAllUserIncomes(userId);
             return Redirect("/Income/UserIncomes");
         }
-        public IActionResult TotalIncomes()
-        {
-            return View();
-        }
 
         public IActionResult CreateIncome(string clientId)
         {
