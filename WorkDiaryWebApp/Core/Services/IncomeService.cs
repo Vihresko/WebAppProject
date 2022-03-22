@@ -66,7 +66,12 @@ namespace WorkDiaryWebApp.Core.Services
             return true;
         }
 
-       
+        public List<Income> GetAllUsersIncomesHistory()
+        {
+            var usersIncomes = database.Incomes.OrderByDescending(i => i.Id).ToList();
+            return usersIncomes;
+        }
+
         public string GetInfoForPayment(string clientId, decimal totalPrice, string userId, ListFromProcedures procedures)
         {
             var document = new StringBuilder();

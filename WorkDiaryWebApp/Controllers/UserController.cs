@@ -12,27 +12,10 @@ namespace WorkDiaryWebApp.Controllers
     public class UserController : Controller
     {
         private readonly IUserService userService;
-        private readonly RoleManager<IdentityRole> roleManager;
-        public UserController(IUserService _userService, RoleManager<IdentityRole> _roleManager)
+        
+        public UserController(IUserService _userService)
         {
             userService = _userService;
-            roleManager = _roleManager;
-        }
-
-        public async Task<IActionResult> CreateRole()
-        {
-           /* await roleManager.CreateAsync(new IdentityRole()
-            {
-                Name = "User"
-            }); */
-
-            return Ok();
-        }
-
-        [Authorize(Roles = UserConstant.Role.Administrator)]
-        public async Task<IActionResult> ManageUsers()
-        {
-            return Ok();
         }
 
         public IActionResult Register()

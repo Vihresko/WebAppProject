@@ -1,0 +1,37 @@
+﻿<h1 style="text-decoration:underline">All Users Incomes Preview</h1>
+<br />
+@model List<Income>
+
+@{
+    int count = 0;
+}
+
+<form>
+    <a asp-controller="Income" asp-action="UserIncomes" class="button-return">NotReported</a>
+    <a asp-controller="Income" asp-action="UserIncomesHistory" class="button-return">History</a>
+</form>
+<br />
+<div>
+    <text><pre> #   Income Description</pre></text>
+</div>
+<div class="scroll">
+    <table class="table table-striped">
+        <tbody>
+            @foreach (var i in Model)
+            {
+                count++;
+                <tr>
+                    <th scope="row">@count</th>
+                    <td>@i.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<br/>
+
+
+
+
+
+

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WorkDiaryWebApp.Constraints.Services;
 using WorkDiaryWebApp.Core.Constants;
@@ -26,6 +27,7 @@ builder.Services.AddControllersWithViews().AddMvcOptions(options =>
 {
     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
     options.ModelBinderProviders.Insert(0, new DateTimeModelBinderProvider(FormatConstant.DATE_TIME_FORMAT));
+    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
 });
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IProcedureService, ProcedureService>();
@@ -62,6 +64,7 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "Area",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
 app.MapRazorPages();
 
 app.Run();

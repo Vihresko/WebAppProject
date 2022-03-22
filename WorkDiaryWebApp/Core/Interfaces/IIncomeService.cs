@@ -23,5 +23,7 @@ namespace WorkDiaryWebApp.Core.Interfaces
         public Task<bool> ReportAllUserIncomes(string userId);
 
         public List<Income> GetUnreportedUserIncomes(string userId);
+
+        public List<Income> GetAllUsersIncomesHistory();
     }
 }
