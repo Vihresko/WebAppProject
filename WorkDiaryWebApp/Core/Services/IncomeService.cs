@@ -68,7 +68,7 @@ namespace WorkDiaryWebApp.Core.Services
 
         public List<Income> GetAllUsersIncomesHistory()
         {
-            var usersIncomes = database.Incomes.OrderByDescending(i => i.Id).ToList();
+            var usersIncomes = database.Incomes.Where(i => i.IsReported == true).OrderByDescending(i => i.Id).ToList();
             return usersIncomes;
         }
 

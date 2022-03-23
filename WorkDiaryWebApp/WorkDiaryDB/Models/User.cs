@@ -12,7 +12,7 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Models
         [MaxLength(FULL_NAME_MAX_LENGTH)]
         public string FullName { get; set; }
 
-        public virtual ICollection<ClientProcedure> UserPlayers { get; set; } = new HashSet<ClientProcedure>();
+        public virtual ICollection<ClientProcedure> UserProcedures { get; set; } = new HashSet<ClientProcedure>();
 
         [ForeignKey(nameof(Contact))]
         public string  ContactId { get; set; }

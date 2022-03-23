@@ -35,6 +35,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IIncomeService, IncomeService>();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IBankService, BankService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
