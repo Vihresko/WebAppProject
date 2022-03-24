@@ -7,7 +7,7 @@
 }
 
 <form>
-    <a asp-controller="Income" asp-action="UserIncomes" class="button-return">NotReported</a>
+    <a asp-controller="Income" asp-action="UserIncomes" class="button-return">MyDiary</a>
     <a asp-controller="Income" asp-action="UserIncomesHistory" class="button-return">History</a>
 </form>
 <br />
@@ -35,7 +35,7 @@
 @if (@count > 0 && ViewBag.Show == "Unreported")
 {
     <div>
-        <a asp-controller="Income" asp-action="ReportAllUserIncomes" class="button-pay">ReportAll</a>
+        <a asp-controller="Income" asp-action="CleanUserDiary" class="button-pay">CleanDiary</a>
     </div>
 }
 

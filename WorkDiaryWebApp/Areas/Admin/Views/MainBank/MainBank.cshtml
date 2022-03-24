@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "MainBank";
+    int count = 0;
+}
+
+@model MainBankInfoModel
+<text>Main bank balance: @Model.Balance</text>
+
+<div class="scroll">
+    <table class="table table-striped">
+        <tbody>
+            @foreach (var report in Model.Reports)
+            {
+                count++;
+                <tr>
+                    <th scope="row">@count</th>
+                    <td>@report.Username</td>
+                    <td>@report.Value</td>
+                    <td>@report.DateTime</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<br/>

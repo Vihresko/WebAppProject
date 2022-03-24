@@ -40,10 +40,10 @@ namespace WorkDiaryWebApp.Controllers
             return View("~/Views/Income/UserIncomes.cshtml",model);
         }
 
-        public IActionResult ReportAllUserIncomes()
+        public IActionResult CleanUserDiary()
         {
             var userId = userManager.GetUserId(User);
-            var isDone = incomeService.ReportAllUserIncomes(userId);
+            var isDone = incomeService.CleanUserDiary(userId);
             return Redirect("/Income/UserIncomes");
         }
 

@@ -32,5 +32,7 @@ namespace WorkDiaryWebApp.WorkDiaryDB
         public DbSet<VisitBag> VisitBags { get; set; }
         public DbSet<MainBank> MainBanks { get; set; }
 
+        public DbSet<Report> Reports { get; set; }
+
     }
 }

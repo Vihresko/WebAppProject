@@ -20,7 +20,7 @@ namespace WorkDiaryWebApp.Core.Interfaces
 
         public List<Income> GetUserIncomesHistory(string userId);
 
-        public Task<bool> ReportAllUserIncomes(string userId);
+        public Task<bool> CleanUserDiary(string userId);
 
         public List<Income> GetUnreportedUserIncomes(string userId);
 

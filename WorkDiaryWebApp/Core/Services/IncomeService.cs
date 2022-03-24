@@ -112,7 +112,7 @@ namespace WorkDiaryWebApp.Core.Services
             database.SaveChanges();
         }
 
-        public async Task<bool> ReportAllUserIncomes(string userId)
+        public async Task<bool> CleanUserDiary(string userId)
         {
             var userBankId = database.Users.Where(u => u.Id == userId).Select(u => u.BankId).FirstOrDefault();
             var userIncomes = database.Incomes.Where(i => i.BankId == userBankId && i.IsReported == false).ToList();
