@@ -25,7 +25,7 @@ namespace WorkDiaryWebApp.Areas.Admin.Controllers
                 return View(model);
             }
 
-            (bool isDone, string? errors) = procedureService.AddNewProcedure(model);
+            (bool isDone, string? errors) =  procedureService.AddNewProcedure(model);
 
             if (!isDone)
             {

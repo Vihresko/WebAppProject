@@ -172,7 +172,7 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Banks", (string)null);
+                    b.ToTable("Banks");
                 });
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.Client", b =>
@@ -209,7 +209,7 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
 
                     b.HasIndex("VisitBagId");
 
-                    b.ToTable("Clients", (string)null);
+                    b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.ClientProcedure", b =>
@@ -244,7 +244,7 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ClientProcedures", (string)null);
+                    b.ToTable("ClientProcedures");
                 });
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.Contact", b =>
@@ -272,7 +272,7 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contacts", (string)null);
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.Income", b =>
@@ -302,7 +302,28 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
 
                     b.HasIndex("BankId");
 
-                    b.ToTable("Incomes", (string)null);
+                    b.ToTable("Incomes");
+                });
+
+            modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.MainBank", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MainBanks");
                 });
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.Outcome", b =>
@@ -329,7 +350,7 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
 
                     b.HasIndex("BankId");
 
-                    b.ToTable("Outcomes", (string)null);
+                    b.ToTable("Outcomes");
                 });
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.Procedure", b =>
@@ -354,7 +375,7 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Procedures", (string)null);
+                    b.ToTable("Procedures");
                 });
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.User", b =>
@@ -446,7 +467,7 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VisitBags", (string)null);
+                    b.ToTable("VisitBags");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -526,7 +547,7 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
                         .IsRequired();
 
                     b.HasOne("WorkDiaryWebApp.WorkDiaryDB.Models.User", "User")
-                        .WithMany("UserPlayers")
+                        .WithMany("UserProcedures")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -598,7 +619,7 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.User", b =>
                 {
-                    b.Navigation("UserPlayers");
+                    b.Navigation("UserProcedures");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,18 +1,23 @@
-﻿using WorkDiaryWebApp.Core.Interfaces;
+﻿using Microsoft.AspNetCore.Identity;
+using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Admin;
 using WorkDiaryWebApp.WorkDiaryDB;
+using WorkDiaryWebApp.WorkDiaryDB.Models;
 
 namespace WorkDiaryWebApp.Core.Services
 {
     public class AdminService : IAdminService
     {
         private readonly WorkDiaryDbContext database;
+        private readonly RoleManager<IdentityRole> roleManager;
 
-        public AdminService(WorkDiaryDbContext _database)
+
+        public AdminService(WorkDiaryDbContext _database, RoleManager<IdentityRole> _roleManager)
         {
             database = _database;
+            roleManager = _roleManager;
         }
-        
+
         public List<ShowUserInfoModel> GetUsersInfo()
         {
            var allUsers = new List<ShowUserInfoModel>();
@@ -36,6 +41,29 @@ namespace WorkDiaryWebApp.Core.Services
 
             allUsers.AddRange(usersFromDb);
             return allUsers;
+        }
+
+        public User IsThatFirstRegistration()
+        {
+            var numberOfUsers = database.Users.Count();
+            User user = null;
+            if (numberOfUsers == 1)
+            {
+                user = database.Users.First();
+            }
+            return user;
+        }
+
+        public async Task CreateAdminRoleAndMainBank()
+        {
+            await roleManager.CreateAsync(new IdentityRole()
+            {
+                Name = "Admin"
+            });
+
+            var mainBank = new MainBank();
+            database.MainBanks.Add(mainBank);
+            await database.SaveChangesAsync();
         }
     }
 }

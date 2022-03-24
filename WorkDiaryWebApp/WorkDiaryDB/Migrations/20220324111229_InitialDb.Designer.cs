@@ -12,8 +12,8 @@ using WorkDiaryWebApp.WorkDiaryDB;
 namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
 {
     [DbContext(typeof(WorkDiaryDbContext))]
-    [Migration("20220320204139_RecreateDb")]
-    partial class RecreateDb
+    [Migration("20220324111229_InitialDb")]
+    partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -307,6 +307,27 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
                     b.ToTable("Incomes");
                 });
 
+            modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.MainBank", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MainBanks");
+                });
+
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.Outcome", b =>
                 {
                     b.Property<long>("Id")
@@ -528,7 +549,7 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
                         .IsRequired();
 
                     b.HasOne("WorkDiaryWebApp.WorkDiaryDB.Models.User", "User")
-                        .WithMany("UserPlayers")
+                        .WithMany("UserProcedures")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -600,7 +621,7 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.User", b =>
                 {
-                    b.Navigation("UserPlayers");
+                    b.Navigation("UserProcedures");
                 });
 #pragma warning restore 612, 618
         }

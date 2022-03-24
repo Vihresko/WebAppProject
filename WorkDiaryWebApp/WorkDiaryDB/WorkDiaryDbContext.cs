@@ -29,8 +29,8 @@ namespace WorkDiaryWebApp.WorkDiaryDB
         public DbSet<Income> Incomes { get; set; }
         public DbSet<Outcome> Outcomes { get; set; }
         public DbSet<Bank> Banks { get; set; }
-
         public DbSet<VisitBag> VisitBags { get; set; }
+        public DbSet<MainBank> MainBanks { get; set; }
 
     }
 }

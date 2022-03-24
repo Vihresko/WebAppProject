@@ -12,10 +12,13 @@ namespace WorkDiaryWebApp.Controllers
     public class UserController : Controller
     {
         private readonly IUserService userService;
-        
-        public UserController(IUserService _userService)
+        private readonly IAdminService adminService;
+        private readonly UserManager<User> userManager;
+        public UserController(IUserService _userService, IAdminService _adminService, UserManager<User> _userManager)
         {
             userService = _userService;
+            adminService = _adminService;
+            userManager = _userManager;
         }
 
         public IActionResult Register()
@@ -50,7 +53,21 @@ namespace WorkDiaryWebApp.Controllers
             {
                 ViewData[MessageConstant.ErrorMessage] = "Invalid data!";
             }
-          
+
+            //Temp code start
+            /*
+            First Registred user is set to Admin
+            In the first registration MainBank is created 
+            */
+            var firstUserId = adminService.IsThatFirstRegistration();
+            
+            if(firstUserId != null)
+            {
+                await adminService.CreateAdminRoleAndMainBank();
+                var roleresult = await userManager.AddToRoleAsync(firstUserId, "Admin");
+            }
+            //Temp code end
+
             return View(model);
         }
 

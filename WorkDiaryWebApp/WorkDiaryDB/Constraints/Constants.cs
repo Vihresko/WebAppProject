@@ -34,6 +34,9 @@
 
         //Income/Outcome
         public const int IN_OUT_COME_DESCRIPTION_MAX_LENGTH = 1000;
+
+        //MainBank
+        public const int MAIN_BANK_NAME_MAX_LENGTH = 50;
        
     }
 }

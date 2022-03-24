@@ -25,12 +25,12 @@ namespace WorkDiaryWebApp.Areas.Admin.Controllers
             return Ok();
         }
 
-        public async Task<IActionResult> ManageUsers()
+        public IActionResult ManageUsers()
         {
             return View();
         }
 
-        public async Task<IActionResult> ShowUsers()
+        public IActionResult ShowUsers()
         {
             var model = adminService.GetUsersInfo();
             return View(model);
