@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkDiaryWebApp.WorkDiaryDB;
 
@@ -11,9 +12,10 @@ using WorkDiaryWebApp.WorkDiaryDB;
 namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
 {
     [DbContext(typeof(WorkDiaryDbContext))]
-    partial class WorkDiaryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220324130616_AddReport")]
+    partial class AddReport
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -385,9 +387,6 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2");
 
                     b.Property<int?>("MainBankId")
                         .HasColumnType("int");

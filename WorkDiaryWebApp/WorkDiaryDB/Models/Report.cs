@@ -4,19 +4,18 @@ using WorkDiaryWebApp.WorkDiaryDB.Constraints;
 
 namespace WorkDiaryWebApp.WorkDiaryDB.Models
 {
-    public class MainBank
+    public class Report
     {
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        [MaxLength(Constants.MAIN_BANK_NAME_MAX_LENGTH)]
-        public string Name { get; set; } = "Vault";
-
         [Column(TypeName = "decimal(18,2)")]
+        public decimal Value { get; set; }
 
-        public decimal Balance { get; set; }
+        [Required]
+        [MaxLength(Constants.USERNAME_MAX_LENGTH)]
+        public string Username { get; set; }
 
-        public ICollection<Report> Reports { get; set; } = new List<Report>();
+        public DateTime DateTime { get; set; } = DateTime.Now;
     }
 }

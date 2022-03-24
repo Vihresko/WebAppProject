@@ -53,10 +53,27 @@ namespace WorkDiaryWebApp.Core.Services
             {
                 return (false, message.ToString());
             }
+           
             bank.ReportedMoney+=model.Value;
+
+            AddReportToMainBank(model.UserId, model.Value);
+
             database.SaveChanges();
             return (isOk, message.ToString());
 
+        }
+
+        private void AddReportToMainBank(string userId, decimal value)
+        {
+            var username = database.Users.Where(u => u.Id == userId).Select(u => u.UserName).First();
+            var report = new Report()
+            {
+                Username = username,
+                Value = value
+            };
+            var mainBank = database.MainBanks.First();
+            mainBank.Reports.Add(report);
+            mainBank.Balance += value;
         }
 
         private Bank GetUserBank(string userId)
