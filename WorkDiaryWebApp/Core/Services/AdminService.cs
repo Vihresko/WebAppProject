@@ -23,19 +23,19 @@ namespace WorkDiaryWebApp.Core.Services
         {
            var allUsers = new List<ShowUserInfoModel>();
 
-            var usersFromDb = database.Users.Select(u => new ShowUserInfoModel()
+            var usersFromDb = await database.Users.Select(u => new ShowUserInfoModel()
             {
                 Username = u.UserName,
                 FullName = u.FullName,
                 UserId = u.Id,
                 UserBankId = u.BankId,
                 Email = u.Email,
-            }).ToList();
+            }).ToListAsync();
 
             foreach (var user in usersFromDb)
             {
-                var roleId = database.UserRoles.Where(r => r.UserId == user.UserId).Select(r => r.RoleId).FirstOrDefault();
-                var role = database.Roles.Where(r => r.Id == roleId).Select(r => r.Name).FirstOrDefault();
+                var roleId = await database.UserRoles.Where(r => r.UserId == user.UserId).Select(r => r.RoleId).FirstOrDefaultAsync();
+                var role = await database.Roles.Where(r => r.Id == roleId).Select(r => r.Name).FirstOrDefaultAsync();
                 
                 user.Role = role;
             }
@@ -46,7 +46,7 @@ namespace WorkDiaryWebApp.Core.Services
 
         public async Task<User> IsThatFirstRegistration()
         {
-            var numberOfUsers = database.Users.Count();
+            var numberOfUsers = await database.Users.CountAsync();
             User user = null;
             if (numberOfUsers == 1)
             {
@@ -63,7 +63,7 @@ namespace WorkDiaryWebApp.Core.Services
             });
 
             var mainBank = new MainBank();
-            database.MainBanks.Add(mainBank);
+            await database.MainBanks.AddAsync(mainBank);
             await database.SaveChangesAsync();
         }
     }

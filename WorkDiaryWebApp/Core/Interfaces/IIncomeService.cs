@@ -6,24 +6,24 @@ namespace WorkDiaryWebApp.Core.Interfaces
 {
     public interface IIncomeService
     {
-        public (bool, string?) AddClientProcedureToVisitBag(AddIncomePostModel model, string clientId);
+        public Task<(bool, string?)> AddClientProcedureToVisitBag(AddIncomePostModel model, string clientId);
 
-        public ListFromProcedures ShowClientHistory(string clientId);
+        public Task<ListFromProcedures> ShowClientHistory(string clientId);
 
-        public ListFromProcedures ShowClientVisitBag(string clientId);
+        public Task<ListFromProcedures> ShowClientVisitBag(string clientId);
 
-        public void RemoveProcedureFromVisitBag(string clientId, string procedureId);
+        public Task RemoveProcedureFromVisitBag(string clientId, string procedureId);
 
-        public string GetInfoForPayment(string clientId, decimal totalPrice, string userId, ListFromProcedures procedures);
+        public Task<string> GetInfoForPayment(string clientId, decimal totalPrice, string userId, ListFromProcedures procedures);
 
-        public bool CompleetePayment(PayPostModel model);
+        public Task<bool> CompleetePayment(PayPostModel model);
 
-        public List<Income> GetUserIncomesHistory(string userId);
+        public Task<List<Income>> GetUserIncomesHistory(string userId);
 
         public Task<bool> CleanUserDiary(string userId);
 
-        public List<Income> GetUnreportedUserIncomes(string userId);
+        public Task<List<Income>> GetUnreportedUserIncomes(string userId);
 
-        public List<Income> GetAllUsersIncomesHistory();
+        public Task<List<Income>> GetAllUsersIncomesHistory();
     }
 }

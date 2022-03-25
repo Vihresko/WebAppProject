@@ -37,7 +37,7 @@ namespace WorkDiaryWebApp.Constraints.Services
 
             try
             {
-                database.Clients.Add(newClient);
+                await database.Clients.AddAsync(newClient);
                 await database.SaveChangesAsync();
             }
             catch
@@ -45,57 +45,6 @@ namespace WorkDiaryWebApp.Constraints.Services
                 return (false, CommonMessage.DATABASE_ERROR);
             }
             return (true, null);
-        }
-
-        private (bool, string) ValidateClientModel(string firstName, string lastName, string email, string birthDay, string? clientId = null)
-        {
-            bool isValidModel = true;
-            var errors = new StringBuilder();
-
-            if (firstName == null || firstName.Length < NAME_MIN_LENGTH || firstName.Length > FIRST_NAME_MAX_LENGTH)
-            {
-                isValidModel = false;
-                errors.AppendLine($"{nameof(firstName)} must be between {NAME_MIN_LENGTH} and {FIRST_NAME_MAX_LENGTH} characters!");
-            }
-            if (lastName == null || lastName.Length < NAME_MIN_LENGTH || lastName.Length > LAST_NAME_MAX_LENGTH)
-            {
-                isValidModel = false;
-                errors.AppendLine($"{nameof(lastName)} must be between {NAME_MIN_LENGTH} and {LAST_NAME_MAX_LENGTH} characters!");
-            }
-            if (email == null || email.Length > EMAIL_MAX_LENGTH)
-            {
-                isValidModel = false;
-                errors.AppendLine($"{nameof(email)} must be maximum from {EMAIL_MAX_LENGTH} symbols");
-            }
-
-            var isValidDate = DateTime.TryParseExact(birthDay, FormatConstant.DATE_TIME_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime birthDayChecked);
-
-            if(birthDayChecked > DateTime.Now)
-            {
-                isValidDate = false;
-                errors.AppendLine("Birth day is in the future!");
-            }
-
-            if (!isValidDate)
-            {
-                isValidModel = false;
-                errors.AppendLine($"{nameof(birthDay)} must be valid DATE like '{FormatConstant.DATE_TIME_FORMAT_EXAM}'!");
-            }
-
-            bool isEmailChanged = database.Clients.Where(c => c.Id == clientId && c.Email != email).Any();
-            bool isEmailExist = false;
-            if (isEmailChanged)
-            {
-                isEmailExist = database.Clients.Where(c => c.Email == email).Any();
-            }
-
-            if (isEmailExist)
-            {
-                isValidModel = false;
-                errors.AppendLine("This email is already registred!");
-            }
-
-            return (isValidModel, errors.ToString());
         }
 
         public async Task<ClientInfoModel> ClientInfo(string clientId)
@@ -168,5 +117,57 @@ namespace WorkDiaryWebApp.Constraints.Services
 
             return (true, null);
         }
+
+        private (bool, string) ValidateClientModel(string firstName, string lastName, string email, string birthDay, string? clientId = null)
+        {
+            bool isValidModel = true;
+            var errors = new StringBuilder();
+
+            if (firstName == null || firstName.Length < NAME_MIN_LENGTH || firstName.Length > FIRST_NAME_MAX_LENGTH)
+            {
+                isValidModel = false;
+                errors.AppendLine($"{nameof(firstName)} must be between {NAME_MIN_LENGTH} and {FIRST_NAME_MAX_LENGTH} characters!");
+            }
+            if (lastName == null || lastName.Length < NAME_MIN_LENGTH || lastName.Length > LAST_NAME_MAX_LENGTH)
+            {
+                isValidModel = false;
+                errors.AppendLine($"{nameof(lastName)} must be between {NAME_MIN_LENGTH} and {LAST_NAME_MAX_LENGTH} characters!");
+            }
+            if (email == null || email.Length > EMAIL_MAX_LENGTH)
+            {
+                isValidModel = false;
+                errors.AppendLine($"{nameof(email)} must be maximum from {EMAIL_MAX_LENGTH} symbols");
+            }
+
+            var isValidDate = DateTime.TryParseExact(birthDay, FormatConstant.DATE_TIME_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime birthDayChecked);
+
+            if (birthDayChecked > DateTime.Now)
+            {
+                isValidDate = false;
+                errors.AppendLine("Birth day is in the future!");
+            }
+
+            if (!isValidDate)
+            {
+                isValidModel = false;
+                errors.AppendLine($"{nameof(birthDay)} must be valid DATE like '{FormatConstant.DATE_TIME_FORMAT_EXAM}'!");
+            }
+
+            bool isEmailChanged = database.Clients.Where(c => c.Id == clientId && c.Email != email).Any();
+            bool isEmailExist = false;
+            if (isEmailChanged)
+            {
+                isEmailExist = database.Clients.Where(c => c.Email == email).Any();
+            }
+
+            if (isEmailExist)
+            {
+                isValidModel = false;
+                errors.AppendLine("This email is already registred!");
+            }
+
+            return (isValidModel, errors.ToString());
+        }
+
     }
 }

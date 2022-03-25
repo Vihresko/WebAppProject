@@ -8,7 +8,6 @@ namespace WorkDiaryWebApp.Core.Interfaces
         public Task<(bool, StringBuilder)> RegisterNewUser(RegisterFormModel model);
 
         public Task<bool> TryToLogin(LoginFormModel model);
-
       
     }
 }

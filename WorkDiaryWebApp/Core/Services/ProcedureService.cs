@@ -44,7 +44,7 @@ namespace WorkDiaryWebApp.Core.Services
 
             try
             {
-                database.Procedures.Add(newProcedure);
+                await database.Procedures.AddAsync(newProcedure);
                 await database.SaveChangesAsync();
             }
             catch

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Text;
 using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.User;
@@ -23,7 +24,7 @@ namespace WorkDiaryWebApp.Core.Services
         public async Task<(bool, StringBuilder)> RegisterNewUser(RegisterFormModel model)
         {
             (bool isValidModel, StringBuilder errors) = ValidateRegisterModel(model);
-            (bool isEmailExist, string? emailError) = ValidateEmail(model.Email);
+            (bool isEmailExist, string? emailError) = await ValidateEmail(model.Email);
 
             if (isEmailExist) errors.AppendLine(emailError);
 
@@ -66,7 +67,7 @@ namespace WorkDiaryWebApp.Core.Services
         public async Task<bool> TryToLogin(LoginFormModel model)
         {
 
-            var user = database.Users.FirstOrDefault(u => u.UserName == model.Username);
+            var user = await database.Users.FirstOrDefaultAsync(u => u.UserName == model.Username);
             bool isValid = false;
             if (user != null)
             {
@@ -80,9 +81,9 @@ namespace WorkDiaryWebApp.Core.Services
             return isValid;
         }
 
-        private (bool, string?) ValidateEmail(string email)
+        private async Task<(bool, string?)> ValidateEmail(string email)
         {
-            var isEmailExist = database.Contacts.Where(c => c.Email == email).Any();
+            var isEmailExist = await database.Contacts.Where(c => c.Email == email).AnyAsync();
             if (isEmailExist)
             {
                 return (true, $"{nameof(email)} already exist!");

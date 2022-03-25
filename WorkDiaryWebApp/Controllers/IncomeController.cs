@@ -22,28 +22,28 @@ namespace WorkDiaryWebApp.Controllers
             userManager = _userManager;
             incomeService = _incomeService;
         }
-        public IActionResult UserIncomes()
+        public async Task<IActionResult> UserIncomes()
         {
             
             var userId = userManager.GetUserId(User);
-            var model = incomeService.GetUnreportedUserIncomes(userId);
+            var model = await incomeService.GetUnreportedUserIncomes(userId);
             ViewBag.Show = "Unreported";
 
             return View(model);
         }
 
 
-        public IActionResult UserIncomesHistory()
+        public async Task<IActionResult> UserIncomesHistory()
         {
             var userId = userManager.GetUserId(User);
-            var model = incomeService.GetUserIncomesHistory(userId);
+            var model = await incomeService.GetUserIncomesHistory(userId);
             return View("~/Views/Income/UserIncomes.cshtml",model);
         }
 
-        public IActionResult CleanUserDiary()
+        public async Task<IActionResult> CleanUserDiary()
         {
             var userId = userManager.GetUserId(User);
-            var isDone = incomeService.CleanUserDiary(userId);
+            var isDone = await incomeService.CleanUserDiary(userId);
             return Redirect("/Income/UserIncomes");
         }
 
@@ -58,7 +58,7 @@ namespace WorkDiaryWebApp.Controllers
         {
             
             string userId = userManager.GetUserId(this.User);
-            (bool isDone, string? errors) = incomeService.AddClientProcedureToVisitBag(addWorkmodel, userId);
+            (bool isDone, string? errors) = await incomeService.AddClientProcedureToVisitBag(addWorkmodel, userId);
 
             var model = await GetWorkModelForView(addWorkmodel.ClientId);
 
@@ -74,40 +74,40 @@ namespace WorkDiaryWebApp.Controllers
             return View("~/Views/Income/CreateIncome.cshtml",model);
         }
 
-        public IActionResult ShowHistoryOfClient(string clientId)
+        public async Task<IActionResult> ShowHistoryOfClient(string clientId)
         {
             TempData["Controller"] = "Income";
             TempData["Action"] = "ShowHistoryOfClient";
             TempData["neededId"] = $"?clientId={clientId}";
             TempData["clientId"] = clientId;
-            var model = incomeService.ShowClientHistory(clientId);
+            var model = await incomeService.ShowClientHistory(clientId);
             return View(model);
         }
 
-        public IActionResult ShowClientVisitBag(string clientId)
+        public async Task<IActionResult> ShowClientVisitBag(string clientId)
         {
             TempData["Controller"] = "Income";
             TempData["Action"] = "CreateIncome";
             TempData["neededId"] = $"?clientId={clientId}";
             TempData["clientId"] = clientId;
-            var model = incomeService.ShowClientVisitBag(clientId);
+            var model = await incomeService.ShowClientVisitBag(clientId);
             return View(model);
         }
 
-        public IActionResult RemoveProcedure(string clientId, string procedureId)
+        public async Task<IActionResult> RemoveProcedure(string clientId, string procedureId)
         {
-            incomeService.RemoveProcedureFromVisitBag(clientId, procedureId);
+            await incomeService.RemoveProcedureFromVisitBag(clientId, procedureId);
             return Redirect($"/Income/ShowClientVisitBag?clientId={clientId}");
           
         }
 
         [HttpPost]
-        public IActionResult Pay(string clientId, decimal totalPrice)
+        public async Task<IActionResult> Pay(string clientId, decimal totalPrice)
         {
-            var proceduresInfo = incomeService.ShowClientVisitBag(clientId);
+            var proceduresInfo = await incomeService.ShowClientVisitBag(clientId);
             string userId = userManager.GetUserId(this.User);
             //TODO: userId do nothing?
-            string document = incomeService.GetInfoForPayment(clientId, totalPrice, userId, proceduresInfo);
+            string document = await incomeService.GetInfoForPayment(clientId, totalPrice, userId, proceduresInfo);
             var model = new PayPostModel()
             {
                 Description = document,
@@ -119,9 +119,9 @@ namespace WorkDiaryWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult ConfirmPay(PayPostModel model)
+        public async Task<IActionResult> ConfirmPay(PayPostModel model)
         {
-            var result = incomeService.CompleetePayment(model);
+            var result = await incomeService.CompleetePayment(model);
 
             //TODO:Redirect correctly
             return Redirect($"/Income/ShowClientVisitBag?clientId={model.ClientId}");

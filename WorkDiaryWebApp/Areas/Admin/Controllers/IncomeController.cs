@@ -11,9 +11,9 @@ namespace WorkDiaryWebApp.Areas.Admin.Controllers
             incomeService = _incomeService;
         }
 
-        public IActionResult TotalIncomes()
+        public async Task <IActionResult> TotalIncomes()
         {
-            var model = incomeService.GetAllUsersIncomesHistory();
+            var model = await incomeService.GetAllUsersIncomesHistory();
             return View(model);
         }
     }

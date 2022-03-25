@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Text;
 using WorkDiaryWebApp.Core.Constants;
 using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Income;
@@ -16,9 +17,9 @@ namespace WorkDiaryWebApp.Core.Services
         {
             database = _database;
         }
-        public (bool, string?) AddClientProcedureToVisitBag(AddIncomePostModel model, string userId)
+        public async Task<(bool, string?)> AddClientProcedureToVisitBag(AddIncomePostModel model, string userId)
         {
-            var clientBagId = database.Clients.Where(c => c.Id == model.ClientId).Select(c => c.VisitBagId).FirstOrDefault();
+            var clientBagId = await database.Clients.Where(c => c.Id == model.ClientId).Select(c => c.VisitBagId).FirstOrDefaultAsync();
             
             var work = new ClientProcedure()
             {
@@ -28,22 +29,22 @@ namespace WorkDiaryWebApp.Core.Services
                 VisitBagId = clientBagId
             };
 
-            var isDoubling = database.ClientProcedures.Where(cp => cp.VisitBagId == clientBagId && cp.ProcedureId == model.ProcedureId).Any();
+            var isDoubling = await database.ClientProcedures.Where(cp => cp.VisitBagId == clientBagId && cp.ProcedureId == model.ProcedureId).AnyAsync();
 
             if (isDoubling)
             {
                 return (false, "This procedure is already added in client visitbag!");
             }
-            database.ClientProcedures.Add(work);
-            database.SaveChanges();
+            await database.ClientProcedures.AddAsync(work);
+            await database.SaveChangesAsync();
             return (true, null);
            
         }
 
-        public bool CompleetePayment(PayPostModel model)
+        public async Task<bool> CompleetePayment(PayPostModel model)
         {
-            var userBank = database.Users.Where(u => u.Id == model.UserId).Select(u => u.Bank).FirstOrDefault();
-            var clientVisitBagId = database.Clients.Where(c => c.Id == model.ClientId).Select(c => c.VisitBagId).FirstOrDefault();
+            var userBank = await database.Users.Where(u => u.Id == model.UserId).Select(u => u.Bank).FirstOrDefaultAsync();
+            var clientVisitBagId = await database.Clients.Where(c => c.Id == model.ClientId).Select(c => c.VisitBagId).FirstOrDefaultAsync();
 
             var income = new Income()
             {
@@ -51,31 +52,31 @@ namespace WorkDiaryWebApp.Core.Services
                 Description = model.Description,
                 Value = model.Value,
             };
-            database.Incomes.Add(income);
+            await database.Incomes.AddAsync(income);
 
-            var clientProceduresForClose = database.ClientProcedures.Where(cp => cp.UserId == model.UserId &&
+            var clientProceduresForClose = await database.ClientProcedures.Where(cp => cp.UserId == model.UserId &&
                                                                                  cp.ClientId == model.ClientId &&
-                                                                                 cp.VisitBagId == clientVisitBagId).ToList();
+                                                                                 cp.VisitBagId == clientVisitBagId).ToListAsync();
 
             foreach (var cp in clientProceduresForClose)
             {
                 cp.VisitBagId = null;
             }
             userBank.TakenMoney += model.Value;
-            database.SaveChanges();
+            await database.SaveChangesAsync();
             return true;
         }
 
-        public List<Income> GetAllUsersIncomesHistory()
+        public async Task<List<Income>> GetAllUsersIncomesHistory()
         {
-            var usersIncomes = database.Incomes.Where(i => i.IsReported == true).OrderByDescending(i => i.Id).ToList();
+            var usersIncomes = await database.Incomes.Where(i => i.IsReported == true).OrderByDescending(i => i.Id).ToListAsync();
             return usersIncomes;
         }
 
-        public string GetInfoForPayment(string clientId, decimal totalPrice, string userId, ListFromProcedures procedures)
+        public async Task<string> GetInfoForPayment(string clientId, decimal totalPrice, string userId, ListFromProcedures procedures)
         {
             var document = new StringBuilder();
-            var client = database.Clients.Where(c => c.Id == clientId).FirstOrDefault();
+            var client = await database.Clients.Where(c => c.Id == clientId).FirstOrDefaultAsync();
             document.AppendLine($"Today: {DateTime.Now.ToString()}, '{client.FirstName} {client.LastName}' with email:'{client.Email}' pay below procedures:");
             int count = 0;
             foreach (var pr in procedures.Procedures)
@@ -89,33 +90,33 @@ namespace WorkDiaryWebApp.Core.Services
             return document.ToString();
         }
 
-        public List<Income> GetUnreportedUserIncomes(string userId)
+        public async Task<List<Income>> GetUnreportedUserIncomes(string userId)
         {
-            var userBankId = database.Users.Where(u => u.Id == userId).Select(u => u.BankId).FirstOrDefault();
-            var userIncomes = database.Incomes.Where(i => i.BankId == userBankId && i.IsReported == false).OrderByDescending(i => i.Id).ToList();
+            var userBankId = await database.Users.Where(u => u.Id == userId).Select(u => u.BankId).FirstOrDefaultAsync();
+            var userIncomes = await database.Incomes.Where(i => i.BankId == userBankId && i.IsReported == false).OrderByDescending(i => i.Id).ToListAsync();
             return userIncomes;
         }
 
-        public List<Income> GetUserIncomesHistory(string userId)
+        public async Task<List<Income>> GetUserIncomesHistory(string userId)
         {
-            var userBankId = database.Users.Where(u => u.Id == userId).Select(u => u.BankId).FirstOrDefault();
-            var userIncomes = database.Incomes.Where(i => i.BankId == userBankId && i.IsReported == true).OrderByDescending(i => i.Id).ToList();
+            var userBankId = await database.Users.Where(u => u.Id == userId).Select(u => u.BankId).FirstOrDefaultAsync();
+            var userIncomes = await database.Incomes.Where(i => i.BankId == userBankId && i.IsReported == true).OrderByDescending(i => i.Id).ToListAsync();
             return userIncomes;
         }
 
 
-        public void RemoveProcedureFromVisitBag(string clientId, string procedureId)
+        public async Task RemoveProcedureFromVisitBag(string clientId, string procedureId)
         {
-            var clientBagId = database.Clients.Where(c => c.Id == clientId).Select(c => c.VisitBagId).FirstOrDefault();
-            var workForDelete = database.ClientProcedures.Where(cp => cp.ProcedureId == procedureId && cp.ClientId == clientId && cp.VisitBagId == clientBagId).FirstOrDefault();
+            var clientBagId = await database.Clients.Where(c => c.Id == clientId).Select(c => c.VisitBagId).FirstOrDefaultAsync();
+            var workForDelete = await database.ClientProcedures.Where(cp => cp.ProcedureId == procedureId && cp.ClientId == clientId && cp.VisitBagId == clientBagId).FirstOrDefaultAsync();
             database.ClientProcedures.Remove(workForDelete);
-            database.SaveChanges();
+            await database.SaveChangesAsync();
         }
 
         public async Task<bool> CleanUserDiary(string userId)
         {
-            var userBankId = database.Users.Where(u => u.Id == userId).Select(u => u.BankId).FirstOrDefault();
-            var userIncomes = database.Incomes.Where(i => i.BankId == userBankId && i.IsReported == false).ToList();
+            var userBankId = await database.Users.Where(u => u.Id == userId).Select(u => u.BankId).FirstOrDefaultAsync();
+            var userIncomes = await database.Incomes.Where(i => i.BankId == userBankId && i.IsReported == false).ToListAsync();
 
             foreach (var income in userIncomes)
             {
@@ -134,14 +135,14 @@ namespace WorkDiaryWebApp.Core.Services
             return true;
         }
 
-        public ListFromProcedures ShowClientHistory(string clientId)
+        public async Task<ListFromProcedures> ShowClientHistory(string clientId)
         {
-           var clientProceduresFromDb = database.ClientProcedures.Where(cp => cp.ClientId == clientId && string.IsNullOrEmpty(cp.VisitBagId)).OrderByDescending(cp => cp.Date).ToList();
+           var clientProceduresFromDb = await database.ClientProcedures.Where(cp => cp.ClientId == clientId && string.IsNullOrEmpty(cp.VisitBagId)).OrderByDescending(cp => cp.Date).ToListAsync();
 
             var model = new ListFromProcedures();
             foreach (var cp in clientProceduresFromDb)
             {
-                var procedure = database.Procedures.Where(p => p.Id == cp.ProcedureId).FirstOrDefault();
+                var procedure = await database.Procedures.Where(p => p.Id == cp.ProcedureId).FirstOrDefaultAsync();
                 ShowProcedureModel procedureModel = new ShowProcedureModel()
                 {
                     Name = procedure.Name,
@@ -155,15 +156,15 @@ namespace WorkDiaryWebApp.Core.Services
             return model;
         }
 
-        public ListFromProcedures ShowClientVisitBag(string clientId)
+        public async Task<ListFromProcedures> ShowClientVisitBag(string clientId)
         {
-            var clientProceduresFromDb = database.ClientProcedures.Where(cp => cp.ClientId == clientId && cp.VisitBagId != null)
-                                                                  .OrderByDescending(cp => cp.Date).ToList();
+            var clientProceduresFromDb = await database.ClientProcedures.Where(cp => cp.ClientId == clientId && cp.VisitBagId != null)
+                                                                  .OrderByDescending(cp => cp.Date).ToListAsync();
 
             var model = new ListFromProcedures();
             foreach (var cp in clientProceduresFromDb)
             {
-                var procedure = database.Procedures.Where(p => p.Id == cp.ProcedureId).FirstOrDefault();
+                var procedure = await database.Procedures.Where(p => p.Id == cp.ProcedureId).FirstOrDefaultAsync();
                 ShowProcedureModel procedureModel = new ShowProcedureModel()
                 {
                     Name = procedure.Name,
