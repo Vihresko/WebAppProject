@@ -17,19 +17,19 @@ namespace WorkDiaryWebApp.Controllers
             userManager = _userManager;
         }
 
-        public IActionResult UserBank()
+        public async Task <IActionResult> UserBank()
         {
             var userId = userManager.GetUserId(User);
-            var model = bankService.GetUserBankBalance(userId);
+            var model = await bankService.GetUserBankBalance(userId);
             return View(model);
         }
 
        
 
         [HttpPost]
-        public IActionResult ReportMoney(ReportMoneyPostModel model)
+        public async Task<IActionResult> ReportMoney(ReportMoneyPostModel model)
         {
-            (bool isDone, string message) = bankService.ReportMoney(model);
+            (bool isDone, string message) = await bankService.ReportMoney(model);
             
             return Redirect($"/Bank/UserBank");
         }

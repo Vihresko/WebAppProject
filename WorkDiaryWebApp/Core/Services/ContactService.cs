@@ -1,4 +1,5 @@
-﻿using WorkDiaryWebApp.Core.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Contact;
 using WorkDiaryWebApp.WorkDiaryDB;
 
@@ -11,15 +12,15 @@ namespace WorkDiaryWebApp.Core.Services
         {
             database = _database;
         }
-        public List<UserContactGetModel> GetAllContacts()
+        public async Task<List<UserContactGetModel>> GetAllContacts()
         {
-            var userNames = database.Users.Select(x => new
+            var userNames = await database.Users.Select(x => new
             {
                 FullName = x.FullName,
                 ContactId = x.ContactId
-            }).ToList();
+            }).ToListAsync();
 
-            var contactsInfo = database.Contacts.ToList();
+            var contactsInfo = await database.Contacts.ToListAsync();
 
             var contacts = new List<UserContactGetModel>();
 

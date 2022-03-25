@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 using System.Text;
 using WorkDiaryWebApp.Core.Constants;
 using WorkDiaryWebApp.Core.Interfaces;
@@ -16,7 +17,7 @@ namespace WorkDiaryWebApp.Constraints.Services
         {
             database = db;
         }
-        public (bool, string?) AddNewClient(AddClientModel model)
+        public async Task<(bool, string?)> AddNewClient(AddClientModel model)
         {
             (bool isValidModel, string errors) = ValidateClientModel(model.FirstName, model.LastName, model.Email, model.BirthDay);
 
@@ -37,7 +38,7 @@ namespace WorkDiaryWebApp.Constraints.Services
             try
             {
                 database.Clients.Add(newClient);
-                database.SaveChanges();
+                await database.SaveChangesAsync();
             }
             catch
             {
@@ -97,9 +98,9 @@ namespace WorkDiaryWebApp.Constraints.Services
             return (isValidModel, errors.ToString());
         }
 
-        public ClientInfoModel ClientInfo(string clientId)
+        public async Task<ClientInfoModel> ClientInfo(string clientId)
         {
-            var clientFromDb = database.Clients.Where(c => c.Id == clientId).FirstOrDefault();
+            var clientFromDb = await database.Clients.Where(c => c.Id == clientId).FirstOrDefaultAsync();
             ClientInfoModel model = new ClientInfoModel()
             {
                 FirstName = clientFromDb.FirstName,
@@ -112,10 +113,10 @@ namespace WorkDiaryWebApp.Constraints.Services
             return model;
         }
 
-        public ListFromClients GetAllClients()
+        public async Task<ListFromClients> GetAllClients()
         {
             var model = new ListFromClients();
-            var clientsFromDB = database.Clients.ToHashSet();
+            var clientsFromDB = await database.Clients.ToListAsync();
             foreach (var client in clientsFromDB)
             {
                 ShowClientModel clientModel = new ShowClientModel()
@@ -130,7 +131,7 @@ namespace WorkDiaryWebApp.Constraints.Services
             return model;
         }
 
-        public (bool, string?) EditClient(ClientInfoModel model)
+        public async Task<(bool, string?)> EditClient(ClientInfoModel model)
         {
             (bool isValidModel, string errors) = ValidateClientModel(model.FirstName, model.LastName, model.Email, model.BirthDay, model.Id);
 
@@ -143,7 +144,7 @@ namespace WorkDiaryWebApp.Constraints.Services
             {
                 return (isValidModel, errors);
             }
-            var originState = database.Clients.Where(c => c.Id == model.Id).FirstOrDefault();
+            var originState = await database.Clients.Where(c => c.Id == model.Id).FirstOrDefaultAsync();
             var birthDay = DateTime.ParseExact(model.BirthDay, FormatConstant.DATE_TIME_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None);
             if (originState.FirstName == model.FirstName && originState.LastName == model.LastName
                 && originState.Email == model.Email && originState.IsActive == model.IsActive
@@ -158,7 +159,7 @@ namespace WorkDiaryWebApp.Constraints.Services
                 originState.Email = model.Email;
                 originState.IsActive = model.IsActive;
                 originState.BirthDay = birthDay;
-                database.SaveChanges();
+                await database.SaveChangesAsync();
             }
             catch
             {

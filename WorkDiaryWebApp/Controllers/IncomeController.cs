@@ -47,20 +47,20 @@ namespace WorkDiaryWebApp.Controllers
             return Redirect("/Income/UserIncomes");
         }
 
-        public IActionResult CreateIncome(string clientId)
+        public async Task<IActionResult> CreateIncome(string clientId)
         {
-            var model = GetWorkModelForView(clientId);
+            var model = await GetWorkModelForView(clientId);
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult AddIncomeToClientVisitBag(AddIncomePostModel addWorkmodel)
+        public async Task<IActionResult> AddIncomeToClientVisitBag(AddIncomePostModel addWorkmodel)
         {
             
             string userId = userManager.GetUserId(this.User);
             (bool isDone, string? errors) = incomeService.AddClientProcedureToVisitBag(addWorkmodel, userId);
 
-            var model = GetWorkModelForView(addWorkmodel.ClientId);
+            var model = await GetWorkModelForView(addWorkmodel.ClientId);
 
             if (isDone)
             {
@@ -127,15 +127,15 @@ namespace WorkDiaryWebApp.Controllers
             return Redirect($"/Income/ShowClientVisitBag?clientId={model.ClientId}");
         }
 
-        private WorkModel GetWorkModelForView(string clientId)
+        private async Task<WorkModel> GetWorkModelForView(string clientId)
         {
             //TempData is needed for Back button 
             TempData["Controller"] = "Income";
             TempData["Action"] = "CreateIncome";
             TempData["neededId"] = $"?clientId={clientId}";
 
-            var clientModel = clientService.ClientInfo(clientId);
-            var proceduresModel = procedureService.GetAllProcedures();
+            var clientModel = await clientService.ClientInfo(clientId);
+            var proceduresModel = await procedureService.GetAllProcedures();
             var model = new WorkModel(clientModel, proceduresModel);
             return model;
         }

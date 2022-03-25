@@ -10,9 +10,9 @@ namespace WorkDiaryWebApp.Areas.Admin.Controllers
         {
             mainBankService = _mainBankService;
         }
-        public IActionResult MainBank()
+        public async Task<IActionResult> MainBank()
         {
-            var model = mainBankService.GetMainBankInfo();
+            var model = await mainBankService.GetMainBankInfo();
             return View(model);
         }
     }

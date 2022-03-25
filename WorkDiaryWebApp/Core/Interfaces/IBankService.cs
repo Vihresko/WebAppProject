@@ -4,8 +4,8 @@ namespace WorkDiaryWebApp.Core.Interfaces
 {
     public interface IBankService
     {
-        public (bool, string) ReportMoney(ReportMoneyPostModel model);
+        public Task<(bool, string)> ReportMoney(ReportMoneyPostModel model);
 
-        public UserBankStatusGetModel GetUserBankBalance(string userId);
+        public Task<UserBankStatusGetModel> GetUserBankBalance(string userId);
     }
 }

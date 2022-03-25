@@ -10,9 +10,9 @@ namespace WorkDiaryWebApp.Controllers
         {
             contactService = _contactService;
         }
-        public IActionResult Contacts()
+        public async Task<IActionResult> Contacts()
         {
-            var model = contactService.GetAllContacts();
+            var model = await contactService.GetAllContacts();
 
             return View(model);
         }

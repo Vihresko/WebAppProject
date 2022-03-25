@@ -4,6 +4,6 @@ namespace WorkDiaryWebApp.Core.Interfaces
 {
     public interface IContactService
     {
-        public List<UserContactGetModel> GetAllContacts();
+        public Task<List<UserContactGetModel>> GetAllContacts();
     }
 }

@@ -59,7 +59,7 @@ namespace WorkDiaryWebApp.Controllers
             First Registred user is set to Admin
             In the first registration MainBank is created 
             */
-            var firstUserId = adminService.IsThatFirstRegistration();
+            var firstUserId = await adminService.IsThatFirstRegistration();
             
             if(firstUserId != null)
             {

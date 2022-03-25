@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Admin;
 using WorkDiaryWebApp.WorkDiaryDB;
@@ -18,7 +19,7 @@ namespace WorkDiaryWebApp.Core.Services
             roleManager = _roleManager;
         }
 
-        public List<ShowUserInfoModel> GetUsersInfo()
+        public async Task<List<ShowUserInfoModel>> GetUsersInfo()
         {
            var allUsers = new List<ShowUserInfoModel>();
 
@@ -43,13 +44,13 @@ namespace WorkDiaryWebApp.Core.Services
             return allUsers;
         }
 
-        public User IsThatFirstRegistration()
+        public async Task<User> IsThatFirstRegistration()
         {
             var numberOfUsers = database.Users.Count();
             User user = null;
             if (numberOfUsers == 1)
             {
-                user = database.Users.First();
+                user = await database.Users.FirstAsync();
             }
             return user;
         }

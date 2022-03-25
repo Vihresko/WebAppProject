@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Text;
 using WorkDiaryWebApp.Core.Constants;
 using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Procedure;
@@ -16,7 +17,7 @@ namespace WorkDiaryWebApp.Core.Services
         {
             database = db;
         }
-        public (bool, string?) AddNewProcedure(AddProcedureModel model)
+        public async Task<(bool, string?)> AddNewProcedure(AddProcedureModel model)
         {
             
             (bool isValidModel, string errors) = ValidateProcedureValues(model.Name, model.Description, model.Price);
@@ -44,7 +45,7 @@ namespace WorkDiaryWebApp.Core.Services
             try
             {
                 database.Procedures.Add(newProcedure);
-                database.SaveChanges();
+                await database.SaveChangesAsync();
             }
             catch
             {
@@ -53,7 +54,7 @@ namespace WorkDiaryWebApp.Core.Services
             return (true, null);
         }
 
-        public (bool, string?) EditProcedure(ShowProcedureModel model)
+        public async Task<(bool, string?)> EditProcedure(ShowProcedureModel model)
         {
             (bool isValidModel, string errors) = ValidateProcedureValues(model.Name, model.Description, model.Price);
 
@@ -61,7 +62,7 @@ namespace WorkDiaryWebApp.Core.Services
             {
                 return (isValidModel, errors.ToString());
             }
-            var originState = database.Procedures.Where(p => p.Id == model.Id).FirstOrDefault();
+            var originState = await database.Procedures.Where(p => p.Id == model.Id).FirstOrDefaultAsync();
 
             if (originState.Name == model.Name &&
                originState.Description == model.Description &&
@@ -77,7 +78,7 @@ namespace WorkDiaryWebApp.Core.Services
                 originState.Description = model.Description;
                 originState.Price = model.Price;
                 originState.IsActive = model.IsActive;
-                database.SaveChanges();
+                await database.SaveChangesAsync();
             }
             catch
             {
@@ -86,10 +87,10 @@ namespace WorkDiaryWebApp.Core.Services
             return (true, null);
         }
 
-        public ListFromProcedures GetAllProcedures()
+        public async Task<ListFromProcedures> GetAllProcedures()
         {
             var model = new ListFromProcedures();
-            var proceduresFromDB = database.Procedures.ToHashSet();
+            var proceduresFromDB = await database.Procedures.ToListAsync();
             foreach (var procedure in proceduresFromDB)
             {
                 ShowProcedureModel procedureModel = new ShowProcedureModel()
@@ -105,9 +106,9 @@ namespace WorkDiaryWebApp.Core.Services
             return model;
         }
 
-        public ShowProcedureModel ProcedureInfo(string procedureId)
+        public async Task<ShowProcedureModel> ProcedureInfo(string procedureId)
         {
-            var procedureFromDb = database.Procedures.Where(p => p.Id == procedureId).FirstOrDefault();
+            var procedureFromDb = await database.Procedures.Where(p => p.Id == procedureId).FirstOrDefaultAsync();
             ShowProcedureModel model = new ShowProcedureModel()
             {
                 Name = procedureFromDb.Name,

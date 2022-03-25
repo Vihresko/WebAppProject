@@ -12,16 +12,16 @@ namespace WorkDiaryWebApp.Controllers
         {
             clientService = _clientService;
         }
-        public IActionResult Clients()
+        public async Task<IActionResult> Clients()
         {
-            var model = clientService.GetAllClients();
+            var model = await clientService.GetAllClients();
             return View(model);
         }
 
        
-        public IActionResult Client(string clientId)
+        public async Task<IActionResult> Client(string clientId)
         {
-            var clientModel = clientService.ClientInfo(clientId);
+            var clientModel = await clientService.ClientInfo(clientId);
             return View(clientModel);
         }
 
@@ -30,13 +30,13 @@ namespace WorkDiaryWebApp.Controllers
             return View(new AddClientModel());
         }
         [HttpPost]
-        public IActionResult AddClient(AddClientModel model)
+        public async Task<IActionResult> AddClient(AddClientModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            (bool isDone, string? errors) = clientService.AddNewClient(model);
+            (bool isDone, string? errors) =await clientService.AddNewClient(model);
 
             if (!isDone)
             {
@@ -60,9 +60,9 @@ namespace WorkDiaryWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditClient(ClientInfoModel model)
+        public async Task<IActionResult> EditClient(ClientInfoModel model)
         {
-            (bool isDone, string? errors) = clientService.EditClient(model);
+            (bool isDone, string? errors) = await clientService.EditClient(model);
 
             if (isDone)
             {
@@ -79,9 +79,9 @@ namespace WorkDiaryWebApp.Controllers
             return View(model);
         }
 
-        public IActionResult EditClient(string clientId)
+        public async Task<IActionResult> EditClient(string clientId)
         {
-            var model = clientService.ClientInfo(clientId);
+            var model = await clientService.ClientInfo(clientId);
             return View(model);
         }
     }

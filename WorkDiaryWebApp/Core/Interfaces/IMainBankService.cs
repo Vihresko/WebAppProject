@@ -4,6 +4,6 @@ namespace WorkDiaryWebApp.Core.Interfaces
 {
     public interface IMainBankService
     {
-        public MainBankInfoModel GetMainBankInfo();
+        public Task<MainBankInfoModel> GetMainBankInfo();
     }
 }

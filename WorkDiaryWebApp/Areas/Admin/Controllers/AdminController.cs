@@ -30,9 +30,9 @@ namespace WorkDiaryWebApp.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult ShowUsers()
+        public async Task<IActionResult> ShowUsers()
         {
-            var model = adminService.GetUsersInfo();
+            var model = await adminService.GetUsersInfo();
             return View(model);
         }
 

@@ -1,4 +1,5 @@
-﻿using WorkDiaryWebApp.Core.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.MainBank;
 using WorkDiaryWebApp.WorkDiaryDB;
 
@@ -11,9 +12,9 @@ namespace WorkDiaryWebApp.Core.Services
         {
             database = _database;
         }
-        public MainBankInfoModel GetMainBankInfo()
+        public async Task<MainBankInfoModel> GetMainBankInfo()
         {
-            var reports = database.Reports.OrderByDescending(r => r.DateTime).ToList();
+            var reports = await database.Reports.OrderByDescending(r => r.DateTime).ToListAsync();
             var balance = reports.Sum(r => r.Value);
             var model = new MainBankInfoModel()
             {
@@ -23,5 +24,6 @@ namespace WorkDiaryWebApp.Core.Services
 
             return model;
         }
+
     }
 }

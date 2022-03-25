@@ -5,9 +5,9 @@ namespace WorkDiaryWebApp.Core.Interfaces
 {
     public interface IAdminService
     {
-        public List<ShowUserInfoModel> GetUsersInfo();
+        public Task<List<ShowUserInfoModel>> GetUsersInfo();
 
-        public User IsThatFirstRegistration();
+        public Task<User> IsThatFirstRegistration();
 
         public Task CreateAdminRoleAndMainBank();
 

@@ -18,14 +18,14 @@ namespace WorkDiaryWebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddProcedure(AddProcedureModel model)
+        public async Task<IActionResult> AddProcedure(AddProcedureModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            (bool isDone, string? errors) =  procedureService.AddNewProcedure(model);
+            (bool isDone, string? errors) =  await procedureService.AddNewProcedure(model);
 
             if (!isDone)
             {
@@ -47,16 +47,16 @@ namespace WorkDiaryWebApp.Areas.Admin.Controllers
             return View(model);
         }
 
-        public IActionResult EditProcedure(string procedureId)
+        public async Task<IActionResult> EditProcedure(string procedureId)
         {
-            var model = procedureService.ProcedureInfo(procedureId);
+            var model = await procedureService.ProcedureInfo(procedureId);
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult EditProcedure(ShowProcedureModel model)
+        public async Task<IActionResult> EditProcedure(ShowProcedureModel model)
         {
-            (bool isDone, string? errors) = procedureService.EditProcedure(model);
+            (bool isDone, string? errors) = await procedureService.EditProcedure(model);
 
             if (isDone)
             {

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Text;
 using WorkDiaryWebApp.Core.Constants;
 using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Bank;
@@ -15,9 +16,9 @@ namespace WorkDiaryWebApp.Core.Services
             database = _database;
         }
 
-        public UserBankStatusGetModel GetUserBankBalance(string userId)
+        public async Task <UserBankStatusGetModel> GetUserBankBalance(string userId)
         {
-            var bank = GetUserBank(userId);
+            var bank =  await GetUserBank(userId);
             var userBankStatus = new UserBankStatusGetModel()
             {
                 UserId = userId,
@@ -27,9 +28,9 @@ namespace WorkDiaryWebApp.Core.Services
             return userBankStatus;
         }
 
-        public (bool, string) ReportMoney(ReportMoneyPostModel model)
+        public async Task<(bool, string)> ReportMoney(ReportMoneyPostModel model)
         {
-            var bank = GetUserBank(model.UserId);
+            var bank = await GetUserBank(model.UserId);
             var neededMoney = bank.TakenMoney - bank.ReportedMoney;
 
             var message = new StringBuilder();
@@ -56,30 +57,30 @@ namespace WorkDiaryWebApp.Core.Services
            
             bank.ReportedMoney+=model.Value;
 
-            AddReportToMainBank(model.UserId, model.Value);
+            await AddReportToMainBank(model.UserId, model.Value);
 
-            database.SaveChanges();
             return (isOk, message.ToString());
 
         }
 
-        private void AddReportToMainBank(string userId, decimal value)
+        private async Task AddReportToMainBank(string userId, decimal value)
         {
-            var username = database.Users.Where(u => u.Id == userId).Select(u => u.UserName).First();
+            var username = await database.Users.Where(u => u.Id == userId).Select(u => u.UserName).FirstAsync();
             var report = new Report()
             {
                 Username = username,
                 Value = value
             };
-            var mainBank = database.MainBanks.First();
+            var mainBank = await database.MainBanks.FirstAsync();
             mainBank.Reports.Add(report);
             mainBank.Balance += value;
+            await database.SaveChangesAsync();
         }
 
-        private Bank GetUserBank(string userId)
+        private async Task<Bank> GetUserBank(string userId)
         {
-            var userBankId = database.Users.Where(u => u.Id == userId).Select(u => u.BankId).First();
-            var bank = database.Banks.Where(b => b.Id == userBankId).First();
+            var userBankId = await database.Users.Where(u => u.Id == userId).Select(u => u.BankId).FirstAsync();
+            var bank = await database.Banks.Where(b => b.Id == userBankId).FirstAsync();
             return bank;
         }
     }

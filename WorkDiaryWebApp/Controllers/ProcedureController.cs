@@ -12,9 +12,9 @@ namespace WorkDiaryWebApp.Controllers
         {
             procedureService = _procedureService;
         }
-        public IActionResult Procedures()
+        public async Task<IActionResult> Procedures()
         {
-            var model = procedureService.GetAllProcedures();
+            var model = await procedureService.GetAllProcedures();
 
             //TempData is needed for Back button 
             TempData["Controller"] = "Procedure";
@@ -23,9 +23,9 @@ namespace WorkDiaryWebApp.Controllers
             return View(model);
         }
 
-        public IActionResult Procedure(string procedureId)
+        public async Task<IActionResult> Procedure(string procedureId)
         {
-            var model = procedureService.ProcedureInfo(procedureId);
+            var model = await procedureService.ProcedureInfo(procedureId);
            
             return View(model);
         }
