@@ -13,5 +13,9 @@ namespace WorkDiaryWebApp.Core.Interfaces
 
         public Task<ShowUserInfoModel> GetUserInfo(string userId);
 
+        public Task<(bool, string)> UpdateUser(ShowUserInfoModel user);
+
+        
+
     }
 }

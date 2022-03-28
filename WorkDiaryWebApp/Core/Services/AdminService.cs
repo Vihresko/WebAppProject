@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Admin;
 using WorkDiaryWebApp.WorkDiaryDB;
@@ -11,12 +12,14 @@ namespace WorkDiaryWebApp.Core.Services
     {
         private readonly WorkDiaryDbContext database;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<User> userManager;
 
 
-        public AdminService(WorkDiaryDbContext _database, RoleManager<IdentityRole> _roleManager)
+        public AdminService(WorkDiaryDbContext _database, RoleManager<IdentityRole> _roleManager, UserManager<User> _userManager)
         {
             database = _database;
             roleManager = _roleManager;
+            userManager = _userManager;
         }
 
         public async Task<List<ShowUserInfoModel>> GetUsersInfo()
@@ -33,10 +36,10 @@ namespace WorkDiaryWebApp.Core.Services
 
             foreach (var user in usersFromDb)
             {
-                var roleId = await database.UserRoles.Where(r => r.UserId == user.UserId).Select(r => r.RoleId).FirstOrDefaultAsync();
-                var role = await database.Roles.Where(r => r.Id == roleId).Select(r => r.Name).ToArrayAsync();
+                var rolesId = await database.UserRoles.Where(r => r.UserId == user.UserId).Select(r => r.RoleId).ToArrayAsync();
+                var rolesNames = await database.Roles.Where(r => rolesId.Contains(r.Id)).Select(r => r.Name).ToArrayAsync();
                 
-                user.Roles = role;
+                user.Roles = rolesNames;
             }
 
             allUsers.AddRange(usersFromDb);
@@ -61,6 +64,11 @@ namespace WorkDiaryWebApp.Core.Services
                 Name = "Admin"
             });
 
+            await roleManager.CreateAsync(new IdentityRole()
+            {
+                Name = "User"
+            });
+
             var mainBank = new MainBank();
             await database.MainBanks.AddAsync(mainBank);
             await database.SaveChangesAsync();
@@ -83,6 +91,59 @@ namespace WorkDiaryWebApp.Core.Services
             var roles = await database.Roles.Where(r => rolesId.Contains(r.Id)).Select(r => r.Name).ToArrayAsync();
             userModel.Roles = roles;
             return userModel;
+        }
+
+        public async Task<(bool, string)> UpdateUser(ShowUserInfoModel model)
+        {
+            var errors = new StringBuilder();
+            bool isValid = true;
+            var currentUser = await database.Users.FirstOrDefaultAsync(u => u.Id == model.UserId);
+            var currentRolesId = await database.UserRoles.Where(ur => ur.UserId == model.UserId).Select(ur => ur.RoleId).ToArrayAsync();
+            var currentRolesNames = await database.Roles.Where(r => currentRolesId.Contains(r.Id)).Select(r=> r.Name).ToArrayAsync();
+            var currentContact = await database.Contacts.FirstOrDefaultAsync(u => u.Id == currentUser.ContactId);
+
+            if(currentUser == null)
+            {
+                return (false, "Not existing user!");
+            }
+
+            if(currentUser.UserName != model.Username)
+            {
+                if(await database.Users.AnyAsync(u => u.UserName == model.Username))
+                {
+                    isValid = false;
+                    errors.AppendLine($"This username {model.Username} already exist");
+                }
+                else
+                {
+                    currentUser.UserName = model.Username;
+                }
+            }
+
+            if(currentUser.FullName != model.FullName)
+            {
+                currentUser.FullName = model.FullName;
+            }
+
+            if(currentContact.Email != model.Email)
+            {
+                currentContact.Email = model.Email;
+            }
+
+            if(currentRolesNames != null)
+            {
+                var removeUserRoles = await userManager.RemoveFromRolesAsync(currentUser, currentRolesNames);
+            }
+
+            var addUserRoles = await userManager.AddToRolesAsync(currentUser, model.Roles);
+
+            if (isValid)
+            {
+                await database.SaveChangesAsync();
+            }
+
+            return (isValid, errors.ToString());
+           
         }
     }
 }

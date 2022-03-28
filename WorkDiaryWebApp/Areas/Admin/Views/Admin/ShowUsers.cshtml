@@ -11,7 +11,7 @@
             <th class="th-static" scope="col">#</th>
             <th class="th-static" scope="col">Name</th>
             <th class="th-static" scope="col">Username</th>
-            <th class="th-static" scope="col">Role</th>
+            <th class="th-static" scope="col">Roles</th>
             <th class="th-static" scope="col">AdminAction</th>
         </tr>
     </thead>
@@ -26,9 +26,7 @@
                 <th scope="row">@count</th>
                 <td>@user.FullName</td>
                 <td>@user.Username</td>
-                <td>
-                    @String.Join(", ", @user.Roles)
-                </td>
+                <td>@string.Join(", ", user.Roles)</td>
                 <td>
                     <a href="/Admin/Admin/EditUser?userId=@user.UserId" 
                        class="btn" 

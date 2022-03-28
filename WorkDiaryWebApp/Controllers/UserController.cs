@@ -53,17 +53,18 @@ namespace WorkDiaryWebApp.Controllers
                 ViewData[MessageConstant.ErrorMessage] = "Invalid data!";
             }
 
+            //TODO:Admin and user creating logic
             //Temp code start
             /*
             First Registred user is set to Admin
             In the first registration MainBank is created 
             */
-            var firstUserId = await adminService.IsThatFirstRegistration();
+            var firstUser = await adminService.IsThatFirstRegistration();
             
-            if(firstUserId != null)
+            if(firstUser != null)
             {
                 await adminService.CreateAdminRoleAndMainBank();
-                var roleresult = await userManager.AddToRoleAsync(firstUserId, "Admin");
+                var roleresult = await userManager.AddToRoleAsync(firstUser, "Admin");
             }
             //Temp code end
 
