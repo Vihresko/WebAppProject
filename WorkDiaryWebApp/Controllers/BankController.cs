@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using WorkDiaryWebApp.Core.Constants;
 using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Bank;
 using WorkDiaryWebApp.WorkDiaryDB.Models;
@@ -23,8 +22,6 @@ namespace WorkDiaryWebApp.Controllers
             var model = await bankService.GetUserBankBalance(userId);
             return View(model);
         }
-
-       
 
         [HttpPost]
         public async Task<IActionResult> ReportMoney(ReportMoneyPostModel model)

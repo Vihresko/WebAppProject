@@ -11,5 +11,7 @@ namespace WorkDiaryWebApp.Core.Interfaces
 
         public Task CreateAdminRoleAndMainBank();
 
+        public Task<ShowUserInfoModel> GetUserInfo(string userId);
+
     }
 }

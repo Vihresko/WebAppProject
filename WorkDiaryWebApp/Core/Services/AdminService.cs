@@ -29,15 +29,14 @@ namespace WorkDiaryWebApp.Core.Services
                 FullName = u.FullName,
                 UserId = u.Id,
                 UserBankId = u.BankId,
-                Email = u.Email,
             }).ToListAsync();
 
             foreach (var user in usersFromDb)
             {
                 var roleId = await database.UserRoles.Where(r => r.UserId == user.UserId).Select(r => r.RoleId).FirstOrDefaultAsync();
-                var role = await database.Roles.Where(r => r.Id == roleId).Select(r => r.Name).FirstOrDefaultAsync();
+                var role = await database.Roles.Where(r => r.Id == roleId).Select(r => r.Name).ToArrayAsync();
                 
-                user.Role = role;
+                user.Roles = role;
             }
 
             allUsers.AddRange(usersFromDb);
@@ -65,6 +64,25 @@ namespace WorkDiaryWebApp.Core.Services
             var mainBank = new MainBank();
             await database.MainBanks.AddAsync(mainBank);
             await database.SaveChangesAsync();
+        }
+
+        public async Task<ShowUserInfoModel> GetUserInfo(string userId)
+        {
+            var user = await database.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            var contact = await database.Contacts.Where(c => c.Id == user.ContactId).FirstOrDefaultAsync();
+            var userModel = new ShowUserInfoModel()
+            {
+                UserId = userId,
+                FullName = user.FullName,
+                Email = contact.Email,
+                UserBankId = user.BankId,
+                Username = user.UserName
+            };
+
+            var rolesId = await database.UserRoles.Where(r => r.UserId == userId).Select(r => r.RoleId).ToArrayAsync();
+            var roles = await database.Roles.Where(r => rolesId.Contains(r.Id)).Select(r => r.Name).ToArrayAsync();
+            userModel.Roles = roles;
+            return userModel;
         }
     }
 }

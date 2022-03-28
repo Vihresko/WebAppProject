@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using WorkDiaryWebApp.Core.Constants;
 using WorkDiaryWebApp.Core.Interfaces;
-using WorkDiaryWebApp.Core.Services;
 using WorkDiaryWebApp.Models;
 using WorkDiaryWebApp.Models.Income;
 using WorkDiaryWebApp.WorkDiaryDB.Models;
@@ -31,7 +30,6 @@ namespace WorkDiaryWebApp.Controllers
 
             return View(model);
         }
-
 
         public async Task<IActionResult> UserIncomesHistory()
         {

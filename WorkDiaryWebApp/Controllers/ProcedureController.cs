@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WorkDiaryWebApp.Core.Constants;
 using WorkDiaryWebApp.Core.Interfaces;
-using WorkDiaryWebApp.Models.Procedure;
 
 namespace WorkDiaryWebApp.Controllers
 {

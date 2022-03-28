@@ -26,9 +26,11 @@
                 <th scope="row">@count</th>
                 <td>@user.FullName</td>
                 <td>@user.Username</td>
-                <td>@user.Role</td>
                 <td>
-                    <a href="" 
+                    @String.Join(", ", @user.Roles)
+                </td>
+                <td>
+                    <a href="/Admin/Admin/EditUser?userId=@user.UserId" 
                        class="btn" 
                        style="background-image: radial-gradient(white, white, blue);" 
                        role="button">

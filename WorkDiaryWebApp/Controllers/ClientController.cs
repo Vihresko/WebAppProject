@@ -17,7 +17,6 @@ namespace WorkDiaryWebApp.Controllers
             var model = await clientService.GetAllClients();
             return View(model);
         }
-
        
         public async Task<IActionResult> Client(string clientId)
         {
