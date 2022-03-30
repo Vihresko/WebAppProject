@@ -33,7 +33,7 @@ namespace WorkDiaryWebApp.Controllers
                 return View(model);
             }
 
-            (bool isDone, StringBuilder errors) = await userService.RegisterNewUser(model);
+            (bool isDone, StringBuilder errors, string userName) = await userService.RegisterNewUser(model);
             if (!isDone)
             {
                 var splitedErrors = errors.ToString().Split(Environment.NewLine);
@@ -67,7 +67,12 @@ namespace WorkDiaryWebApp.Controllers
                 string[] roles = { "Admin", "User" };
                 var roleresult = await userManager.AddToRolesAsync(firstUser, roles);
             }
-           
+            else
+            {
+                var identityUser = userManager.Users.First(u => u.UserName == userName);
+                var giveDefaultRole = await userManager.AddToRolesAsync(identityUser, new string[] { "Guest" });
+            }
+
             //Temp code end
 
             return View(model);

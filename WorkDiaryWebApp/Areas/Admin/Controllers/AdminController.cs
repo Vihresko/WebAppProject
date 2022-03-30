@@ -20,7 +20,7 @@ namespace WorkDiaryWebApp.Areas.Admin.Controllers
         {
             await roleManager.CreateAsync(new IdentityRole()
              {
-                 Name = "Admin"
+                 Name = "Guest"
              }); 
 
             return Ok();

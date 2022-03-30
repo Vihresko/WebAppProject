@@ -23,7 +23,7 @@
 </table>
 
 <form asp-controller="Bank" asp-action="ReportMoney" method="post">
-    <input type="number" name="Value" value=@balance />
+    <input type="number" name="Value" range="1,@balance" value=@balance />
     <input type="hidden" name="userId" value=@Model.UserId />
     <button class="button-return" type="submit">Report</button>
 </form>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using WorkDiaryWebApp.Core.Constants;
 using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Bank;
 using WorkDiaryWebApp.WorkDiaryDB.Models;
@@ -27,8 +28,19 @@ namespace WorkDiaryWebApp.Controllers
         public async Task<IActionResult> ReportMoney(ReportMoneyPostModel model)
         {
             (bool isDone, string message) = await bankService.ReportMoney(model);
-            
-            return Redirect($"/Bank/UserBank");
+
+            if (isDone)
+            {
+                ViewData[MessageConstant.SuccessMessage] = "Success!";
+            }
+            else
+            {
+                ViewData[MessageConstant.ErrorMessage] = message;
+            }
+
+            var userId = userManager.GetUserId(User);
+            var model1 = await bankService.GetUserBankBalance(userId);
+            return View("~/Views/Bank/UserBank.cshtml",model1);
         }
 
     }

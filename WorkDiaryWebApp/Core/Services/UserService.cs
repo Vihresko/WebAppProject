@@ -21,11 +21,11 @@ namespace WorkDiaryWebApp.Core.Services
             userManager = _userManager;
             signInManager = _signInManager;
         }
-        public async Task<(bool, StringBuilder)> RegisterNewUser(RegisterFormModel model)
+        public async Task<(bool, StringBuilder, string)> RegisterNewUser(RegisterFormModel model)
         {
             (bool isValidModel, StringBuilder errors) = ValidateRegisterModel(model);
             (bool isEmailExist, string? emailError) = await ValidateEmail(model.Email);
-
+            string userNameForReturn = null;
             if (isEmailExist) errors.AppendLine(emailError);
 
             if (isValidModel)
@@ -48,6 +48,7 @@ namespace WorkDiaryWebApp.Core.Services
                     Bank = newBank
                 };
 
+                userNameForReturn = newUser.UserName;
                 var result = await userManager.CreateAsync(newUser, model.Password);
                 if (!result.Succeeded)
                 {
@@ -61,7 +62,7 @@ namespace WorkDiaryWebApp.Core.Services
                 await database.SaveChangesAsync();
             }
 
-            return (isValidModel, errors);
+            return (isValidModel, errors, userNameForReturn);
         }
 
         public async Task<bool> TryToLogin(LoginFormModel model)
