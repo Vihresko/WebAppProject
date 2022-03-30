@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WorkDiaryWebApp.Core.Constants;
 using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Procedure;
 
 namespace WorkDiaryWebApp.Controllers
 {
+    [Authorize]
     public class ProcedureController : Controller
     {
         private readonly IProcedureService procedureService;

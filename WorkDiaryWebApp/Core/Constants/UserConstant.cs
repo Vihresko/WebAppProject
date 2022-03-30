@@ -6,6 +6,7 @@
         {
             public const string ADMINISTRATOR = "Admin";
             public const string USER = "User";
+            public const string GUEST = "Guest";
         }
     }
 }

@@ -7,5 +7,6 @@
         public const string ACTIVE_STATUS_ERROR = "Invalid data for Activity (true/false)!";
         public const string NOT_REGISTRED_USER = "Wrong authentication!";
         public const string DATABASE_ERROR = "Fail to add info in database!";
+        public const string INVALID_DATA = "Invalid data!";
     }
 }

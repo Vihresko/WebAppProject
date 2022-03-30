@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WorkDiaryWebApp.Core.Constants;
 using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Contact;
 using WorkDiaryWebApp.WorkDiaryDB;
@@ -14,7 +15,8 @@ namespace WorkDiaryWebApp.Core.Services
         }
         public async Task<List<UserContactGetModel>> GetAllContacts()
         {
-            var activeUsersIds = database.UserRoles.Select(ur => ur.UserId).ToList();
+            var guestRoleId = await database.Roles.Where(r => r.Name == UserConstant.Role.GUEST).Select(r => r.Id).FirstOrDefaultAsync();
+            var activeUsersIds = await database.UserRoles.Where(ur => ur.RoleId != guestRoleId).Select(ur => ur.UserId).ToListAsync();
             var userNames = await database.Users.Where(u => activeUsersIds.Contains(u.Id)).Select(x => new
             {
                 FullName = x.FullName,

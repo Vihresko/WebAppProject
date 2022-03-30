@@ -62,7 +62,7 @@ namespace WorkDiaryWebApp.Controllers
 
             if (isDone)
             {
-                ViewData[MessageConstant.SuccessMessage] = "success";
+                ViewData[MessageConstant.SuccessMessage] = CommonMessage.SUCCESS_MESSAGE;
             }
             else
             {

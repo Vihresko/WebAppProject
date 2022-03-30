@@ -69,7 +69,7 @@ namespace WorkDiaryWebApp.Core.Services
 
         public async Task<List<Income>> GetAllUsersIncomesHistory()
         {
-            var usersIncomes = await database.Incomes.Where(i => i.IsReported == true).OrderByDescending(i => i.Id).ToListAsync();
+            var usersIncomes = await database.Incomes.OrderByDescending(i => i.Id).ToListAsync();
             return usersIncomes;
         }
 
@@ -77,14 +77,13 @@ namespace WorkDiaryWebApp.Core.Services
         {
             var document = new StringBuilder();
             var client = await database.Clients.Where(c => c.Id == clientId).FirstOrDefaultAsync();
-            document.AppendLine($"Today: {DateTime.Now.ToString()}, '{client.FirstName} {client.LastName}' with email:'{client.Email}' pay below procedures:");
+            document.AppendLine($"Date: {DateTime.Now.ToString()}, '{client.FirstName} {client.LastName}' with email:'{client.Email}' pay below procedures:");
             int count = 0;
             foreach (var pr in procedures.Procedures)
             {
                 count++;
                 document.AppendLine($"{pr.Name}: -'{pr.Description}' price: {pr.Price}");
             }
-            //TODO: valuta
             document.AppendLine($">>>Total price: {totalPrice} {FormatConstant.CURRENCY}");
             //TODO: if have promotion? 
             return document.ToString();

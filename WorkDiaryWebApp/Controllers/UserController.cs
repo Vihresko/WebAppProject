@@ -46,11 +46,11 @@ namespace WorkDiaryWebApp.Controllers
 
             if (isDone)
             {
-                ViewData[MessageConstant.SuccessMessage] = "Success!";
+                ViewData[MessageConstant.SuccessMessage] = CommonMessage.SUCCESS_MESSAGE;
             }
             else
             {
-                ViewData[MessageConstant.ErrorMessage] = "Invalid data!";
+                ViewData[MessageConstant.ErrorMessage] = CommonMessage.INVALID_DATA;
             }
 
             //TODO:Admin and user creating logic
@@ -64,13 +64,13 @@ namespace WorkDiaryWebApp.Controllers
             if(firstUser != null)
             {
                 await adminService.CreateRolesAndMainBank();
-                string[] roles = { "Admin", "User" };
+                string[] roles = {UserConstant.Role.ADMINISTRATOR, UserConstant.Role.USER };
                 var roleresult = await userManager.AddToRolesAsync(firstUser, roles);
             }
             else
             {
                 var identityUser = userManager.Users.First(u => u.UserName == userName);
-                var giveDefaultRole = await userManager.AddToRolesAsync(identityUser, new string[] { "Guest" });
+                var giveDefaultRole = await userManager.AddToRolesAsync(identityUser, new string[] { UserConstant.Role.GUEST });
             }
 
             //Temp code end

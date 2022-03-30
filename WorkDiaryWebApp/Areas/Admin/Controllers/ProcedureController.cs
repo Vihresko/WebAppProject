@@ -38,11 +38,11 @@ namespace WorkDiaryWebApp.Areas.Admin.Controllers
             }
             if (isDone)
             {
-                ViewData[MessageConstant.SuccessMessage] = "Success!";
+                ViewData[MessageConstant.SuccessMessage] = CommonMessage.SUCCESS_MESSAGE;
             }
             else
             {
-                ViewData[MessageConstant.ErrorMessage] = "Invalid data!";
+                ViewData[MessageConstant.ErrorMessage] = CommonMessage.INVALID_DATA;
             }
             return View(model);
         }
@@ -60,7 +60,7 @@ namespace WorkDiaryWebApp.Areas.Admin.Controllers
 
             if (isDone)
             {
-                ViewData[MessageConstant.SuccessMessage] = "success";
+                ViewData[MessageConstant.SuccessMessage] = CommonMessage.SUCCESS_MESSAGE;
             }
             else if (errors == CommonMessage.NO_CHANGES_MESSAGE)
             {
