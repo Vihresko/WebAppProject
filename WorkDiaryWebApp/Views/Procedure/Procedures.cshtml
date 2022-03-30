@@ -2,9 +2,10 @@
     ViewData["Title"] = "Procedures";
 }
 @model ListFromProcedures
-<h1>Preview all active procedures</h1>
+
 <br />
 <br />
+<h1>Our Procedures</h1>
 <br />
 <div class="scroll-all">
     <table class="table table-striped">
@@ -40,11 +41,7 @@
                     <td>@procedure.Price</td>
                     <td>
                         <a href="/Procedure/Procedure?procedureId=@procedure.Id"
-                       class="btn"
-                       style="background-image: radial-gradient(white, white, blue);"
-                       role="button">
-                            Select
-                        </a>
+                       class="btn button-return">Select</a>
                     </td>
                     @if (User.IsInRole("Admin"))
                     {

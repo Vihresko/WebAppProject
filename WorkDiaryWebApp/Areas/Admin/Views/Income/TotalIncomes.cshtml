@@ -6,15 +6,10 @@
     int count = 0;
 }
 
-<form>
-    <a asp-controller="Income" asp-action="UserIncomes" class="button-return">NotReported</a>
-    <a asp-controller="Income" asp-action="UserIncomesHistory" class="button-return">History</a>
-</form>
-<br />
 <div>
     <text><pre> #   Income Description</pre></text>
 </div>
-<div class="scroll">
+<div class="scroll-admin">
     <table class="table table-striped">
         <tbody>
             @foreach (var i in Model)

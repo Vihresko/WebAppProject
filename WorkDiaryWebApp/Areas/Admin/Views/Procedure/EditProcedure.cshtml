@@ -27,17 +27,17 @@
 
 <form class="form-inline" asp-area="Admin" asp-controller="Procedure" asp-action="EditProcedure" method="post">
 
-    <p class="text-primary">New Name:</p>
+    <p style="color: aquamarine">New Name:</p>
     <input asp-for=@Model.Name class="form-control" value=@Model.Name>
     <span asp-validation-for=@Model.Name class="text-danger"></span>
     <br />
 
-    <p class="text-primary">New Description:</p>
+    <p style="color: aquamarine">New Description:</p>
     <textarea asp-for=@Model.Description rows="5" cols="120">@Model.Description</textarea>
     <span asp-validation-for=@Model.Description class="text-danger"></span>
     <br />
 
-    <p class="text-primary">New Price:</p>
+    <p style="color: aquamarine">New Price:</p>
     <input asp-for=@Model.Price class="form-control" type="number" value=@Model.Price>
     <span asp-validation-for=@Model.Price class= "text-danger"></span>
     <br />
@@ -45,7 +45,7 @@
     <div class="col-lg-6 col-md-6 col-12">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <p class="text-primary">Status Options:</p>
+                <p style="color: aquamarine">Status Options:</p>
                 <select class="form-control select2bs4" name="IsActive" id="IsActive" style="width: 100%">
                     <option value="@Model.IsActive">Current Status</option>
                     <option value="true">Activate</option>

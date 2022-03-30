@@ -15,7 +15,7 @@ html {
 
 body {
     margin-bottom: 60px;
-    background-image: radial-gradient(white, white, green);
+    background-image: radial-gradient(white, white, blue);
     /*
     background-image: url(/pics/cityWhiteCenter.jpg);
     background-repeat: no-repeat;
@@ -62,6 +62,12 @@ div.content {
     position: relative;
 }
 
+.scroll-admin {
+    height: 250px;
+    overflow: scroll;
+    position: relative;
+}
+
 .scroll-all {
     height: 600px;
     overflow: scroll;
@@ -76,7 +82,7 @@ tr.static th {
 
 tr.static-radial th {
     background: white;
-    background-image: radial-gradient(white, white, green);
+    background-image: radial-gradient(white, white, blue);
     color: rgba(0, 0, 0, 0.4)
 }
 

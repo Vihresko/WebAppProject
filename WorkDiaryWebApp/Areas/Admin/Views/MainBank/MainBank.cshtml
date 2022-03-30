@@ -8,6 +8,14 @@
 
 <div class="scroll">
     <table class="table table-striped">
+        <thead>
+            <tr class="static">
+                <th class="th-static" scope="col">#</th>
+                <th class="th-static" scope="col">Username</th>
+                <th class="th-static" scope="col">Money</th>
+                <th class="th-static" scope="col">Date</th>
+            </tr>
+        </thead>
         <tbody>
             @foreach (var report in Model.Reports)
             {
