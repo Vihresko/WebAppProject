@@ -14,7 +14,8 @@ namespace WorkDiaryWebApp.Core.Services
         }
         public async Task<List<UserContactGetModel>> GetAllContacts()
         {
-            var userNames = await database.Users.Select(x => new
+            var activeUsersIds = database.UserRoles.Select(ur => ur.UserId).ToList();
+            var userNames = await database.Users.Where(u => activeUsersIds.Contains(u.Id)).Select(x => new
             {
                 FullName = x.FullName,
                 ContactId = x.ContactId
@@ -37,7 +38,7 @@ namespace WorkDiaryWebApp.Core.Services
                 };
                 contacts.Add(contact);
             }
-            return contacts;
+            return contacts.OrderBy(c => c.Town).ThenBy(c => c.FullName).ToList();
         }
     }
 }

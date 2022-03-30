@@ -19,7 +19,7 @@ namespace WorkDiaryWebApp.Constraints.Services
         }
         public async Task<(bool, string?)> AddNewClient(AddClientModel model)
         {
-            (bool isValidModel, string errors) = ValidateClientModel(model.FirstName, model.LastName, model.Email, model.BirthDay);
+            (bool isValidModel, string errors)  = await ValidateClientModel(model.FirstName, model.LastName, model.Email, model.BirthDay);
 
             if (!isValidModel)
             {
@@ -34,6 +34,12 @@ namespace WorkDiaryWebApp.Constraints.Services
                 BirthDay = DateTime.ParseExact(model.BirthDay, FormatConstant.DATE_TIME_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None),
                 VisitBag = new VisitBag()
             };
+
+            var areExist = await database.Clients.AnyAsync(x => x.FirstName == model.FirstName && x.LastName == model.LastName && x.Email == model.Email);
+            if (areExist)
+            {
+                return (false, "This user already exist!");
+            }
 
             try
             {
@@ -82,7 +88,7 @@ namespace WorkDiaryWebApp.Constraints.Services
 
         public async Task<(bool, string?)> EditClient(ClientInfoModel model)
         {
-            (bool isValidModel, string errors) = ValidateClientModel(model.FirstName, model.LastName, model.Email, model.BirthDay, model.Id);
+            (bool isValidModel, string errors) = await ValidateClientModel(model.FirstName, model.LastName, model.Email, model.BirthDay, model.Id);
 
             if(model.IsActive != true && model.IsActive != false)
             {
@@ -118,7 +124,7 @@ namespace WorkDiaryWebApp.Constraints.Services
             return (true, null);
         }
 
-        private (bool, string) ValidateClientModel(string firstName, string lastName, string email, string birthDay, string? clientId = null)
+        private async Task<(bool, string)> ValidateClientModel(string firstName, string lastName, string email, string birthDay, string? clientId = null)
         {
             bool isValidModel = true;
             var errors = new StringBuilder();
@@ -153,11 +159,12 @@ namespace WorkDiaryWebApp.Constraints.Services
                 errors.AppendLine($"{nameof(birthDay)} must be valid DATE like '{FormatConstant.DATE_TIME_FORMAT_EXAM}'!");
             }
 
-            bool isEmailChanged = database.Clients.Where(c => c.Id == clientId && c.Email != email).Any();
+            bool isEmailChanged = await database.Clients.Where(c => c.Id == clientId && c.Email != email).AnyAsync();
             bool isEmailExist = false;
+            
             if (isEmailChanged)
             {
-                isEmailExist = database.Clients.Where(c => c.Email == email).Any();
+                isEmailExist = await database.Clients.Where(c => c.Email == email).AnyAsync();
             }
 
             if (isEmailExist)

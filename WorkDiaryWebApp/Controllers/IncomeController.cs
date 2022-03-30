@@ -8,7 +8,7 @@ using WorkDiaryWebApp.WorkDiaryDB.Models;
 
 namespace WorkDiaryWebApp.Controllers
 {
-    public class IncomeController : Controller
+    public class IncomeController : BaseControllerUser
     {
         private readonly IClientService clientService;
         private readonly IProcedureService procedureService;

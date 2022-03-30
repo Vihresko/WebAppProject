@@ -43,7 +43,7 @@ namespace WorkDiaryWebApp.Core.Services
             }
 
             allUsers.AddRange(usersFromDb);
-            return allUsers;
+            return allUsers.OrderByDescending(u => u.Roles.Count()).ToList();
         }
 
         public async Task<User> IsThatFirstRegistration()
@@ -57,7 +57,7 @@ namespace WorkDiaryWebApp.Core.Services
             return user;
         }
 
-        public async Task CreateAdminRoleAndMainBank()
+        public async Task CreateRolesAndMainBank()
         {
             await roleManager.CreateAsync(new IdentityRole()
             {

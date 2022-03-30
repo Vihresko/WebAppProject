@@ -6,7 +6,7 @@ using WorkDiaryWebApp.Models.Admin;
 
 namespace WorkDiaryWebApp.Areas.Admin.Controllers
 {
-    public class AdminController : BaseController
+    public class AdminController : BaseControllerAdmin
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IAdminService adminService;

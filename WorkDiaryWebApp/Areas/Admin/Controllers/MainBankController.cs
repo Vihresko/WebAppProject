@@ -3,7 +3,7 @@ using WorkDiaryWebApp.Core.Interfaces;
 
 namespace WorkDiaryWebApp.Areas.Admin.Controllers
 {
-    public class MainBankController : BaseController
+    public class MainBankController : BaseControllerAdmin
     {
         private readonly IMainBankService mainBankService;
         public MainBankController(IMainBankService _mainBankService)

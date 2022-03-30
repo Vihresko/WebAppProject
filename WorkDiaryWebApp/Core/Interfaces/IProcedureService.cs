@@ -6,6 +6,7 @@ namespace WorkDiaryWebApp.Core.Interfaces
     {
         public Task<(bool, string?)> AddNewProcedure(AddProcedureModel addProcedureModel);
         public Task<ListFromProcedures> GetAllProcedures();
+        public Task<ListFromProcedures> GetAllProceduresAdmin();
 
         public Task<ShowProcedureModel> ProcedureInfo(string procedureId);
 

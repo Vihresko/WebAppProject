@@ -3,7 +3,7 @@ using WorkDiaryWebApp.Core.Interfaces;
 
 namespace WorkDiaryWebApp.Areas.Admin.Controllers
 {
-    public class IncomeController : BaseController
+    public class IncomeController : BaseControllerAdmin
     {
         private readonly IIncomeService incomeService;
         public IncomeController(IIncomeService _incomeService)

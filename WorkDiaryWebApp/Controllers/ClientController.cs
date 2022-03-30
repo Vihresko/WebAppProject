@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WorkDiaryWebApp.Core.Constants;
 using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Client;
 
 namespace WorkDiaryWebApp.Controllers
 {
+    [Authorize(Roles = $"{UserConstant.Role.USER}, {UserConstant.Role.ADMINISTRATOR}")]
     public class ClientController : Controller
     {
         private readonly IClientService clientService;
@@ -35,7 +37,7 @@ namespace WorkDiaryWebApp.Controllers
             {
                 return View(model);
             }
-            (bool isDone, string? errors) =await clientService.AddNewClient(model);
+            (bool isDone, string? errors) = await clientService.AddNewClient(model);
 
             if (!isDone)
             {

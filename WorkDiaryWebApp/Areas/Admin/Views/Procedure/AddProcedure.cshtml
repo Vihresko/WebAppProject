@@ -18,7 +18,7 @@
         </div>
 
         <div class="form-floating mb-3">
-          <input type="number" name="Price" class="form-control" value=@Model.Price>
+          <input type="number" name="Price" range="1,1000000"class="form-control" value=@Model.Price>
           <label for=@Model.Price>Price</label>
           <span asp-validation-for=@Model.Price typeof="number" class="text-danger"></span>
         </div>

@@ -9,7 +9,7 @@ namespace WorkDiaryWebApp.Core.Interfaces
 
         public Task<User> IsThatFirstRegistration();
 
-        public Task CreateAdminRoleAndMainBank();
+        public Task CreateRolesAndMainBank();
 
         public Task<ShowUserInfoModel> GetUserInfo(string userId);
 

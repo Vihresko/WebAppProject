@@ -4,7 +4,8 @@
     {
         public static class Role
         {
-            public const string Administrator = "Admin";
+            public const string ADMINISTRATOR = "Admin";
+            public const string USER = "User";
         }
     }
 }

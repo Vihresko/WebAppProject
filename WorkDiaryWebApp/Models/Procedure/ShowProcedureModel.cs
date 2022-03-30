@@ -10,7 +10,7 @@ namespace WorkDiaryWebApp.Models.Procedure
         public string Name { get; set; }
 
         [MaxLength(Constants.PROCEDURE_DESCRIPTION_MAX_LENGTH)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Range((double) Constants.PROCEDURE_MIN_PRICE, (double) Constants.PROCEDURE_MAX_PRICE)]
         public decimal Price { get; set; }

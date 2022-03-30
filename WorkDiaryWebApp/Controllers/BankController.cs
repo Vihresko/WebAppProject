@@ -6,7 +6,7 @@ using WorkDiaryWebApp.WorkDiaryDB.Models;
 
 namespace WorkDiaryWebApp.Controllers
 {
-    public class BankController : Controller
+    public class BankController : BaseControllerUser
     {
         private readonly IBankService bankService;
         private readonly UserManager<User> userManager;

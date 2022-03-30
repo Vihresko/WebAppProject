@@ -1,5 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,9 +9,20 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WorkDiaryWebApp.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/plugins/toastr/toastr.min.css"/>
+    <link rel="stylesheet" href="~/plugins/toastr/toastr.min.css" />
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <style>
 
+            body {
+                background-image: url(/pics/cityWhiteCenter.jpg);
+                background-repeat: no-repeat;
+                background-size: contain;
+            }
+        </style>
+    }
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
@@ -21,48 +34,65 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Client" asp-action="AddClient">AddClient</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Client" asp-action="Clients">AllClients</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="Admin" asp-controller="Procedure" asp-action="AddProcedure">AddProcedure</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Procedure" asp-action="Procedures">AllProcedures</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Bank" asp-action="UserBank">UserBank</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="Admin" asp-controller="MainBank" asp-action="MainBank">MainBank</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Income" asp-action="UserIncomes">UserIncome</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="Admin" asp-controller="Income" asp-action="TotalIncomes">TotalIncome</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Outcome" asp-action="UserOutcomes">UserOutcome</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Outcome" asp-action="TotalOutcomes">TotalOutcome</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Contact" asp-action="Contacts">Contacts</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="Admin" asp-controller="Admin" asp-action="ManageUsers">ManageUsers</a>
-                        </li>
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                        }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Contact" asp-action="Contacts">Contacts</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Procedure" asp-action="Procedures">AllProcedures</a>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("User"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Client" asp-action="AddClient">AddClient</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Client" asp-action="Clients">AllClients</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Bank" asp-action="UserBank">UserBank</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Income" asp-action="UserIncomes">UserIncome</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Outcome" asp-action="UserOutcomes">UserOutcome</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Outcome" asp-action="TotalOutcomes">TotalOutcome</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="Admin" asp-controller="Procedure" asp-action="AddProcedure">AddProcedure</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="Admin" asp-controller="MainBank" asp-action="MainBank">MainBank</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="Admin" asp-controller="Income" asp-action="TotalIncomes">TotalIncome</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="Admin" asp-controller="Admin" asp-action="ManageUsers">ManageUsers</a>
+                            </li>
+                        }
+
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -85,8 +115,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/plugins/toastr/toastr.min.js"></script>
-    <partial name = "_UserMessages"/>
-    <partial name = "_ValidationScriptsPartial"/>
+    <partial name="_UserMessages" />
+    <partial name="_ValidationScriptsPartial" />
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

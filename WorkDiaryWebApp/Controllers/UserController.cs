@@ -56,16 +56,18 @@ namespace WorkDiaryWebApp.Controllers
             //TODO:Admin and user creating logic
             //Temp code start
             /*
-            First Registred user is set to Admin
+            First Registred user is set to Admin and user roles
             In the first registration MainBank is created 
             */
             var firstUser = await adminService.IsThatFirstRegistration();
             
             if(firstUser != null)
             {
-                await adminService.CreateAdminRoleAndMainBank();
-                var roleresult = await userManager.AddToRoleAsync(firstUser, "Admin");
+                await adminService.CreateRolesAndMainBank();
+                string[] roles = { "Admin", "User" };
+                var roleresult = await userManager.AddToRolesAsync(firstUser, roles);
             }
+           
             //Temp code end
 
             return View(model);

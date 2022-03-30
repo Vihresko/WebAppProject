@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Text;
 using WorkDiaryWebApp.Core.Constants;
 using WorkDiaryWebApp.Core.Interfaces;
@@ -13,9 +14,11 @@ namespace WorkDiaryWebApp.Core.Services
     public class ProcedureService : IProcedureService
     {
         private readonly WorkDiaryDbContext database;
-        public ProcedureService(WorkDiaryDbContext db)
+        private readonly UserManager<User> userManager;
+        public ProcedureService(WorkDiaryDbContext db, UserManager<User> _userManager)
         {
             database = db;
+            userManager = _userManager;
         }
         public async Task<(bool, string?)> AddNewProcedure(AddProcedureModel model)
         {
@@ -89,21 +92,13 @@ namespace WorkDiaryWebApp.Core.Services
 
         public async Task<ListFromProcedures> GetAllProcedures()
         {
-            var model = new ListFromProcedures();
+            var proceduresFromDB = await database.Procedures.Where(p => p.IsActive == true).ToListAsync();
+            return CreateListFromProcedures(proceduresFromDB);
+        }
+        public async Task<ListFromProcedures> GetAllProceduresAdmin()
+        {
             var proceduresFromDB = await database.Procedures.ToListAsync();
-            foreach (var procedure in proceduresFromDB)
-            {
-                ShowProcedureModel procedureModel = new ShowProcedureModel()
-                {
-                    Name = procedure.Name,
-                    Description = procedure.Description,
-                    Price = procedure.Price,
-                    Id = procedure.Id
-                };
-                model.Procedures.Add(procedureModel);
-            }
-            model.Procedures = model.Procedures.OrderBy(c => c.Name).ToHashSet();
-            return model;
+            return CreateListFromProcedures(proceduresFromDB);
         }
 
         public async Task<ShowProcedureModel> ProcedureInfo(string procedureId)
@@ -143,6 +138,25 @@ namespace WorkDiaryWebApp.Core.Services
             }
 
             return (isValidModel, errors.ToString());
+        }
+
+        private ListFromProcedures CreateListFromProcedures(List<Procedure> proceduresFromDB)
+        {
+            var model = new ListFromProcedures();
+            foreach (var procedure in proceduresFromDB)
+            {
+                ShowProcedureModel procedureModel = new ShowProcedureModel()
+                {
+                    Name = procedure.Name,
+                    Description = procedure.Description,
+                    Price = procedure.Price,
+                    Id = procedure.Id,
+                    IsActive = procedure.IsActive
+                };
+                model.Procedures.Add(procedureModel);
+            }
+            model.Procedures = model.Procedures.OrderBy(c => c.Name).ToHashSet();
+            return model;
         }
     }
 }

@@ -4,9 +4,9 @@ using WorkDiaryWebApp.Core.Constants;
 
 namespace WorkDiaryWebApp.Areas.Admin.Controllers
 {
-    [Authorize(Roles = UserConstant.Role.Administrator)]
+    [Authorize(Roles = UserConstant.Role.ADMINISTRATOR)]
     [Area("Admin")]
-    public class BaseController : Controller
+    public class BaseControllerAdmin : Controller
     {
        
     }

@@ -5,7 +5,7 @@ using WorkDiaryWebApp.Models.Procedure;
 
 namespace WorkDiaryWebApp.Areas.Admin.Controllers
 {
-    public class ProcedureController : BaseController
+    public class ProcedureController : BaseControllerAdmin
     {
         private readonly IProcedureService procedureService;
         public ProcedureController(IProcedureService _procedureService)

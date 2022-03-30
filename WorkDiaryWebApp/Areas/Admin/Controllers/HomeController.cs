@@ -2,7 +2,7 @@
 
 namespace WorkDiaryWebApp.Areas.Admin.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : BaseControllerAdmin
     {
         public IActionResult Index()
         {

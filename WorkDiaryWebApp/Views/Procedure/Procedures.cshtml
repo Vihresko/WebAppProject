@@ -3,45 +3,57 @@
 }
 @model ListFromProcedures
 <h1>Preview all active procedures</h1>
-<br /><br /><br />
+<br />
+<br />
+<br />
 <div class="scroll-all">
-<table class="table table-striped">
-    <thead>
-        <tr class="static-radial">
-            <th class="th-static" scope="col">#</th>
-            <th class="th-static" scope="col">Name</th>
-            <th class="th-static" scope="col">Description</th>
-            <th class="th-static" scope="col">Price</th>
-            <th class="th-static" scope="col">Info</th>
-            <th class="th-static" scope="col">AdminAction</th>
-        </tr>
-    </thead>
-    <tbody>
-        @{
-            int count = 0;
-        }
-        @foreach (var procedure in Model.Procedures)
-        {
-            count++;
-            <tr>
-                <th scope="row">@count</th>
-                <td>@procedure.Name</td>
-                <td>
-                    <span class="d-inline-block text-truncate" style="max-width: 150px;">
-                        @procedure.Description
-                    </span>
-                </td>
-                <td>@procedure.Price</td>
-                <td>
-                    <a href="/Procedure/Procedure?procedureId=@procedure.Id" 
-                       class="btn" 
-                       style="background-image: radial-gradient(white, white, blue);" 
-                       role="button">
-                       Select</a>
-               </td>
-                <td><a class="btn button-pay" asp-area="Admin" asp-controller="Procedure" asp-action="EditProcedure" asp-route-procedureId=@procedure.Id>Edit</a></td>
+    <table class="table table-striped">
+        <thead>
+            <tr class="static-radial">
+                <th class="th-static" scope="col">#</th>
+                <th class="th-static" scope="col">Name</th>
+                <th class="th-static" scope="col">Description</th>
+                <th class="th-static" scope="col">Price</th>
+                <th class="th-static" scope="col">Info</th>
+                @if (User.IsInRole("Admin"))
+                {
+                    <th class="th-static" scope="col">AdminAction</th>
+                    <th class="th-static" scope="col">IsActive</th>
+                }
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @{
+                int count = 0;
+            }
+            @foreach (var procedure in Model.Procedures)
+            {
+                count++;
+                <tr>
+                    <th scope="row">@count</th>
+                    <td>@procedure.Name</td>
+                    <td>
+                        <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                            @procedure.Description
+                        </span>
+                    </td>
+                    <td>@procedure.Price</td>
+                    <td>
+                        <a href="/Procedure/Procedure?procedureId=@procedure.Id"
+                       class="btn"
+                       style="background-image: radial-gradient(white, white, blue);"
+                       role="button">
+                            Select
+                        </a>
+                    </td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td><a class="btn button-pay" asp-area="Admin" asp-controller="Procedure" asp-action="EditProcedure" asp-route-procedureId=@procedure.Id>Edit</a></td>
+                        <td>@procedure.IsActive</td>
+                    }
+
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
