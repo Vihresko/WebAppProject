@@ -99,8 +99,10 @@ namespace WorkDiaryWebApp.Constraints.Services
             {
                 return (isValidModel, errors);
             }
+
             var originState = await database.Clients.Where(c => c.Id == model.Id).FirstOrDefaultAsync();
             var birthDay = DateTime.ParseExact(model.BirthDay, FormatConstant.DATE_TIME_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None);
+
             if (originState.FirstName == model.FirstName && originState.LastName == model.LastName
                 && originState.Email == model.Email && originState.IsActive == model.IsActive
                 && originState.BirthDay == birthDay)
