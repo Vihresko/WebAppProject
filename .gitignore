@@ -1,3 +1,6 @@
 /.vs
 /WorkDiaryWebApp/bin
 /WorkDiaryWebApp/obj
+/WorkDiaryWebApp.Tests/bin/Debug/net6.0
+/WorkDiaryWebApp.Tests/obj
+/TestResults

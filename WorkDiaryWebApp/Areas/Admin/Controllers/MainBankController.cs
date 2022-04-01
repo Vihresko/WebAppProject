@@ -10,6 +10,7 @@ namespace WorkDiaryWebApp.Areas.Admin.Controllers
         {
             mainBankService = _mainBankService;
         }
+
         public async Task<IActionResult> MainBank()
         {
             var model = await mainBankService.GetMainBankInfo();

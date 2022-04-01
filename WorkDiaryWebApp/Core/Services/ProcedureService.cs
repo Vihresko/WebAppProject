@@ -14,11 +14,9 @@ namespace WorkDiaryWebApp.Core.Services
     public class ProcedureService : IProcedureService
     {
         private readonly WorkDiaryDbContext database;
-        private readonly UserManager<User> userManager;
-        public ProcedureService(WorkDiaryDbContext db, UserManager<User> _userManager)
+        public ProcedureService(WorkDiaryDbContext db)
         {
             database = db;
-            userManager = _userManager;
         }
         public async Task<(bool, string?)> AddNewProcedure(AddProcedureModel model)
         {
@@ -30,7 +28,7 @@ namespace WorkDiaryWebApp.Core.Services
                 return (isValidModel, errors.ToString());
             }
 
-            var isExist = database.Procedures.Any(p => p.Name == model.Name && p.Description == model.Description);
+            var isExist =  await database.Procedures.AnyAsync(p => p.Name == model.Name && p.Description == model.Description);
 
             if (isExist)
             {
