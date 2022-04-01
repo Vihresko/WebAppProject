@@ -35,19 +35,20 @@ namespace WorkDiaryWebApp.Core.Services
 
             var message = new StringBuilder();
             var isOk = true;
-            if(neededMoney > model.Value || neededMoney == model.Value && model.Value > 0)
+
+            if(neededMoney > model.Value && model.Value > 0|| neededMoney == model.Value && model.Value > 0)
             {
                 message.AppendLine("Done!");
             }
-            else if(neededMoney < model.Value)
+            else if(neededMoney < model.Value && model.Value > 0)
             {
                 isOk = false;
                 message.AppendLine($"You try to report 'MORE' than needed money:{neededMoney} {FormatConstant.CURRENCY}!");
             }
-            else if(neededMoney == model.Value)
+            else if(model.Value <=0)
             {
                 isOk = false;
-                message.AppendLine("Cannot report 'ZERO' money!");
+                message.AppendLine("Cannot report 'ZERO' or 'Negative' money!");
             }
 
             if (!isOk)
