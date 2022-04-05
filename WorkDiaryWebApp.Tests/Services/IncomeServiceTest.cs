@@ -7,6 +7,7 @@ using WorkDiaryWebApp.Core.Constants;
 using WorkDiaryWebApp.Core.Services;
 using WorkDiaryWebApp.Models.Income;
 using WorkDiaryWebApp.Tests.Mocks;
+using WorkDiaryWebApp.WorkDiaryDB;
 using WorkDiaryWebApp.WorkDiaryDB.Models;
 using Xunit;
 
@@ -105,6 +106,230 @@ namespace WorkDiaryWebApp.Tests.Services
             Assert.Equal(2, count.Count);
         }
 
+        [Fact]
+
+        public async Task GetUnreportedUserIncomes_Must_Return_Only_Ureported_Incomes_On_User()
+        {
+            using var data = DatabaseMock.Instance;
+            var incomeService = new IncomeService(data);
+
+            var user = new User()
+            {
+                UserName = "test",
+                Bank = new Bank(),
+                ContactId = "contact",
+                FullName = "Test Testov"
+            };
+            await data.Users.AddAsync(user);
+            await data.SaveChangesAsync();
+
+            var income1 = new Income()
+            {
+                BankId = user.Bank.Id,
+                Value = 1,
+                Description = "test",
+                IsReported = false,
+                
+            };
+            var income2 = new Income()
+            {
+                BankId = user.Bank.Id,
+                Value = 2,
+                Description = "test",
+                IsReported = true
+            };
+            await data.Incomes.AddRangeAsync(new Income[] { income1, income2 });
+            await data.SaveChangesAsync();
+
+            var result = await incomeService.GetUnreportedUserIncomes(user.Id);
+            int count = result.Count();
+            Assert.Equal(1, count);
+
+
+        }
+
+        [Fact]
+
+        public async Task GetUserIncomesHistory_Must_Return_Only_Selected_User_Incomes_Which_Are_Reported()
+        {
+            using var data = DatabaseMock.Instance;
+            var incomeService = new IncomeService(data);
+
+            var user1 = new User()
+            {
+                UserName = "test1",
+                Bank = new Bank(),
+                ContactId = "contact1",
+                FullName = "Test Testov True"
+            };
+
+            var user2 = new User()
+            {
+                UserName = "test2",
+                Bank = new Bank(),
+                ContactId = "contact2",
+                FullName = "Test Testov False"
+            };
+            await data.Users.AddRangeAsync(new User[] { user1, user2 });
+            await data.SaveChangesAsync();
+
+            var income1 = new Income()
+            {
+                BankId = user1.Bank.Id,
+                Value = 1,
+                Description = "test",
+                IsReported = false,
+
+            };
+            var income2 = new Income()
+            {
+                BankId = user1.Bank.Id,
+                Value = 2,
+                Description = "test",
+                IsReported = true
+            };
+
+            var income3 = new Income()
+            {
+                BankId = user2.Bank.Id,
+                Value = 1,
+                Description = "test",
+                IsReported = false,
+
+            };
+            await data.Incomes.AddRangeAsync(new Income[] { income1, income2 });
+            await data.SaveChangesAsync();
+
+            var result = await incomeService.GetUserIncomesHistory(user1.Id);
+            int count = result.Count();
+            Assert.Equal(1, count);
+            Assert.Equal(2, result.First().Value);
+        }
+
+        [Fact]
+        public async Task CleanUserDiary_Must_Set_All_User_Incomes_To_Reported()
+        {
+            using var data = DatabaseMock.Instance;
+            var incomeService = new IncomeService(data);
+
+            var user = new User()
+            {
+                UserName = "test",
+                Bank = new Bank(),
+                ContactId = "contact",
+                FullName = "Test Testov"
+            };
+            await data.Users.AddAsync(user);
+
+            var income = new Income()
+            {
+                BankId = user.Bank.Id,
+                Value = 1,
+                Description = "test",
+                IsReported = false,
+            };
+            await data.Incomes.AddAsync(income);
+            await data.SaveChangesAsync();
+
+            await incomeService.CleanUserDiary(user.Id);
+            var incomeFromDb = await data.Incomes.FirstOrDefaultAsync();
+            Assert.NotNull(incomeFromDb);
+            Assert.True(incomeFromDb?.IsReported == true);
+        }
+
+        [Fact]
+        public async Task ShowClientHistory_Must_Return_All_Procedures_For_Selected_Client_With_Compleete_Payments()
+        {
+            using var data = DatabaseMock.Instance;
+            var incomeService = new IncomeService(data);
+            await CreateTwoClientProcedures(data);
+           
+
+            var result = await incomeService.ShowClientHistory(clientId1);
+            int count = result.Procedures.Count;
+            Assert.Equal(1, count);
+            Assert.Equal("compleeted", result.Procedures.First().Name);
+        }
+
+        [Fact]
+        public async Task ShowClientVisitBag_Must_Return_All_Procedures_On_Selected_Client_With_Not_Compleete_Payments()
+        {
+            using var data = DatabaseMock.Instance;
+            var incomeService = new IncomeService(data);
+            await CreateTwoClientProcedures(data);
+
+
+            var result = await incomeService.ShowClientVisitBag(clientId1);
+            int count = result.Procedures.Count;
+            Assert.Equal(1, count);
+            Assert.Equal("notCompleeted", result.Procedures.First().Name);
+
+        }
+
+        [Fact]
+        public async Task RemoveProcedureFromVisitBag_Must_Remove_ClientProcedure_From_Given_Client()
+        {
+            using var data = DatabaseMock.Instance;
+            var incomeService = new IncomeService(data);
+            await CreateTwoClientProcedures(data);
+            var procedureId = data.Procedures.First().Id;
+
+            int countBefore = await data.ClientProcedures.CountAsync();
+            Assert.Equal(2, countBefore);
+            await incomeService.RemoveProcedureFromVisitBag(clientId1, procedureId);
+            int countAfter = await data.ClientProcedures.CountAsync();
+            Assert.Equal(1, countAfter);
+
+        }
+
+        private async Task CreateTwoClientProcedures(WorkDiaryDbContext data)
+        {
+            var client = CreateClient();
+
+            var user = new User()
+            {
+                UserName = "test",
+                Bank = new Bank(),
+                ContactId = "contact",
+                FullName = "Test Testov"
+            };
+            await data.Users.AddAsync(user);
+
+            var procedure1 = new Procedure()
+            {
+                Name = "compleeted",
+                Description = "test",
+                Price = 10
+            };
+
+            var procedure2 = new Procedure()
+            {
+                Name = "notCompleeted",
+                Description = "test",
+                Price = 10
+            };
+            await data.Procedures.AddRangeAsync(new Procedure[] { procedure1, procedure2 });
+
+            var clientProcedureCompleeted = new ClientProcedure()
+            {
+                ClientId = client.Id,
+                ProcedureId = procedure1.Id,
+                UserId = user.Id,
+                VisitBagId = null,
+
+            };
+
+            var clientProcedureUncompleeted = new ClientProcedure()
+            {
+                ClientId = client.Id,
+                ProcedureId = procedure2.Id,
+                UserId = user.Id,
+                VisitBagId = client.VisitBagId,
+
+            };
+            await data.ClientProcedures.AddRangeAsync(new ClientProcedure[] { clientProcedureCompleeted, clientProcedureUncompleeted });
+            await data.SaveChangesAsync();
+        }
         private Client CreateClient()
         {
             var client = new Client()
