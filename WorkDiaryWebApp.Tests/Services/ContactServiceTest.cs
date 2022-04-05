@@ -69,6 +69,7 @@ namespace WorkDiaryWebApp.Tests.Services
             await data.SaveChangesAsync();
 
             var result = await contactService.GetAllContacts();
+
             int count = result.Count;
             Assert.Equal(1, count);
             Assert.Equal("user@abc.bg", result.First().Email);

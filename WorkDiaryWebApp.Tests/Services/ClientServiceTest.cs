@@ -78,6 +78,7 @@ namespace WorkDiaryWebApp.Tests.Services
             
             var client = await clientService.ClientInfo(clientId);
 
+            Assert.IsType<ClientInfoModel>(client);
             Assert.Equal(clientId, client.Id);
 
         }
@@ -90,6 +91,8 @@ namespace WorkDiaryWebApp.Tests.Services
             await AddTwoClientsToDb(clientService);
 
             var clients = await clientService.GetAllClients();
+
+            Assert.IsType<ListFromClients>(clients);
             var count = clients.Clients.Count();
             Assert.Equal(2, count);
         }

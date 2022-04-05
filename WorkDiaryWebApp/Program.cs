@@ -2,9 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WorkDiaryWebApp.Constraints.Services;
-using WorkDiaryWebApp.Core.Constants;
 using WorkDiaryWebApp.Core.Interfaces;
-using WorkDiaryWebApp.Core.ModelBinders;
 using WorkDiaryWebApp.Core.Services;
 using WorkDiaryWebApp.WorkDiaryDB;
 using WorkDiaryWebApp.WorkDiaryDB.Models;
@@ -25,8 +23,6 @@ builder.Services.AddDefaultIdentity<User>(options =>
     .AddEntityFrameworkStores<WorkDiaryDbContext>();
 builder.Services.AddControllersWithViews().AddMvcOptions(options =>
 {
-    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
-    options.ModelBinderProviders.Insert(0, new DateTimeModelBinderProvider(FormatConstant.DATE_TIME_FORMAT));
     options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
 });
 builder.Services.AddScoped<IClientService, ClientService>();

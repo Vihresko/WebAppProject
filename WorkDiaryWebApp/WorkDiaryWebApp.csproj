@@ -8,9 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Core\CustomAttributes\**" />
     <Compile Remove="wwwroot\plugins\bootstrap-switch\**" />
+    <Content Remove="Core\CustomAttributes\**" />
     <Content Remove="wwwroot\plugins\bootstrap-switch\**" />
+    <EmbeddedResource Remove="Core\CustomAttributes\**" />
     <EmbeddedResource Remove="wwwroot\plugins\bootstrap-switch\**" />
+    <None Remove="Core\CustomAttributes\**" />
     <None Remove="wwwroot\plugins\bootstrap-switch\**" />
   </ItemGroup>
 
@@ -20,10 +24,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Core\CustomAttributes\" />
   </ItemGroup>
 
 </Project>

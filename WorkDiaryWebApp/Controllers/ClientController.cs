@@ -39,7 +39,7 @@ namespace WorkDiaryWebApp.Controllers
             }
             (bool isDone, string? errors) = await clientService.AddNewClient(model);
 
-            if (!isDone)
+            if (!isDone && errors != null)
             {
                 var splitedErrors = errors.ToString().Split(Environment.NewLine);
 
