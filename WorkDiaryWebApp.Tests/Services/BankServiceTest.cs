@@ -19,11 +19,11 @@ namespace WorkDiaryWebApp.Tests.Services
         public async Task GetUserBankBalance_Must_Return_User_Bank_Information()
         {
             using var data = DatabaseMock.Instance;
-            var incomeService = new BankService(data);
+            var bankService = new BankService(data);
 
             var userId = await CreateUserAndBank(data);
 
-            var result = await incomeService.GetUserBankBalance(userId);
+            var result = await bankService.GetUserBankBalance(userId);
             Assert.NotNull(result);
             Assert.Equal(takenMoney, result.TakenMoney);
             Assert.Equal(reportedMoney, result.ReportedMoney);
@@ -33,7 +33,7 @@ namespace WorkDiaryWebApp.Tests.Services
         public async Task ReportMoney_Must_Actualize_User_Bank_Status_And_Main_Bank()
         {
             using var data = DatabaseMock.Instance;
-            var incomeService = new BankService(data);
+            var bankService = new BankService(data);
 
             var userId = await CreateUserAndBank(data);
 
@@ -46,7 +46,7 @@ namespace WorkDiaryWebApp.Tests.Services
             await data.MainBanks.AddAsync(new MainBank());
             await data.SaveChangesAsync();
 
-            var result = await incomeService.ReportMoney(reportMoneyPostmodel);
+            var result = await bankService.ReportMoney(reportMoneyPostmodel);
 
             var userBank = await data.Banks.FirstOrDefaultAsync();
             Assert.NotNull(userBank);
