@@ -38,9 +38,9 @@ namespace WorkDiaryWebApp.Controllers
                 ViewData[MessageConstant.ErrorMessage] = message;
             }
 
-            var userId = userManager.GetUserId(User);
-            var model1 = await bankService.GetUserBankBalance(userId);
-            return View("~/Views/Bank/UserBank.cshtml",model1);
+           var userId = userManager.GetUserId(User);
+           var model1 = await bankService.GetUserBankBalance(userId);
+           return View("~/Views/Bank/UserBank.cshtml",model1);
         }
 
     }
