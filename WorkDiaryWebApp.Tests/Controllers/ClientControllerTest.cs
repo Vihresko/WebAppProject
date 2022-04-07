@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WorkDiaryWebApp.Controllers;
+using WorkDiaryWebApp.Models.Client;
 using WorkDiaryWebApp.Tests.Mocks;
 using Xunit;
 
@@ -16,7 +17,9 @@ namespace WorkDiaryWebApp.Tests.Controllers
             var result = await controller.Clients();
             
             Assert.NotNull(result);
-            Assert.IsType<ViewResult>(result);
+            var resultData = Assert.IsType<ViewResult>(result);
+            //TODO: Check model type and model View
+            //Assert.IsAssignableFrom<ListFromClients>(resultData.Model);
         }
 
         [Fact]

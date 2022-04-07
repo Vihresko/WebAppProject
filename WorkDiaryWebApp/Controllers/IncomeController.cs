@@ -104,7 +104,7 @@ namespace WorkDiaryWebApp.Controllers
         {
             var proceduresInfo = await incomeService.ShowClientVisitBag(clientId);
             string userId = userManager.GetUserId(this.User);
-            //TODO: userId do nothing?
+
             string document = await incomeService.GetInfoForPayment(clientId, totalPrice, userId, proceduresInfo);
             var model = new PayPostModel()
             {
@@ -120,9 +120,23 @@ namespace WorkDiaryWebApp.Controllers
         public async Task<IActionResult> ConfirmPay(PayPostModel model)
         {
             var result = await incomeService.CompleetePayment(model);
-
+            if (result)
+            {
+                ViewData[MessageConstant.SuccessMessage] = CommonMessage.SUCCESS_MESSAGE;
+            }
+            else
+            {
+                ViewData[MessageConstant.ErrorMessage] = "error!";
+            }
             //TODO:Redirect correctly
-            return Redirect($"/Income/ShowClientVisitBag?clientId={model.ClientId}");
+            // return Redirect($"/Income/ShowClientVisitBag?clientId={model.ClientId}");
+
+            TempData["Controller"] = "Income";
+            TempData["Action"] = "CreateIncome";
+            TempData["neededId"] = $"?clientId={model.ClientId}";
+            TempData["clientId"] = model.ClientId;
+            var modelReturn = await incomeService.ShowClientVisitBag(model.ClientId);
+            return View("~/Views/Income/ShowClientVisitBag.cshtml", modelReturn);
         }
 
         private async Task<WorkModel> GetWorkModelForView(string clientId)
