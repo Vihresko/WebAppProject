@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WorkDiaryWebApp.Controllers;
-using WorkDiaryWebApp.Models.Client;
 using WorkDiaryWebApp.Tests.Mocks;
 using Xunit;
 

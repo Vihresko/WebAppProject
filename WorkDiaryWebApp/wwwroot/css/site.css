@@ -77,18 +77,23 @@ div.content {
 
 tr.static th {
     background: white;
-    color: rgba(0, 0, 0, 0.4)
+    color: rgba(0, 0, 0, 0.4);
+}
+
+tr.static-special th {
+    background: linear-gradient(blue,white,white);
+    color: rgba(0, 0, 0, 0.4);
 }
 
 tr.static-radial th {
     background: white;
     background-image: radial-gradient(white, white, blue);
-    color: rgba(0, 0, 0, 0.4)
+    color: rgba(0, 0, 0, 0.4);
 }
 
 .th-static {
     background: white;
     position: sticky;
-    top: 0; /* Don't forget this, required for the stickiness */
+    top: 0;
     box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
 }

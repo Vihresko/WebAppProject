@@ -27,7 +27,7 @@ namespace WorkDiaryWebApp.Areas.Admin.Controllers
 
             (bool isDone, string? errors) =  await procedureService.AddNewProcedure(model);
 
-            if (!isDone)
+            if (!isDone && errors?.Length > 0)
             {
                 var splitedErrors = errors.ToString().Split(Environment.NewLine);
 

@@ -6,58 +6,58 @@
 <h1 class="text-center mt-2">Creat new account</h1>
 <form asp-controller="User" asp-action="Register" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-          <div class="form-floating mb-3">
+          <div class="form-floating mb-2">
           <input type="text" asp-for=@Model.Username class="form-control"value=@Model.Username>
           <label asp-for=@Model.Username>Username</label>
-           <span asp-validation-for=@Model.Username class="text-danger"></span>
+           <span asp-validation-for=@Model.Username class="text-danger" style="font-size:small"></span>
            </div>     
 
-         <div class="form-floating mb-3">
+         <div class="form-floating mb-2">
           <input type="text" asp-for=@Model.FirstName class="form-control" value=@Model.FirstName>
           <label asp-for=@Model.FirstName>First Name</label>
-          <span asp-validation-for=@Model.FirstName class="text-danger"></span>
+          <span asp-validation-for=@Model.FirstName class="text-danger" style="font-size:small"></span>
         </div>
 
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-2">
           <input type="text" asp-for=@Model.LastName class="form-control" value=@Model.LastName>
           <label asp-for=@Model.LastName>Last Name</label>
-           <span asp-validation-for=@Model.LastName class="text-danger"></span>
+           <span asp-validation-for=@Model.LastName class="text-danger" style="font-size:small"></span>
         </div>
 
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-2">
           <input type="email" asp-for=@Model.Email class="form-control" value=@Model.Email>
           <label asp-for=@Model.Email>Email</label>
-           <span asp-validation-for=@Model.Email class="text-danger"></span>
+           <span asp-validation-for=@Model.Email class="text-danger" style="font-size:small"></span>
         </div>
 
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-2">
           <input type="password" asp-for=@Model.Password class="form-control" value=@Model.Password>
           <label asp-for=@Model.Password>Password</label>
-           <span asp-validation-for=@Model.Password class="text-danger"></span>
+           <span asp-validation-for=@Model.Password class="text-danger" style="font-size:small"></span>
         </div>
 
-         <div class="form-floating mb-3">
+         <div class="form-floating mb-2">
           <input type="password" asp-for=@Model.ConfirmPassword class="form-control" value=@Model.ConfirmPassword>
           <label asp-for=@Model.ConfirmPassword>ConfirmPassword</label>
-           <span asp-validation-for=@Model.ConfirmPassword class="text-danger"></span>
+           <span asp-validation-for=@Model.ConfirmPassword class="text-danger" style="font-size:small"></span>
         </div>
 
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-2">
           <input type="text" asp-for=@Model.PhoneNumber class="form-control" value=@Model.PhoneNumber>
           <label asp-for=@Model.PhoneNumber>PhoneNumber</label>
-           <span asp-validation-for=@Model.PhoneNumber class="text-danger"></span>
+           <span asp-validation-for=@Model.PhoneNumber class="text-danger" style="font-size:small"></span>
         </div>
 
-         <div class="form-floating mb-3">
+         <div class="form-floating mb-2">
           <input type="text" asp-for=@Model.Town class="form-control"value=@Model.Town>
           <label asp-for=@Model.Town>Town</label>
-           <span asp-validation-for=@Model.Town class="text-danger"></span>
+           <span asp-validation-for=@Model.Town class="text-danger" style="font-size:small"></span>
         </div>
 
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-2">
           <input type="text" asp-for=@Model.Address class="form-control"value=@Model.Address>
           <label asp-for=@Model.Address>Address</label>
-           <span asp-validation-for=@Model.Address class="text-danger"></span>
+           <span asp-validation-for=@Model.Address class="text-danger" style="font-size:small"></span>
         </div>
 
         <div class="d-grid gap-2">

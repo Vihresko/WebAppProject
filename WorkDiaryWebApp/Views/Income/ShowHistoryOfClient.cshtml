@@ -1,12 +1,18 @@
 ﻿@model ListFromProcedures
+ <form asp-controller="Client" asp-action="Client" method="get">
+                  <input type="hidden" name="clientId" value="@TempData["clientId"]" />
+                  <button class="button-return" type="submit">Return</button>
+                </form>
+                <br /><br />
+<div class="scroll-all">
     <table class="table table-striped">
         <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Date</th>
-                <th scope="col">Info</th>
+            <tr class="static-special">
+                <th class="th-static" scope="col">#</th>
+                <th class="th-static" scope="col">Name</th>
+                <th class="th-static" scope="col">Description</th>
+                <th class="th-static" scope="col">Date</th>
+                <th class="th-static" scope="col">Info</th>
             </tr>
         </thead>
         <tbody>
@@ -28,10 +34,7 @@
                     <td><a href="/Procedure/Procedure?procedureId=@procedure.Id" class="btn btn-primary" role="button">Info</a></td>
                 </tr>
                 }
-                <form asp-controller="Client" asp-action="Client" method="get">
-                  <input type="hidden" name="clientId" value="@TempData["clientId"]" />
-                  <button class="button-return" type="submit">Return</button>
-                </form>
+               
         </tbody>
     </table>
-    
+</div>
