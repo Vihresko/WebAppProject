@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
+namespace WorkDiaryWebApp.Migrations
 {
-    public partial class InitialDb : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -193,6 +193,27 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
                         principalTable: "Contacts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reports",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Value = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    MainBankId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reports", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reports_MainBanks_MainBankId",
+                        column: x => x.MainBankId,
+                        principalTable: "MainBanks",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -415,6 +436,11 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
                 name: "IX_Outcomes_BankId",
                 table: "Outcomes",
                 column: "BankId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reports_MainBankId",
+                table: "Reports",
+                column: "MainBankId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -441,10 +467,10 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
                 name: "Incomes");
 
             migrationBuilder.DropTable(
-                name: "MainBanks");
+                name: "Outcomes");
 
             migrationBuilder.DropTable(
-                name: "Outcomes");
+                name: "Reports");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -457,6 +483,9 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
 
             migrationBuilder.DropTable(
                 name: "Procedures");
+
+            migrationBuilder.DropTable(
+                name: "MainBanks");
 
             migrationBuilder.DropTable(
                 name: "Banks");

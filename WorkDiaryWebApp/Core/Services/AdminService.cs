@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
+using WorkDiaryWebApp.Core.Constants;
 using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Models.Admin;
 using WorkDiaryWebApp.WorkDiaryDB;
@@ -61,14 +62,18 @@ namespace WorkDiaryWebApp.Core.Services
         {
             await roleManager.CreateAsync(new IdentityRole()
             {
-                Name = "Admin"
+                Name = UserConstant.Role.ADMINISTRATOR
             });
 
             await roleManager.CreateAsync(new IdentityRole()
             {
-                Name = "User"
+                Name = UserConstant.Role.USER
             });
 
+            await roleManager.CreateAsync(new IdentityRole()
+            {
+                Name = UserConstant.Role.GUEST
+            });
             var mainBank = new MainBank();
             await database.MainBanks.AddAsync(mainBank);
             await database.SaveChangesAsync();

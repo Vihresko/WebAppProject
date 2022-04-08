@@ -8,7 +8,7 @@ using WorkDiaryWebApp.WorkDiaryDB;
 
 #nullable disable
 
-namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
+namespace WorkDiaryWebApp.Migrations
 {
     [DbContext(typeof(WorkDiaryDbContext))]
     partial class WorkDiaryDbContextModelSnapshot : ModelSnapshot

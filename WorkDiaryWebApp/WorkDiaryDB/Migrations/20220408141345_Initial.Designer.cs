@@ -9,11 +9,11 @@ using WorkDiaryWebApp.WorkDiaryDB;
 
 #nullable disable
 
-namespace WorkDiaryWebApp.WorkDiaryDB.Migrations
+namespace WorkDiaryWebApp.Migrations
 {
     [DbContext(typeof(WorkDiaryDbContext))]
-    [Migration("20220324142054_AddReportDbSet")]
-    partial class AddReportDbSet
+    [Migration("20220408141345_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
