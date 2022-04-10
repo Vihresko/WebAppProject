@@ -40,6 +40,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 });
 builder.Services.AddSignalR();
+builder.Services.AddMemoryCache();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -71,6 +72,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapHub<ChatHub>("/chatHub");
-
 app.MapRazorPages();
 app.Run();

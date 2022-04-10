@@ -7,5 +7,6 @@ namespace WorkDiaryWebApp.Controllers
     [Authorize(Roles = UserConstant.Role.USER)]
     public class BaseControllerUser : Controller
     {
+       
     }
 }

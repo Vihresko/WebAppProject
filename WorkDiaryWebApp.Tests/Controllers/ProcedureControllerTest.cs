@@ -13,27 +13,12 @@ namespace WorkDiaryWebApp.Tests.Controllers
         public async Task Procedure_Must_Return_Correct_Result()
         {
             var procedureService = ProcedureServiceMock.Instance;
-            var controller = new ProcedureController(procedureService);
+            var controller = new ProcedureController(procedureService, null);
 
             var result = await controller.Procedure("test");
 
             Assert.NotNull(result);
             Assert.IsType<ViewResult>(result);
-        }
-        
-        //TODO: In controller have roles logic. How to pass it?
-        [Fact]
-
-        public async Task Procedures_Must_Return_Correct_Result()
-        {
-            var procedureService = ProcedureServiceMock.Instance;
-            var controller = new ProcedureController(procedureService);
-
-            var result = await controller.Procedures();
-            
-            Assert.NotNull(result);
-            var resultData = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsAssignableFrom<ListFromProcedures>(resultData.Model);
         }
     }
 }

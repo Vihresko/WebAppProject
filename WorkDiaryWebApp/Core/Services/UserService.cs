@@ -167,6 +167,5 @@ namespace WorkDiaryWebApp.Core.Services
             return (isValid, errors);
         }
 
-       
     }
 }
