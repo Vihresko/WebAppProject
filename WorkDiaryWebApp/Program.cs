@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using WorkDiaryWebApp.Constraints.Services;
 using WorkDiaryWebApp.Core.Interfaces;
 using WorkDiaryWebApp.Core.Services;
+using WorkDiaryWebApp.Hubs;
 using WorkDiaryWebApp.WorkDiaryDB;
 using WorkDiaryWebApp.WorkDiaryDB.Models;
 
@@ -38,6 +39,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/User/Login";
 
 });
+builder.Services.AddSignalR();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -68,7 +70,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-
+app.MapHub<ChatHub>("/chatHub");
 
 app.MapRazorPages();
 app.Run();
