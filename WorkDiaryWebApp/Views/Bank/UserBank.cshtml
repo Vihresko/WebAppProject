@@ -24,7 +24,7 @@
 </table>
 
 <form asp-controller="Bank" asp-action="ReportMoney" method="post">
-    <input type="number" step="0.1" name="Value" range="1,@balance" value=@balance />
+    <input type="number" step="0.01" name="Value" range="1,@balance" value=@balance />
     <input type="hidden" name="userId" value=@Model.UserId />
     <button class="button-return" onclick="return confirmation()" type="submit">Report</button>
 </form>

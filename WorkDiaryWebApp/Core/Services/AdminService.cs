@@ -100,6 +100,11 @@ namespace WorkDiaryWebApp.Core.Services
 
         public async Task<(bool, string)> UpdateUser(ShowUserInfoModel model)
         {
+            if(model == null)
+            {
+                return (false, "Corrupted data!");
+            }
+
             var errors = new StringBuilder();
             bool isValid = true;
             var currentUser = await database.Users.FirstOrDefaultAsync(u => u.Id == model.UserId);
@@ -135,8 +140,17 @@ namespace WorkDiaryWebApp.Core.Services
                 currentContact.Email = model.Email;
             }
 
-            if(currentRolesNames != null)
+            var adminRoleId = await database.Roles.Where(r => r.Name == UserConstant.Role.ADMINISTRATOR).Select(r => r.Id).FirstOrDefaultAsync();
+            var admins = await database.UserRoles.Where(ur => ur.RoleId == adminRoleId).ToListAsync();
+
+            if(admins.Count < 2 && admins.Any(a => a.UserId == currentUser.Id) && !model.Roles.Contains(UserConstant.Role.ADMINISTRATOR))
             {
+                return (false, "This is last Admin, can not remove it!");
+            }
+
+            if (currentRolesNames != null)
+            {
+
                 var removeUserRoles = await userManager.RemoveFromRolesAsync(currentUser, currentRolesNames);
             }
 
@@ -148,7 +162,6 @@ namespace WorkDiaryWebApp.Core.Services
             }
 
             return (isValid, errors.ToString());
-           
         }
     }
 }
