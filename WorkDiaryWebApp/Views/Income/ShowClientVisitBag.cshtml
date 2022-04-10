@@ -48,7 +48,8 @@
              <form asp-controller="Income" asp-action="Pay" method="post">
                 <input type="hidden" name="clientId" value=@TempData["clientId"] />
                 <input type="hidden" name="totalPrice" value=@totalPrice />
-
+                <label for"discount" class="offset-1">Discount percentage:</label>
+                <input type="number" min="0" max="100" name="discount">
                 <input type="hidden" name="Value" value="@totalPrice" />
                 <button class="button-pay" type="submit" style="margin-left:15px">Payment</button>
             </form>

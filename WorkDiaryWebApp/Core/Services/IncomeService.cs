@@ -73,20 +73,24 @@ namespace WorkDiaryWebApp.Core.Services
             return usersIncomes;
         }
 
-        public async Task<string> GetInfoForPayment(string clientId, decimal totalPrice, string userId, ListFromProcedures procedures)
+        public async Task<(string, decimal)> GetInfoForPayment(string clientId, decimal totalPrice, string username,ListFromProcedures procedures, decimal discount)
         {
             var document = new StringBuilder();
             var client = await database.Clients.Where(c => c.Id == clientId).FirstOrDefaultAsync();
-            document.AppendLine($"Date: {DateTime.Now.ToString()}, '{client.FirstName} {client.LastName}' with email:'{client.Email}' pay below procedures:");
+            document.AppendLine($"Date: {DateTime.Now.ToString()}, '{client.FirstName} {client.LastName}' with email:'{client.Email}' pay below procedures to <{username}>:");
             int count = 0;
             foreach (var pr in procedures.Procedures)
             {
                 count++;
                 document.AppendLine($"{pr.Name}: -'{pr.Description}' price: {pr.Price}");
             }
-            document.AppendLine($">>>Total price: {totalPrice} {FormatConstant.CURRENCY}");
-            //TODO: if have promotion? 
-            return document.ToString();
+            if (discount > 0)
+            {
+                totalPrice = totalPrice - (totalPrice * (discount / 100));
+                document.AppendLine($"The client use discount from {discount}%!");
+            }
+            document.AppendLine($">>>Total price: {totalPrice:f2} {FormatConstant.CURRENCY}");
+            return (document.ToString(), totalPrice);
         }
 
         public async Task<List<Income>> GetUnreportedUserIncomes(string userId)

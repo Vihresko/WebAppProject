@@ -14,7 +14,7 @@ namespace WorkDiaryWebApp.Core.Interfaces
 
         public Task RemoveProcedureFromVisitBag(string clientId, string procedureId);
 
-        public Task<string> GetInfoForPayment(string clientId, decimal totalPrice, string userId, ListFromProcedures procedures);
+        public Task<(string, decimal)> GetInfoForPayment(string clientId, decimal totalPrice, string username,ListFromProcedures procedures, decimal discount);
 
         public Task<bool> CompleetePayment(PayPostModel model);
 

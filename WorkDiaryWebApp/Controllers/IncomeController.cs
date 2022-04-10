@@ -100,18 +100,18 @@ namespace WorkDiaryWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Pay(string clientId, decimal totalPrice)
+        public async Task<IActionResult> Pay(string clientId, decimal totalPrice, decimal discount)
         {
             var proceduresInfo = await incomeService.ShowClientVisitBag(clientId);
             string userId = userManager.GetUserId(this.User);
-
-            string document = await incomeService.GetInfoForPayment(clientId, totalPrice, userId, proceduresInfo);
+            string username = userManager.GetUserName(this.User);
+            (string document, decimal price) = await incomeService.GetInfoForPayment(clientId, totalPrice, username, proceduresInfo, discount);
             var model = new PayPostModel()
             {
                 Description = document,
                 ClientId = clientId,
                 UserId = userId,
-                Value = totalPrice
+                Value = price
             };
             return View(model);
         }
