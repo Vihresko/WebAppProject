@@ -12,7 +12,7 @@ namespace WorkDiaryWebApp.Tests.Controllers
         public async Task Contacts_Must_Return_Corect_Result()
         {
             var contactService = ContactServiceMock.Instance;
-            var controller = new ContactController(contactService);
+            var controller = new ContactController(contactService, null);
 
             var result = await controller.Contacts();
 

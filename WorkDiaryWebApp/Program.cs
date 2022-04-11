@@ -34,6 +34,7 @@ builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IBankService, BankService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IMainBankService, MainBankService>();
+builder.Services.AddScoped<IOutcomeService, OutcomeService>();
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/User/Login";

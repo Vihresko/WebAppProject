@@ -7,16 +7,18 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Models
     public class Outcome
     {
         [Key]
-        public long Id { get; init; } 
+        public long Id { get; init; }
 
         [Required]
         [MaxLength(IN_OUT_COME_DESCRIPTION_MAX_LENGTH)]
         public string Description { get; set; }
         [Column(TypeName = "decimal(18,2)")]
-        public decimal Value { get; private set; }
+        public decimal Value { get; set; }
 
-        [ForeignKey(nameof(Bank))]
-        public string BankId { get; set; }
-        public virtual Bank Bank { get; set; }
-    }
+        public DateTime DateTime { get; set; } = DateTime.Now;
+
+        [ForeignKey(nameof(MainBank))]
+        public int MainBankId { get; set; }
+        public virtual MainBank MainBank { get; set; }
+    }    
 }

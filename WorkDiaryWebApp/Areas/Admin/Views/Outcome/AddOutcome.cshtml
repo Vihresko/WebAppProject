@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "AddOutcome";
+}
+@model AddOutcomeModel
+
+<br /><br />
+<h1 class="text-center mt-2">Register new outcome</h1> <br />
+<form asp-area="Admin" asp-controller="Outcome" asp-action="AddOutcome" method="post">
+         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+         <div class="form-floating mb-3">
+          <input asp-for=@Model.Description class="form-control">
+          <label for=@Model.Description>Description</label>
+          <span asp-validation-for=@Model.Description class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+          <input asp-for=@Model.Value step="0.01" min="0.01" class="form-control">
+          <label for=@Model.Value>Value</label>
+           <span asp-validation-for=@Model.Value class="text-danger"></span>
+        </div>
+      
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary" type="submit">Create</button>
+        </div>
+</form>
+
+<p>Main Bank Balance: @Model.MainBankVault</p>

@@ -6,5 +6,6 @@ namespace WorkDiaryWebApp.Models.MainBank
     {
         public decimal Balance { get; set; }
         public List<Report> Reports { get; set; }
+
     }
 }

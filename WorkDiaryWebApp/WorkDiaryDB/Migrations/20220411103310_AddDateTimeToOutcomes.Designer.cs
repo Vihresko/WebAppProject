@@ -12,8 +12,8 @@ using WorkDiaryWebApp.WorkDiaryDB;
 namespace WorkDiaryWebApp.Migrations
 {
     [DbContext(typeof(WorkDiaryDbContext))]
-    [Migration("20220408141345_Initial")]
-    partial class Initial
+    [Migration("20220411103310_AddDateTimeToOutcomes")]
+    partial class AddDateTimeToOutcomes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -336,21 +336,23 @@ namespace WorkDiaryWebApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<string>("BankId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
+                    b.Property<int>("MainBankId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Value")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BankId");
+                    b.HasIndex("MainBankId");
 
                     b.ToTable("Outcomes");
                 });
@@ -603,13 +605,13 @@ namespace WorkDiaryWebApp.Migrations
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.Outcome", b =>
                 {
-                    b.HasOne("WorkDiaryWebApp.WorkDiaryDB.Models.Bank", "Bank")
+                    b.HasOne("WorkDiaryWebApp.WorkDiaryDB.Models.MainBank", "MainBank")
                         .WithMany("Outcomes")
-                        .HasForeignKey("BankId")
+                        .HasForeignKey("MainBankId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Bank");
+                    b.Navigation("MainBank");
                 });
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.Report", b =>
@@ -641,8 +643,6 @@ namespace WorkDiaryWebApp.Migrations
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.Bank", b =>
                 {
                     b.Navigation("Incomes");
-
-                    b.Navigation("Outcomes");
                 });
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.Client", b =>
@@ -652,6 +652,8 @@ namespace WorkDiaryWebApp.Migrations
 
             modelBuilder.Entity("WorkDiaryWebApp.WorkDiaryDB.Models.MainBank", b =>
                 {
+                    b.Navigation("Outcomes");
+
                     b.Navigation("Reports");
                 });
 

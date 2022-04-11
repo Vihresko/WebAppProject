@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WorkDiaryWebApp.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -135,27 +135,6 @@ namespace WorkDiaryWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Outcomes",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    Value = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    BankId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Outcomes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Outcomes_Banks_BankId",
-                        column: x => x.BankId,
-                        principalTable: "Banks",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
@@ -191,6 +170,27 @@ namespace WorkDiaryWebApp.Migrations
                         name: "FK_AspNetUsers_Contacts_ContactId",
                         column: x => x.ContactId,
                         principalTable: "Contacts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Outcomes",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    Value = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    MainBankId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Outcomes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Outcomes_MainBanks_MainBankId",
+                        column: x => x.MainBankId,
+                        principalTable: "MainBanks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -433,9 +433,9 @@ namespace WorkDiaryWebApp.Migrations
                 column: "BankId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Outcomes_BankId",
+                name: "IX_Outcomes_MainBankId",
                 table: "Outcomes",
-                column: "BankId");
+                column: "MainBankId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reports_MainBankId",

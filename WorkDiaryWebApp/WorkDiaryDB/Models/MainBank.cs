@@ -18,5 +18,6 @@ namespace WorkDiaryWebApp.WorkDiaryDB.Models
         public decimal Balance { get; set; }
 
         public ICollection<Report> Reports { get; set; } = new List<Report>();
+        public ICollection<Outcome> Outcomes { get; set; } = new List<Outcome>();
     }
 }

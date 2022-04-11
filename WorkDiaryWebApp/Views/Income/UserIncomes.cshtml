@@ -1,4 +1,7 @@
-﻿<h1 style="text-decoration:underline">Your Incomes Preview</h1>
+﻿@{
+    ViewData["Title"] = "Incomes";
+}
+<h1 style="text-decoration:underline">Your Incomes Preview</h1>
 <br />
 @model List<Income>
 
@@ -35,7 +38,7 @@
 @if (@count > 0 && ViewBag.Show == "Unreported")
 {
     <div>
-        <a asp-controller="Income" asp-action="CleanUserDiary" class="button-pay">CleanDiary</a>
+        <a asp-controller="Income" asp-action="CleanUserDiary" onclick="return confirmation()" class="button-pay">CleanDiary</a>
     </div>
 }
 

@@ -5,6 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/myFavicon.ico" />
     <title>@ViewData["Title"] - WorkDiary</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -82,13 +83,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Income" asp-action="UserIncomes">UserIncome</a>
                             </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Outcome" asp-action="UserOutcomes">UserOutcome</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Outcome" asp-action="TotalOutcomes">TotalOutcome</a>
-                            </li>
+                            
                         }
                         @if (User.IsInRole("Admin"))
                         {
@@ -100,6 +95,12 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="Admin" asp-controller="Income" asp-action="TotalIncomes">TotalIncome</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="Admin" asp-controller="Outcome" asp-action="AddOutcome">AddOutcome</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="Admin" asp-controller="Outcome" asp-action="Outcomes">Outcomes</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="Admin" asp-controller="Admin" asp-action="ManageUsers">Manage</a>

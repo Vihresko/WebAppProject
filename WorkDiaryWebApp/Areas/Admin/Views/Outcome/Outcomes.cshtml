@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Outcomes";
+}
+@model List<Outcome>
+<h5>My outcomes:</h5>
+<div class="scroll">
+    <table class="table table-striped">
+         <thead>
+        <tr class="static-radial">
+            <th class="th-static" scope="col">#</th>
+            <th class="th-static" scope="col">Description</th>
+            <th class="th-static" scope="col">Value</th>
+            <th class="th-static" scope="col">Date</th>
+
+        </tr>
+    </thead>
+        <tbody>
+            @{
+                int count = 0;
+            }
+            @foreach (var outcome in Model)
+            {
+                count++;
+                <tr>
+                    <th scope="row">@count</th>
+                    <td>@outcome.Description</td>
+                    <td>-@outcome.Value</td>
+                    <td>@outcome.DateTime</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
