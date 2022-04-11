@@ -20,7 +20,6 @@ namespace WorkDiaryWebApp.Core.Services
         }
         public async Task<(bool, string?)> AddNewProcedure(AddProcedureModel model)
         {
-            
             (bool isValidModel, string errors) = ValidateProcedureValues(model.Name, model.Description, model.Price);
 
             if (!isValidModel)
@@ -42,7 +41,6 @@ namespace WorkDiaryWebApp.Core.Services
                 Price = model.Price
             };
 
-
             try
             {
                 await database.Procedures.AddAsync(newProcedure);
@@ -54,7 +52,6 @@ namespace WorkDiaryWebApp.Core.Services
             }
             return (true, null);
         }
-
         public async Task<(bool, string?)> EditProcedure(ShowProcedureModel model)
         {
             (bool isValidModel, string errors) = ValidateProcedureValues(model.Name, model.Description, model.Price);
@@ -87,7 +84,6 @@ namespace WorkDiaryWebApp.Core.Services
             }
             return (true, null);
         }
-
         public async Task<ListFromProcedures> GetAllProcedures()
         {
             var proceduresFromDB = await database.Procedures.Where(p => p.IsActive == true).ToListAsync();
@@ -98,7 +94,6 @@ namespace WorkDiaryWebApp.Core.Services
             var proceduresFromDB = await database.Procedures.ToListAsync();
             return CreateListFromProcedures(proceduresFromDB);
         }
-
         public async Task<ShowProcedureModel> ProcedureInfo(string procedureId)
         {
             var procedureFromDb = await database.Procedures.Where(p => p.Id == procedureId).FirstOrDefaultAsync();
@@ -112,7 +107,6 @@ namespace WorkDiaryWebApp.Core.Services
             };
             return model;
         }
-
         private (bool, string) ValidateProcedureValues(string Name, string? Description, decimal Price)
         {
             bool isValidModel = true;
@@ -137,7 +131,6 @@ namespace WorkDiaryWebApp.Core.Services
 
             return (isValidModel, errors.ToString());
         }
-
         private ListFromProcedures CreateListFromProcedures(List<Procedure> proceduresFromDB)
         {
             var model = new ListFromProcedures();

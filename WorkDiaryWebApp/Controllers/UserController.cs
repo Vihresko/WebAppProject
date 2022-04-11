@@ -53,11 +53,10 @@ namespace WorkDiaryWebApp.Controllers
                 ViewData[MessageConstant.ErrorMessage] = CommonMessage.INVALID_DATA;
             }
 
-            //TODO:Admin and user creating logic
-            //Temp code start
             /*
-            First Registred user is set to Admin and user roles
-            In the first registration MainBank is created 
+            For easy tests:
+            -First Registred user is set to Admin and User roles.
+            -In the first registration MainBank is created 
             */
             var firstUser = await adminService.IsThatFirstRegistration();
             
@@ -72,8 +71,6 @@ namespace WorkDiaryWebApp.Controllers
                 var identityUser = userManager.Users.First(u => u.UserName == userName);
                 var giveDefaultRole = await userManager.AddToRolesAsync(identityUser, new string[] { UserConstant.Role.GUEST });
             }
-
-            //Temp code end
 
             return View(model);
         }

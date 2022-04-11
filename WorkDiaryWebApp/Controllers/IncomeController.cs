@@ -128,9 +128,7 @@ namespace WorkDiaryWebApp.Controllers
             {
                 ViewData[MessageConstant.ErrorMessage] = "error!";
             }
-            //TODO:Redirect correctly
-            // return Redirect($"/Income/ShowClientVisitBag?clientId={model.ClientId}");
-
+           
             TempData["Controller"] = "Income";
             TempData["Action"] = "CreateIncome";
             TempData["neededId"] = $"?clientId={model.ClientId}";

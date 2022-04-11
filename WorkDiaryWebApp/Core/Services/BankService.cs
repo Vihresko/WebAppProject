@@ -15,7 +15,6 @@ namespace WorkDiaryWebApp.Core.Services
         {
             database = _database;
         }
-
         public async Task <UserBankStatusGetModel> GetUserBankBalance(string userId)
         {
             var bank =  await GetUserBank(userId);
@@ -27,7 +26,6 @@ namespace WorkDiaryWebApp.Core.Services
             };
             return userBankStatus;
         }
-
         public async Task<(bool, string)> ReportMoney(ReportMoneyPostModel model)
         {
             var bank = await GetUserBank(model.UserId);
@@ -63,7 +61,6 @@ namespace WorkDiaryWebApp.Core.Services
             return (isOk, message.ToString());
 
         }
-
         private async Task AddReportToMainBank(string userId, decimal value)
         {
             var username = await database.Users.Where(u => u.Id == userId).Select(u => u.UserName).FirstAsync();
@@ -77,7 +74,6 @@ namespace WorkDiaryWebApp.Core.Services
             mainBank.Balance += value;
             await database.SaveChangesAsync();
         }
-
         private async Task<Bank> GetUserBank(string userId)
         {
             var userBankId = await database.Users.Where(u => u.Id == userId).Select(u => u.BankId).FirstAsync();

@@ -14,7 +14,6 @@ namespace WorkDiaryWebApp.Core.Services
         private readonly WorkDiaryDbContext database;
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
-
         public UserService(WorkDiaryDbContext _database, UserManager<User> _userManager, SignInManager<User> _signInManager)
         {
             database = _database;
@@ -92,7 +91,6 @@ namespace WorkDiaryWebApp.Core.Services
 
             return (false, null);
         }
-
 
         private (bool, StringBuilder) ValidateRegisterModel(RegisterFormModel model)
         {

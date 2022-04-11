@@ -40,7 +40,6 @@ namespace WorkDiaryWebApp.Core.Services
             return (true, null);
            
         }
-
         public async Task<bool> CompleetePayment(PayPostModel model)
         {
             var userBank = await database.Users.Where(u => u.Id == model.UserId).Select(u => u.Bank).FirstOrDefaultAsync();
@@ -106,7 +105,6 @@ namespace WorkDiaryWebApp.Core.Services
             var userIncomes = await database.Incomes.Where(i => i.BankId == userBankId && i.IsReported == true).OrderByDescending(i => i.Id).ToListAsync();
             return userIncomes;
         }
-
 
         public async Task RemoveProcedureFromVisitBag(string clientId, string procedureId)
         {

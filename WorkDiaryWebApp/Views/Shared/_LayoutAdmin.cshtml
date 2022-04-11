@@ -45,25 +45,14 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @if (!User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                            </li>
-                        }
+                       
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Contact" asp-action="Contacts">UserContacts</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Contact" asp-action="Contacts">Contacts</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Procedure" asp-action="Procedures">AllProcedures</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Chat" asp-action="Chat">Chat</a>
                             </li>
                         }
 
@@ -77,33 +66,37 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Bank" asp-action="UserBank">UserBank</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Bank" asp-action="UserBank">MyBank</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Income" asp-action="UserIncomes">UserIncome</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Income" asp-action="UserIncomes">MyDiary</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Chat" asp-action="Chat">Chat</a>
                             </li>
                             
                         }
                         @if (User.IsInRole("Admin"))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="Admin" asp-controller="Procedure" asp-action="AddProcedure">AddProcedure</a>
+                             <li class="nav-item">
+                                <a class="nav-link" asp-area="Admin" asp-controller="Income" asp-action="TotalIncomes">IncomesInfo</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="Admin" asp-controller="MainBank" asp-action="MainBank">MainBank</a>
+                                <a class="nav-link" asp-area="Admin" asp-controller="Outcome" asp-action="Outcomes">MyOutcomes</a>
+                            </li>
+                             <li class="nav-item">
+                                <a class="nav-link" asp-area="Admin" asp-controller="MainBank" asp-action="MainBank">MainBank</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="Admin" asp-controller="Income" asp-action="TotalIncomes">TotalIncome</a>
+                                <a class="nav-link" asp-area="Admin" asp-controller="Procedure" asp-action="AddProcedure">AddProcedure</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="Admin" asp-controller="Outcome" asp-action="AddOutcome">AddOutcome</a>
+                                <a class="nav-link" asp-area="Admin" asp-controller="Outcome" asp-action="AddOutcome">AddOutcome</a>
                             </li>
+                            
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="Admin" asp-controller="Outcome" asp-action="Outcomes">Outcomes</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="Admin" asp-controller="Admin" asp-action="ManageUsers">Manage</a>
+                                <a class="nav-link" asp-area="Admin" asp-controller="Admin" asp-action="ManageUsers">Manage</a>
                             </li>
                         }
 

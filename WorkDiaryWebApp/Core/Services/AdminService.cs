@@ -14,8 +14,6 @@ namespace WorkDiaryWebApp.Core.Services
         private readonly WorkDiaryDbContext database;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<User> userManager;
-
-
         public AdminService(WorkDiaryDbContext _database, RoleManager<IdentityRole> _roleManager, UserManager<User> _userManager)
         {
             database = _database;
